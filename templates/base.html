@@ -1,0 +1,22 @@
+{% from "includes/macros.html" import render_nav %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/master.css")}}">
+</head>
+
+<body>
+    {{ render_nav(False) }}
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+
+</html>

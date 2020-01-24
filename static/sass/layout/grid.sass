@@ -1,0 +1,56 @@
+.d_flex
+    display: flex
+
+.container
+    width: 98%
+    max-width: 1200px
+    margin: 0 auto
+$padding: 0
+@while $padding <= 200
+    .pt_#{$padding}
+        padding-top: #{$padding}px
+    .pr_#{$padding}
+        padding-right: #{$padding}px
+    .pb_#{$padding}
+        padding-bottom: #{$padding}px
+    .pl_#{$padding}
+        padding-left: #{$padding}px
+    .py_#{$padding}
+        padding: #{$padding}px 0
+    .px_#{$padding}
+        padding: 0 #{$padding}px
+    .p_#{$padding}
+        padding: #{$padding}px
+    $padding: $padding + 10
+$margin: 0
+
+@while $margin <= 100
+    .mt_#{$margin}
+        margin-top: #{$margin}px
+    .mr_#{$margin}
+        margin-right: #{$margin}px
+    .mb_#{$margin}
+        margin-bottom: #{$margin}px
+    .ml_#{$margin}
+        margin-left: #{$margin}px
+    .my_#{$margin}
+        margin: #{$margin}px 0
+    .mx_#{$margin}
+        margin: 0 #{$margin}px
+
+    $margin: $margin + 10
+@each $el in space-between flex-start flex-end space-around center
+    .x_#{$el}
+        justify-content: #{$el}
+@each $el in center flex-start flex-end
+    .y_#{$el}
+        align-items: #{$el}
+
+$col: 0
+$colMax: 12
+
+@while $col <= 12
+    .col_#{$col}
+        width: percentage($col/$colMax)
+
+    $col: $col + 1
