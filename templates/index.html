@@ -1,9 +1,11 @@
+{% from "includes/macros.html" import render_nav %}
 {% extends "base.html" %}
 {% block content %}
-<section id="hero">
+{{ render_nav(False) }}
+<header>
     <div class='container'>
         hello hero
     </div>
-</section>
+</header>
 
 {% endblock %}

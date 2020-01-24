@@ -4,9 +4,11 @@ import os
 
 app = Flask(__name__)
 
-
+# we extract the mongo uri from the env
 MONGO_URI = os.environ.get("MONGO_URI")
 
+# we imported the file with mongo that contains the class Mongo
+# and we initialize a new connection to mongodb
 db = Mongo(MONGO_URI)
 
 
@@ -18,7 +20,7 @@ def index():
 @app.route("/register")
 def register():
 
-    return "Hello register!"
+    return render_template("register.html")
 
 
 if __name__ == "__main__":

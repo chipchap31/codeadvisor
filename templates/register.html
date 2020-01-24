@@ -1,0 +1,32 @@
+{% from "includes/macros.html" import render_input, render_nav %}
+{% extends "base.html" %}
+{% block content %}
+{{ render_nav(False) }}
+
+<header id="hero">
+    <div class='container'>
+        <div class='row mt_30'>
+            <div class='col_4'>
+                <h1>Create an account</h1>
+                <p class='mt_10 color_white'>Lorem ipsum dolor sit amet, consectetur.</p>
+                <form class="mt_20">
+                    <div class='row d_flex x_space-between'>
+                        <div class='col_5'>
+                            {{ render_input("first_name", "First name", "text", "Your first name")}}
+                        </div>
+                        <div class='col_5'>
+                            {{ render_input("last_name", "Last name", "text", "Your last name")}}
+                        </div>
+                    </div>
+                    {{ render_input("user_name", "Username", "text", "Your username")}}    
+                    {{ render_input("email", "Email address", "email", "example@example.com")}}    
+                    {{ render_input("password", "Password", "password", "Must contain at least 10 characters")}}    
+                    {{ render_input("password2", "Confirm password", "password", "Re-type your password")}}    
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</header>
+
+{% endblock %}
