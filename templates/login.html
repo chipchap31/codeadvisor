@@ -1,0 +1,42 @@
+{% from "includes/macros.html" import  render_nav %}
+{% extends "base.html" %}
+{% block content %}
+{{ render_nav(False) }}
+
+<header id="hero">
+    <div class='container'>
+        <div class='row mt_30'>
+            <div class='col_4'>
+                <h1>Create an account</h1>
+                <p class='mt_10 color_white'>Lorem ipsum dolor sit amet, consectetur.</p>
+                <form class="mt_20" action="/login" method="POST">
+                    <label for='first_name'>Username</label>
+                    <input required class="my_10" id='user_name' name='user_name' type='text'
+                        placeholder="Your username">
+                    {% if error %}
+                    <div class='mb_10 color_error'>
+                        {{message["user_name"] if message["user_name"]}}
+                    </div>
+                    {% endif %}
+
+                    <label for='password'>Password</label>
+                    <input required class="my_10" id='password' name='password' type='password'
+                        placeholder="Your password">
+                    {% if error %}
+                    <div class='mb_10 color_error'>
+                        {{message["password"] if message["password"]}}
+                    </div>
+                    {% endif %}
+
+                    <button class='button button_md bg_green mt_20' type='submit'>Login</button>
+
+                    <div class='mt_20'>
+                        <p>Don't have an account? <a href="/register">register</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</header>
+
+{% endblock %}

@@ -3,16 +3,16 @@
 
 <nav class='bg_indigo py_30'>
     <div class='container x_space-between d_flex'>
-        <a href='#' class='color_white decor-none'>codeadvisor</a>
+        <a href='/' class='color_white decor-none'>codeadvisor</a>
         <ul class='d_flex'>
             {% if email %}
             <li>{{ email }}</li>
             {% else %}
             <li>
-                <a href='/login' class='color_white'>login</a>
+                <a href='/login' class='color_white'>Login</a>
             </li>
             <li class='ml_20'>
-                <a href='/register' class='color_white decor-none'>register</a>
+                <a href='/register' class='button button_sm decor-none bg_green'>Register</a>
             </li>
             {% endif %}
         </ul>
@@ -27,6 +27,5 @@
 
 
 {% macro render_input(name, label, type, placeholder) %}
-<label for='{{name}}'>{{label}}</label>
-<input class="mt_10 mb_20" id='{{name}}' name='{{name}}' type='{{type}}' placeholder="{{placeholder}}">
+
 {% endmacro %}
