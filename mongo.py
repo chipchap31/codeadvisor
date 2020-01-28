@@ -1,11 +1,8 @@
 # -----------------------------------------------------------
-# demonstrates how to write ms excel files using python-openpyxl
-#
-# (C) 2015 Frank Hofmann, Berlin, Germany
-# Released under GNU Public License (GPL)
-# email frank.hofmann@efho.de
+
 # -----------------------------------------------------------
-from pymongo import MongoClient
+import pymongo
+
 from datetime import datetime
 import bcrypt
 import json
@@ -22,7 +19,7 @@ class Mongo:
         # define errors for users when registering
 
         try:
-            client = MongoClient(url)
+            client = pymongo.MongoClient(url)
 
             # select the development database
             # change this database when in production
@@ -81,6 +78,7 @@ class Mongo:
             "email": form_data["email"],
             "first_name": form_data["first_name"] or None,
             "last_name": form_data["last_name"] or None,
+            "role": None,
             "password": bcrypt.hashpw(str.encode(form_data["password"]), bcrypt.gensalt()),
             "registered": datetime.now()
         }
@@ -126,8 +124,24 @@ class Mongo:
             "_id": str(user_fetch["_id"]),
             "email": user_fetch["email"],
             "first_name": user_fetch["first_name"],
-            "user_name": user_fetch["user_name"]
-
+            "user_name": user_fetch["user_name"],
+            "role": user_fetch["role"]
         }
 
         return json.dumps(cookie) if not self.error else False
+
+    def set_role(self, user_name: str, role: str):
+
+        coll = self.db["users"]
+        try:
+            coll.update_one({'user_name': user_name}, {'$set': {"role": role}})
+
+            return True
+        except pymongo.errors.PyMongoError as e:
+            print(e)
+            return False
+
+    def fetch_projects(self):
+        coll = self.db["projects"]
+
+        return list(coll.find())

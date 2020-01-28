@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>code advisor</title>
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/master.css")}}">
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+
+<body class="bg_blue">
+
+    <nav class='bg_indigo p_20'>
+        <div class='container d_flex x_space-between'>
+            <div class='logo open color_white'>codeadvisor</div>
+
+            <div class='account color_white align_center'>
+                {{user_auth["email"]}} <i data-feather="chevron-down"></i>
+            </div>
+
+        </div>
+    </nav>
+
+    <div class='container'>
+        <div class='row d_flex'>
+            <div class='col_2'>
+                <ul class="pt_20">
+                    <li class=""><a href="#" class="align_center color_white"><i class='mr_10 ' data-feather="home"></i>
+                            Home</a></li>
+                    <li class="mt_20"><a href="#" class="align_center color_white"><i class='mr_10 '
+                                data-feather="file"></i>
+                            Projects</a>
+
+                        <ul>
+                            <li><a href="/project/new">Create new</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+
+
+            {% block content %}
+            {% endblock %}
+
+        </div>
+
+    </div>
+
+
+
+
+
+</body>
+<script>
+    feather.replace()
+</script>
+
+</html>
