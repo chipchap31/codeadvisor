@@ -27,7 +27,7 @@ def home():
         if user['role'] == 'student':
             projects = db.fetch_projects()
 
-            return render_template("dashboard/student_dash.html", user_auth=user)
+            return render_template("student/student_dash.html", user_auth=user)
 
     return render_template("home/index.html")
 

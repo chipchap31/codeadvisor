@@ -9,6 +9,29 @@ body
 .align_center
     display: flex
     align-items: center
+
+.dropdown
+    position: relative
+    ul
+        display: none
+        background-color: $dark_blue
+        position: absolute
+        top: 25px
+        width: 100%
+
+        li
+            padding: 20px
+
+            a
+                display: block
+
+            &:hover
+                background-color: #304856
+
+    &:hover
+        ul
+            display: block
+
 @each $el, $size in $headingSize
     #{$el}
         font-size: #{$size}

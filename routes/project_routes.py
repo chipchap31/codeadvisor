@@ -4,10 +4,10 @@ from middlewares.user_middlewares import require_login
 projects = Blueprint('projects', __name__)
 
 
-@projects.route("/projects/new"):
+@projects.route("/projects/new")
 def project_new():
     user = require_login(request.cookies)
 
     if user:
-        if user["role"] == student:
-            return render_template("student/")
+        if user["role"] == "student":
+            return render_template("student/project_new.html", user_auth=user)

@@ -13,11 +13,22 @@
 <body class="bg_blue">
 
     <nav class='bg_indigo p_20'>
-        <div class='container d_flex x_space-between'>
+        <div class='container d_flex x_space-between align_center'>
             <div class='logo open color_white'>codeadvisor</div>
 
-            <div class='account color_white align_center'>
-                {{user_auth["email"]}} <i data-feather="chevron-down"></i>
+            <div class='account color_white '>
+                <ul>
+                    <li class="dropdown"><a class="align_center color_white decor-none"
+                            href="/{{user_auth['user_name']}}">{{user_auth["user_name"]}}
+                            <i data-feather="chevron-down"></i></a>
+                        <ul>
+                            <li><a class="color_white decor-none" href="/{{user_auth['user_name']}}">Profile</a></li>
+                            <li><a class="color_white decor-none" href="/logout">Logout</a></li>
+
+                        </ul>
+                    </li>
+                </ul>
+
             </div>
 
         </div>

@@ -1,0 +1,24 @@
+{% extends "student/base.html" %}
+{% block content %}
+<div class='col_6'>
+    <h1>Share your project</h1>
+    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+
+    <form action="/project/new" method="POST">
+        <div class='row d_flex x_space-between'>
+            <div class='col_6'>
+                <label for="">Title</label>
+                <input type="text">
+
+            </div>
+            <div class='col_6'>
+                <label for="">Title</label>
+                <input type="text">
+
+            </div>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}
