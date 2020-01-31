@@ -1,9 +1,12 @@
 
 from flask import Flask
 
-
 from routes.index_routes import index
 from routes.project_routes import projects
+
+
+# we extract the mongo uri from the env
+
 
 app = Flask(__name__)
 

@@ -2,15 +2,7 @@ from middlewares.user_middlewares import require_login
 
 from flask import Blueprint, render_template, request, make_response, redirect
 
-from mongo import Mongo
-import os
-
-# we extract the mongo uri from the env
-
-
-# we imported the file with mongo that contains the class Mongo
-# and we initialize a new connection to mongodb
-db = Mongo(os.environ.get("MONGO_URI"))
+from mongo import database
 
 index = Blueprint('index', __name__)
 
@@ -25,7 +17,7 @@ def home():
         # true if the user is currently logged in
 
         if user['role'] == 'student':
-            projects = db.fetch_projects()
+            projects = database.fetch_projects()
 
             return render_template("student/student_dash.html", user_auth=user)
 
@@ -37,7 +29,7 @@ def register():
     if request.method == "POST":
 
         # register a new user
-        if db.register_user(request.form):
+        if database.register_user(request.form):
             return "Registered"
         else:
             return render_template("home/register.html", input=request.form, error=True, message=db.fetch_error())
@@ -49,7 +41,7 @@ def register():
 def login():
     if request.method == "POST":
         # authenticate user
-        user_fetch = db.login_user(request.form)
+        user_fetch = database.login_user(request.form)
 
         if not user_fetch:
 

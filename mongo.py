@@ -1,6 +1,7 @@
 # -----------------------------------------------------------
 
 # -----------------------------------------------------------
+import os
 import pymongo
 
 from datetime import datetime
@@ -16,14 +17,16 @@ class Mongo:
         """
         self.error = False
         self.registering = True
+        self._id = None
         # define errors for users when registering
 
         try:
+
             client = pymongo.MongoClient(url)
 
             # select the development database
             # change this database when in production
-            self.db = client["ms3_dev"]
+            self.database = client["ms3_dev"]
 
             print("Mongo is connected!")
 
@@ -47,7 +50,7 @@ class Mongo:
         # reset current data
         self.error = False
 
-        coll = self.db["users"]
+        coll = self.database["users"]
 
         # check if user is registered already
         if coll.find_one({"user_name": form_data["user_name"]}):
@@ -97,7 +100,7 @@ class Mongo:
             "user_name": False,
             "password": False
         }
-        coll = self.db["users"]
+        coll = self.database["users"]
         user_fetch = coll.find_one({"user_name": form_data["user_name"]})
 
         # reset error catcher
@@ -127,12 +130,12 @@ class Mongo:
             "user_name": user_fetch["user_name"],
             "role": user_fetch["role"]
         }
-
+        self._id = str(user_fetch["_id"])
         return json.dumps(cookie) if not self.error else False
 
     def set_role(self, user_name: str, role: str):
 
-        coll = self.db["users"]
+        coll = self.database["users"]
         try:
             coll.update_one({'user_name': user_name}, {'$set': {"role": role}})
 
@@ -142,6 +145,46 @@ class Mongo:
             return False
 
     def fetch_projects(self):
-        coll = self.db["projects"]
+        coll = self.database["projects"]
 
         return list(coll.find())
+
+    def create_project(self, project_data):
+        print(project_data)
+
+        """
+            we create a new project if the user is logged in as student
+            example user input:
+
+            ImmutableMultiDict([('project_title', 'Code advisor'), ('site_url', 'https://www.youtube.com/'),
+            ('front_end', 'html'), ('front_end', 'css'), ('description', 'orem ipsum dolor,
+            sit amet consectetur adipisicing elit.')])
+
+        """
+
+        coll = self.database["projects"]
+
+        # document to save in project collection
+
+        doc = {
+            "project_title": project_data['project_title'],
+            "site_url": project_data['site_url'],
+            "front_end": project_data.getlist('front_end'),
+            "back_end": project_data["back_end"] or None,
+            "description": project_data["description"],
+            "_user": self._id,
+            "like": 0,
+            "created": datetime.now()
+        }
+        try:
+            coll.insert_one(doc)
+            return True
+        except pymongo.errors.PyMongoError as e:
+            raise Exception("Failed to create new project")
+            return False
+
+
+# and we initialize a new connection to mongodb
+
+# we export this so that it is reusable
+database = Mongo(os.environ.get("MONGO_URI"))

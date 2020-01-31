@@ -28,11 +28,18 @@ blockquote:before, blockquote:after, q:before, q:after
 table
     border-collapse: collapse
     border-spacing: 0
-img,form, input
+img,form
+    width: 100%
+input:not([type='checkbox'])
     width: 100%
 
 input, button
     font-size: 16px
-
+textarea
+    display: block
+    width: 100%
+    min-height: 250px
+    resize: none
+    font-size: 16px
 p
     line-height: 24px
