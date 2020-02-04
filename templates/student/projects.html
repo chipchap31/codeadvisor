@@ -1,0 +1,99 @@
+{% extends "student/base.html" %}
+{% block content %}
+<div class='col_6'>
+
+{% if projects|length <= 0:  %}
+    <div class='mt_20 bg_light_blue rounded py_50 text_center'>
+        <h2>It's empty here</h2>
+        <p class='mt_10'>Be the first one to post a project!</p>
+        <a href='/projects/new' class='mt_30 button button_md bg_green'>Create a project</a>
+    </div>
+
+{% else: %}
+    <div class='d_flex align_center mt_20 '>
+      <span class='mr_10'>Sort By:</span>
+      <ul>
+        <li class='dropdown'>
+          <a class='align_center color_indigo' href='/projects?sort=newest'>Newest<i data-feather="chevron-down"></i></a>
+          <ul>
+
+            <li>
+              <a class='decor_none color_dark_blue' href='/projects?sort=newest'>Newest</a>
+            </li>
+            <li>
+              <a class='decor_none color_dark_blue' href='/projects?sort=feedbacks'>Feedbacks</a>
+            </li>
+            <li>
+              <a class='decor_none color_dark_blue' href='/projects?sort=views'>Views</a>
+            </li>
+          </ul>
+        </li>
+
+      </ul>
+    </div>
+    {% for project in projects %}
+        <div class='project_item minimized mt_20 bg_light_blue rounded p_30'>
+        <div class='d_flex x_space-between align_center mb_20'>
+
+            <div>
+            <h2 >{{ project.project_title }}</h2>
+                <em class='text_small'>posted by <a class='color_indigo' href='{{ project._user }}' class='text_small'>
+                  {{ project._user }}</a> at {{ project.created.strftime("%b %-d, %-I:%M %p")}}</em>
+
+            <div class='lang'>
+            {% for lang in project.front_end %}
+                <span class='bg_indigo mr_10 color_white rounded text_small'>{{ lang }}</span>
+            {% endfor %}
+
+
+            {% if project.back_end %}
+
+            <span class='mr_10 text_small bg_indigo color_white rounded'>{{ project.back_end  }}</span>
+
+            {% endif %}
+            </div>
+            </div>
+            <ul class='links d_flex'>
+                <li class=''><a class='color_white bg_green' target='_blank' href="{{ project.site_url }}"><i data-feather='globe'></i></a></li>
+                <li class='ml_20' ><a class='color_white bg_green' target='_blank' href="{{ project.github_repo }}"><i data-feather='file'></i></a></li>
+            </ul>
+        </div>
+            <p>{{ project.description  or 'This project has no description'}}</p>
+            <div class='mt_20 d_flex x_space-between align_center'>
+                <div class='d_flex y_center '>
+
+                    <span>feedbacks ({{ project.feedbacks|length }})</span>
+                    <span class='ml_10'>views ({{ project.views|length }})</span>
+                </div>
+                <div>
+
+                <a class='button button_sm bg_green mr_10' href='/projects/{{ project._id }}'>View</a>
+                <a class='button button_sm bg_red' onclick='dialog.open("{{project._id}}")'>Delete</a>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div id='{{project._id}}' class='dialog d_flex x_center y_center'>
+            <div class='inner bg_light_blue rounded p_50'>
+              <h4>Delete project</h4>
+              <p>Are you sure you want to delete {{project.project_title}}?</p>
+              <div class='mt_20 d_flex'>
+                <button class='mr_10 button button_sm bg_grey' onclick='dialog.close("{{project._id}}")'>Cancel</button>
+                <a href='/projects/delete/{{project._id}}' class='bg_red color_white button button_sm'>Delete</a>
+
+
+
+              </div>
+
+            </div>
+
+
+        </div>
+    {% endfor %}
+{% endif %}
+</div>
+
+
+{% endblock %}

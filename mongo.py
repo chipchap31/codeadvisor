@@ -3,11 +3,10 @@
 # -----------------------------------------------------------
 import os
 import pymongo
-
 from datetime import datetime
 import bcrypt
 import json
-
+from bson.objectid import ObjectId
 
 class Mongo:
     def __init__(self, url):
@@ -17,7 +16,7 @@ class Mongo:
         """
         self.error = False
         self.registering = True
-        self._id = None
+
         # define errors for users when registering
 
         try:
@@ -130,7 +129,7 @@ class Mongo:
             "user_name": user_fetch["user_name"],
             "role": user_fetch["role"]
         }
-        self._id = str(user_fetch["_id"])
+
         return json.dumps(cookie) if not self.error else False
 
     def set_role(self, user_name: str, role: str):
@@ -144,12 +143,8 @@ class Mongo:
             print(e)
             return False
 
-    def fetch_projects(self):
-        coll = self.database["projects"]
 
-        return list(coll.find())
-
-    def create_project(self, project_data):
+    def create_project(self, project_data, user_name):
         print(project_data)
 
         """
@@ -168,23 +163,96 @@ class Mongo:
 
         doc = {
             "project_title": project_data['project_title'],
-            "site_url": project_data['site_url'],
+            "github_repo": project_data['github_repo'],
+            "site_url": project_data['site_url'] or None,
             "front_end": project_data.getlist('front_end'),
             "back_end": project_data["back_end"] or None,
             "description": project_data["description"],
-            "_user": self._id,
-            "like": 0,
-            "created": datetime.now()
+            "_user": str(user_name),
+            "views": [],
+            "created": datetime.now(),
+            "feedbacks": []
         }
         try:
             coll.insert_one(doc)
             return True
-        except pymongo.errors.PyMongoError as e:
+        except pymongo.errors.PyMongoError:
             raise Exception("Failed to create new project")
             return False
 
+    def fetch_projects(self, data):
+        coll = self.database["projects"]
+        if data['sort'] == 'newest':
+            return list(coll.find({"_user": data["user"]})
+            .limit(data['limit'] or 5)
+            .sort([('created', pymongo.DESCENDING)]))
 
-# and we initialize a new connection to mongodb
 
+        elif data['sort'] == 'feedbacks':
+            return list(coll.find({"_user": data["user"]})
+            .limit(data['limit'] or 5)
+            .sort([('feedbacks', pymongo.DESCENDING)]))
+
+        elif data['sort'] == 'views':
+            return list(coll.find({"_user": data["user"]})
+            .limit(data['limit'] or 5)
+            .sort([('views', pymongo.DESCENDING)]))
+
+        else:
+            return list(coll.find({"_user": data["user"]})
+            .limit(data['limit'] or 5)
+            .sort([('created', pymongo.ASCENDING)]))
+
+
+
+    def project_single(self, project_id, user_id ):
+        """
+            Uses project collection.
+
+            Adds the user id to the 'view' field of a single project and
+
+            Returns the single project depending on the '_id' field.
+
+            Parameters
+            ---------------
+            project_id : string
+                single project's id
+            user_id : string
+                current user's unique id
+
+            Returns
+            ---------------
+            type: json
+
+            model: {
+            "_id": str,
+            "_user": str,
+            "back_end": str,
+            "created": date,
+            "description": str,
+            "feedbacks": list,
+            "front_end": list,
+            "github_repo": str,
+            "project_title": str,
+            "site_url": str,
+            "views": list
+            }
+
+
+        """
+        coll = self.database['projects']
+        try:
+            coll.update_one({'_id': ObjectId(project_id)},{'$addToSet' : {"views": {"_user" : ObjectId(user_id)}}})
+            req = json.dumps(coll.find_one({'_id': ObjectId(project_id) }), indent=4, sort_keys=True, default=str)
+            return json.loads(req)
+        except pymongo.errors.PyMongoError as e:
+            raise Exception(e)
+
+    def project_delete(self, id:str):
+        coll = self.database['projects']
+
+        coll.delete_one({'_id': ObjectId(id)})
+        return True
+#  we initialize a new connection to mongodb
 # we export this so that it is reusable
 database = Mongo(os.environ.get("MONGO_URI"))

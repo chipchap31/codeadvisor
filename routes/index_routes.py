@@ -17,7 +17,7 @@ def home():
         # true if the user is currently logged in
 
         if user['role'] == 'student':
-            projects = database.fetch_projects()
+            
 
             return render_template("student/student_dash.html", user_auth=user)
 
@@ -32,7 +32,7 @@ def register():
         if database.register_user(request.form):
             return "Registered"
         else:
-            return render_template("home/register.html", input=request.form, error=True, message=db.fetch_error())
+            return render_template("home/register.html", input=request.form, error=True, message=database.fetch_error())
         return "Posted"
     return render_template("home/register.html")
 
@@ -45,7 +45,7 @@ def login():
 
         if not user_fetch:
 
-            return render_template("home/login.html", error=True, message=db.fetch_error())
+            return render_template("home/login.html", error=True, message=database.fetch_error())
 
             # no user was found
 

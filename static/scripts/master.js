@@ -1,17 +1,15 @@
-document.addEventListener("DOMContentLoaded", function () {
-    // listen for select_wraps
 
-    var select_wrap = Array.from(document.getElementsByClassName('select_wrap'));
+var dialog = (function(){
+  "use strict";
 
-    for (var i = 0; i < select_wrap.length; i++) {
+  function open(id){
+    var target = document.getElementById(id);
+    target.classList.add('open')
+  }
+  function close(id){
+    var target = document.getElementById(id);
+    target.classList.remove('open')
+  }
+  return { open, close }
 
-        // get elements 
-
-        var options = select_wrap[i].getElementsByTagName("select")[0]
-
-        console.log(options)
-
-    }
-
-
-})
+})()

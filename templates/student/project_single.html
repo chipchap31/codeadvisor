@@ -1,0 +1,39 @@
+{% extends "student/base.html" %}
+{% block content %}
+<div class='col_6'>
+    <div class='mt_20'>
+      <a class='color_indigo' href='/projects'><i  data-feather='arrow-left-circle'></i></a>
+    </div>
+    <div class='project_item  mt_20 bg_light_blue rounded p_30'>
+      <div class='d_flex x_space-between align_center mb_20'>
+
+          <div>
+          <h2 >{{ project.project_title }}</h2>
+              <em class='text_small'>posted by <a class='color_indigo' href='{{ project._user }}' class='text_small'>
+                {{ project._user }}</a> at </em>
+
+          <div class='lang'>
+          {% for lang in project.front_end %}
+              <span class='bg_indigo mr_10 color_white rounded text_small'>{{ lang }}</span>
+          {% endfor %}
+
+
+          {% if project.back_end %}
+
+          <span class='mr_10 text_small bg_indigo color_white rounded'>{{ project.back_end  }}</span>
+
+          {% endif %}
+          </div>
+          </div>
+          <ul class='links d_flex'>
+              <li class=''><a class='color_white bg_green' target='_blank' href="{{ project.site_url }}"><i data-feather='globe'></i></a></li>
+              <li class='ml_20' ><a class='color_white bg_green' target='_blank' href="{{ project.github_repo }}"><i data-feather='file'></i></a></li>
+          </ul>
+      </div>
+      <p>{{ project.description  or 'This project has no description'}}</p>
+
+    </div>
+</div>
+
+
+{% endblock %}
