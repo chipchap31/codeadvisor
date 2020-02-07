@@ -1,64 +1,57 @@
-from flask import Blueprint, render_template, request, make_response, redirect
-from middlewares.user_middlewares import require_login
+import json
+from datetime import datetime
+
+import requests
+from flask import Blueprint, render_template, request, redirect, make_response
+from middlewares.user_middlewares import require_student
 from mongo import database
+from github import git_request
+
 projects = Blueprint('projects', __name__)
-
-
-@projects.route("/projects/new", methods=["POST", "GET"])
-def project_new():
-    user = require_login(request.cookies)
-
-    if user:  # check if user is logged in
-
-        if user["role"] == "student":  # check if user is logged in as student
-
-            if request.method == 'POST':
-                if database.create_project(request.form, user['user_name']):
-                    return redirect("/projects")
-                return render_template("student/project_new.html", user_auth=user)
-
-            return render_template("student/project_new.html", user_auth=user)
 
 
 @projects.route("/projects")
 def project():
-    user = require_login(request.cookies)
-    if user:
-        if user['role'] == 'student':
+    student = require_student(request.cookies, redirect)
+    print(student)
+    if student:
+
+        # run below if the git_usernae is not set
+        if not student['git_username']:
+            return redirect("/user/setup_github")
+        
+        git_projects = git_request(f"/users/{student['git_username']}/repos")
+
+        def essentials(data):
+            return {
+                'name': data['name'],
+                'html': data['html_url'],
+                'homepage': data['homepage'],
+                'description': data['description'],
+                'language': data['language'],
+                'avatar_url': data['owner']['avatar_url'],
+                'created_at': datetime.strptime(data['created_at'], '%Y-%m-%dT%H:%M:%SZ'),
+                'updated_at': datetime.strptime(data['updated_at'], '%Y-%m-%dT%H:%M:%SZ')
+            }
+
+        git_projects = list(map(essentials, git_projects))
+
+        return render_template('view/projects.html', user_auth=student, git_projects=git_projects)
 
 
 
 
-            if request.args.get('sort'):
-                return render_template('student/projects.html', projects=database.fetch_projects({
-                "user": user['user_name'],
-                "sort": request.args.get('sort'),
-                "limit": request.args.get("limit")
-                }), user_auth=user)
-
-
-
-
-            return render_template('student/projects.html', projects=database.fetch_projects({
-            "user": user['user_name'],
-            "sort": request.args.get('sort'),
-            "limit": request.args.get("limit")
-            }), user_auth=user)
 
 
 
 
 
-@projects.route("/projects/<id>")
-def single_project(id):
-    user = require_login(request.cookies)
-    if user:
 
-        return render_template("student/project_single.html",user_auth=user, project=database.project_single(id, user["_id"]))
 
-@projects.route('/projects/delete/<id>')
-def delete_project(id):
-    if require_login(request.cookies):
 
-        database.project_delete(id)
-    return redirect('/projects')
+
+
+
+
+
+       

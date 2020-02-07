@@ -1,0 +1,69 @@
+{% extends "view/base.html" %}
+{% block content %}
+
+<div class='col_6'>
+    <div class='mt_20 align_center x_space-between'>
+      <a class='color_indigo' href='{{referrer}}'><i  data-feather='arrow-left-circle'></i></a>
+      {% if user_auth['role'] == 'advisor' %}
+      <a class='button button_sm bg_green'>Add feedback</a>
+      {% endif %}
+    </div>
+    <div class='project_item  mt_20 bg_light_blue rounded p_30'>
+      <div class='d_flex x_space-between align_center mb_20'>
+
+          <div>
+          <h2 >{{ project.project_title }}</h2>
+              <em class='text_small'>posted by <a class='color_indigo' href='{{ project._user }}' class='text_small'>
+                {{ project._user }}</a> at </em>
+
+          <div class='lang'>
+          {% for lang in project.front_end %}
+              <span class='bg_indigo mr_10 color_white rounded text_small'>{{ lang }}</span>
+          {% endfor %}
+
+
+          {% if project.back_end %}
+
+          <span class='mr_10 text_small bg_indigo color_white rounded'>{{ project.back_end  }}</span>
+
+          {% endif %}
+          </div>
+          </div>
+          <ul class='links d_flex'>
+              <li class=''><a class='color_white bg_green' target='_blank' href="{{ project.site_url }}"><i data-feather='globe'></i></a></li>
+              <li class='ml_20' ><a class='color_white bg_green' target='_blank' href="{{ project.github_repo }}"><i data-feather='file'></i></a></li>
+          </ul>
+      </div>
+      <p>{{ project.description  or 'This project has no description'}}</p>
+    </div>
+    <div class='project_item  mt_20 rounded'>
+      <h3 class="mb_10">Add feedback</h3>
+      <form  method='POST' action='/projects/{{project._id}}'>
+            {% for value in project['front_end'] %}
+                <div class="mt_10">
+                    <label>What would you rate the use of {{value}}?</label>
+                        <div class="d_flex align_center x_space-between mt_10">
+                        {% for rate in range(0, 11) %}
+
+                        <div class="d_flex align_center">
+                        <input name="value" value="{{rate}}" type="radio"> <span>{{rate}}</span>
+                         </div>
+
+                        {% endfor %}
+                        </div>
+
+                </div>
+
+                <div class="mt_20">
+                    <label>Write some comment about {{value}}?</label>
+                    <textarea class="rounded mt_10"></textarea>
+                </div>
+            {% endfor %}
+        <button type='submit'>Add</button>
+      </form>
+    </div>
+
+</div>
+
+
+{% endblock %}

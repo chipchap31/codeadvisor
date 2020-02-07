@@ -1,0 +1,28 @@
+{% extends "view/base.html" %}
+{% block content %}
+<div class='col_6'>
+
+
+
+    {% if git_projects|length > 0 %}
+        {% for project in git_projects %}
+                <div class="mt_20 bg_light_blue p_20 rounded">
+                    <em class="mb_10 text_small color_grey">Last updated at {{ project.updated_at.strftime("%d/%m/%Y") }}</em>
+                    <h5 class="bold">{{ project['name'] }}</h5>
+                    <span>Dominant language used: {{ project['language'] }}</span>
+
+                    <p class="mt_10">{{ project.description or 'You did not provide any description for this repository' }}</p>
+                    <div>
+                        <a href="{{ project.html }}">view</a>
+                    </div>
+                </div>
+        {% endfor %}
+    {% endif %}
+
+
+   
+
+</div>
+
+
+{% endblock %}

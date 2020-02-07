@@ -1,6 +1,6 @@
-{% extends "dashboard/base.html" %}
+{% extends "view/base.html" %}
 {% block content %}
-<div class='col_6'>
+<div class='col_6 mt_20'>
     <h1>Before you start...</h1>
     <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
 
@@ -12,7 +12,7 @@
             <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
             <div class='mt_20 d_flex x_center'>
                 <a class="bg_green button button_md"
-                    href="{{ "{}/select_role?role=student".format(user_auth['user_name']) }}">Select</a>
+                    href="/select_role?role=student">Select</a>
             </div>
 
         </div>
@@ -22,7 +22,7 @@
 
             <div class='mt_20 d_flex x_center'>
                 <a class="bg_green button button_md"
-                    href="{{ "{}/select_role?role=advisor".format(user_auth['user_name']) }}">Select</a>
+                    href="/select_role?role=advisor">Select</a>
             </div>
 
 

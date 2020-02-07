@@ -5,6 +5,7 @@ body
     color: $dark_blue
 em
     font-style: italic
+    display: block
 .decor_none
     text-decoration: none
 .align_center
@@ -47,7 +48,8 @@ em
     flex-wrap: wrap
 .text_small
     font-size: 14px
-
+.bold
+    font-weight: bold
 @each $el, $size in $headingSize
     #{$el}
         font-size: #{$size}

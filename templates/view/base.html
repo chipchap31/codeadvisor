@@ -11,11 +11,9 @@
 </head>
 
 <body class="bg_blue">
-
     <nav class='bg_indigo p_20'>
         <div class='container d_flex x_space-between align_center'>
-            <div class='logo open color_white'>codeadvisor</div>
-
+            <a href='/' class='logo open color_white'>codeadvisor</a>
             <div class='account color_white '>
                 <ul>
                     <li class="dropdown"><a class="align_center color_white decor-none"
@@ -38,16 +36,21 @@
         <div class='row d_flex'>
             <div class='col_2'>
                 <ul class="pt_20">
-                    <li class=""><a href="#" class="align_center color_white"><i class='mr_10 ' data-feather="home"></i>
-                            Home</a></li>
-                    <li class="mt_20"><a href="/projects" class="align_center color_white"><i class='mr_10 '
-                                data-feather="file"></i>
-                            Projects</a>
-
+                    <li class=""><a href="/" class="align_center color_white"><i class='mr_10 ' data-feather="home"></i>
+                            Home</a>
+                    </li>
+                    {%if user_auth['role'] == 'student'%}
+                    <li class="mt_20"><a href="/projects" class="align_center color_white"><i class='mr_10' data-feather="file"></i>Projects</a>
                         <ul>
-                            <li><a href="/projects/new">Create new</a></li>
+                          <li><a href="/projects/new">Create new</a></li>
                         </ul>
                     </li>
+                    {% else %}
+                    <li class='mt_20'>
+                        <a href='/feedbacks'>Feedbacks</a>
+                    </li>
+                    {%endif%}
+
 
                 </ul>
             </div>
