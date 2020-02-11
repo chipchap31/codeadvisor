@@ -18,12 +18,7 @@ def home():
         # true if the user is currently logged in
 
         if user['role']:
-            return render_template("view/dashboard.html", sort=request.args.get('sort') or 'Newest', user_auth=user,
-                                   projects=database.fetch_projects({
-                                       "user": None,
-                                       "sort": request.args.get('sort'),
-                                       "limit": request.args.get("limit")
-                                   }))
+            return render_template("view/dashboard.html", user_auth=user, posts=database.post_fetch())
 
         return render_template("view/set_role.html", user_auth=user)
     return render_template("index/index.html")

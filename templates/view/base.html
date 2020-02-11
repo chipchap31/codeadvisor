@@ -6,8 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>code advisor</title>
-    <link rel="stylesheet" href="{{ url_for("static", filename="css/master.css")}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/master.css')}}">
     <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="{{ url_for('static', filename='scripts/master.js') }}"></script>
 </head>
 
 <body class="bg_blue">
@@ -20,7 +22,7 @@
                             href="/{{user_auth['user_name']}}">{{user_auth["user_name"]}}
                             <i data-feather="chevron-down"></i></a>
                         <ul>
-                            <li><a class="color_white decor_none" href="/{{user_auth['user_name']}}">Profile</a></li>
+                            <li><a class="color_white decor_none" href="/users/{{user_auth['user_name']}}">Profile</a></li>
                             <li><a class="color_white decor_none" href="/logout">Logout</a></li>
 
                         </ul>
@@ -40,11 +42,8 @@
                             Home</a>
                     </li>
                     {%if user_auth['role'] == 'student'%}
-                    <li class="mt_20"><a href="/projects" class="align_center color_white"><i class='mr_10' data-feather="file"></i>Projects</a>
-                        <ul>
-                          <li><a href="/projects/new">Create new</a></li>
-                        </ul>
-                    </li>
+                    <li class="mt_20"><a href="/posts" class="align_center color_white"><i class='mr_10' data-feather="droplet"></i>Posts</a></li>
+                    <li class="mt_20"><a href="/projects" class="align_center color_white"><i class='mr_10' data-feather="file"></i>Projects</a></li>
                     {% else %}
                     <li class='mt_20'>
                         <a href='/feedbacks'>Feedbacks</a>
@@ -68,7 +67,7 @@
 
 
 </body>
-<script src="{{ url_for('static', filename='scripts/master.js') }}"></script>
+
 
 <script>
     feather.replace()

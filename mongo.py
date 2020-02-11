@@ -282,11 +282,7 @@ class Mongo:
         except pymongo.errors.PyMongoError as e:
             raise Exception(e)
 
-    def project_delete(self, id: str):
-        coll = self.database['projects']
 
-        coll.delete_one({'_id': ObjectId(id)})
-        return True
 
     def set_git_username(self, target, value):
         coll = self.database['users']
@@ -296,6 +292,69 @@ class Mongo:
         except pymongo.errors.PyMongoError as e:
             print(e)
             return False
+
+    def create_post(self, data):
+        coll = self.database['posts']
+        # determine if the post already exist in the collection
+        find_post = coll.find_one({'_id': data['id']})
+        print(find_post)
+        if find_post:
+
+            return False
+
+        try:
+            data = {
+                '_id': data['id'],
+                'name': data['name'],
+                '_user': data['_user'],
+                'stack_labels': data['stack_labels'],
+                'stack_value': data['stack_value'],
+                'description': data['description'],
+                'updated_at': data['updated_at'],
+                'homepage': data['homepage'],
+                'html_url': data['html_url'],
+                'language': data['language'],
+                'feedbacks': [],
+                'views': [],
+                'posted_at': datetime.now()
+            }
+            coll.insert_one(data)
+            return None
+        except pymongo.errors.PyMongoError as e:
+            print(e)
+            return None
+
+    def post_fetch(self, user=False, sort='newest', limit=5):
+        """
+       
+        :param user: dict
+        :param sort: str
+        :param limit: int   
+        :rtype: list
+        """
+        coll = self.database['posts']
+
+        user = {'_user': user} if user else {}
+
+        result = coll.find(user).limit(limit).sort(sort)
+
+        return list(result)
+    
+    def data_delete(self, data):
+        coll = self.database[data['collection']]
+
+        try:
+            # determine if the current has a valid username
+            # delete if matches with id and username
+            coll.delete_one({'_id': data['_id'], '_user': data['_user']})
+
+            return True
+        
+        except pymongo.errors.PyMongoError as e:
+            print(e)
+            return False
+
+
 
 
 #  we initialize a new connection to mongodb

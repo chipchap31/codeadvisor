@@ -1,7 +1,11 @@
 import json
 
 
-def require_login(cookies):
+def require_login(cookies: object) -> object:
+    """
+
+    :rtype:
+    """
     try:
         return json.loads(cookies["user_data"])
     except Exception as ex:

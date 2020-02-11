@@ -58,15 +58,6 @@ def project_new():
             return render_template("view/project_new.html", user_auth=user, project_list=projects_formatted)
 
 
-@users.route("/projects/<id>", methods=["POST", "GET"])
-def single_project(id):
-    user = require_login(request.cookies)
-    if user:
-        return render_template("view/project_single.html",
-                               referrer=request.referrer, user_auth=user,
-                               project=database.project_single(id, user["_id"]))
-
-
 @users.route('/projects/delete/<id>')
 def delete_project(id):
     if require_login(request.cookies):
@@ -74,7 +65,7 @@ def delete_project(id):
     return redirect('/projects')
 
 
-@users.route("/user/set_git_username")
+@users.route("/users/set_git_username")
 def set_git_username():
     user = require_login(request.cookies)
     if user:
