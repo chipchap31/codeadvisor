@@ -1,0 +1,63 @@
+{% extends "view/base.html" %}
+{% block content %}
+
+<div class='col_7'>
+  {% if config.projects | length > 0 %}
+  {% for project in config.projects %}
+  <div class="mt_20 bg_light_blue p_20 rounded">
+    <div class="align_center x_space-between">
+      <div>
+        <h3 class="bar">{{ project['name'] }}</h3>
+        <span class="text_small color_grey">Language: {{ project['language'] }}</span>
+
+      </div>
+      {% if project['homepage'] %}
+      <a class="icon_button_sm bg_green" target="_blank" href="{{ project['homepage'] }}"><i data-feather="globe"></i></a>
+      {% else %}
+      <div class="icon_button_sm bg_green">
+        <i data-feather="globe" onclick="dialog.open({{ project['id'] }})"></i>
+      </div>
+      {% endif %}
+    </div>
+
+    <p class="mt_10">{{ project.description or 'You did not provide any description for this repository.' }}</p>
+    <div class="d_flex align_center x_space-between mt_20">
+      <em class="mb_10 text_small color_grey">Last updated at {{ project.updated_at.strftime("%d/%m/%Y") }}</em>
+      <a href="/projects/{{project['name']}}" class="button button_sm bg_green">View</a>
+    </div>
+
+  </div>
+
+  <div id="dialog_{{ project['id'] }}" class="dialog">
+    <div class="inner">
+      <h3>Sorry...</h3>
+      <p>The live website for {{ project['name']}} is unvailable!</p>
+      <div>
+        <a target="_blank" class="mt_20 button button_sm bg_green" href="{{ project['html_url'] }}">Add live website</a>
+
+        <button type="button" class="mt_20 ml_10 button button_sm bg_red" onclick="dialog.close({{ project['id'] }})">Close</button>
+      </div>
+
+    </div>
+
+  </div>
+  {% endfor %}
+  <div class="mt_30 d_flex {{'x_flex-end' if config.curr_page == 2 else 'x_space-between'}}">
+    {% if config.curr_page != 2 %}
+    <a href={{config.ref}} class="color_white align_center" href="#"><i class="mr_10" data-feather='arrow-left'></i>Previous</a>
+    {% endif %}
+
+    {% if config.render_next %}
+      <a class="color_white align_center" href="/projects?page={{ config.curr_page }}" name="button">Next page <i class="ml_10" data-feather='arrow-right'></i></a>
+
+    {% endif %}
+
+
+  </div>
+  {% endif %}
+</div>
+
+
+
+
+{% endblock %}

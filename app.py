@@ -23,11 +23,6 @@ def page_not_found(error):
     return 'This page does not exist', 404
 
 
-@app.errorhandler(401)
-def unauthorised_request(error):
-    return 'Unauthorised request', 401
-
-
 @app.before_first_request
 def before_first_request_func():
     user = require_login(request.cookies)

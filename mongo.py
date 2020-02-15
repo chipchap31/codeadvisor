@@ -166,7 +166,6 @@ class Mongo:
             return False
 
     def create_project(self, project_data, user_name):
-
         """
             Description
             --------------
@@ -276,18 +275,19 @@ class Mongo:
         """
         coll = self.database['projects']
         try:
-            coll.update_one({'_id': ObjectId(project_id)}, {'$addToSet': {"views": {"_user": ObjectId(user_id)}}})
-            req = json.dumps(coll.find_one({'_id': ObjectId(project_id)}), indent=4, sort_keys=True, default=str)
+            coll.update_one({'_id': ObjectId(project_id)}, {
+                            '$addToSet': {"views": {"_user": ObjectId(user_id)}}})
+            req = json.dumps(coll.find_one(
+                {'_id': ObjectId(project_id)}), indent=4, sort_keys=True, default=str)
             return json.loads(req)
         except pymongo.errors.PyMongoError as e:
             raise Exception(e)
 
-
-
     def set_git_username(self, target, value):
         coll = self.database['users']
         try:
-            coll.update_one({'user_name': target}, {'$set': {'git_username': value}})
+            coll.update_one({'user_name': target}, {
+                            '$set': {'git_username': value}})
             return True
         except pymongo.errors.PyMongoError as e:
             print(e)
@@ -297,9 +297,8 @@ class Mongo:
         coll = self.database['posts']
         # determine if the post already exist in the collection
         find_post = coll.find_one({'_id': data['id']})
-        print(find_post)
-        if find_post:
 
+        if find_post:
             return False
 
         try:
@@ -319,27 +318,37 @@ class Mongo:
                 'posted_at': datetime.now()
             }
             coll.insert_one(data)
-            return None
+            return True
         except pymongo.errors.PyMongoError as e:
             print(e)
-            return None
+            return False
 
-    def post_fetch(self, user=False, sort='newest', limit=5):
+    def post_fetch(self, name=False, user=False, sort='newest', limit=5):
         """
-       
+
+        :param name:
         :param user: dict
         :param sort: str
-        :param limit: int   
-        :rtype: list
+        :param limit: int
+        :rtype: list or dict
         """
         coll = self.database['posts']
 
         user = {'_user': user} if user else {}
 
-        result = coll.find(user).limit(limit).sort(sort)
+        if not name:
 
-        return list(result)
-    
+            return list(coll.find(user).limit(limit))
+
+        post = coll.find_one({'name': name})
+
+        # avoid adding the username if the owner is viewing
+
+        if post['_user'] != user['_user']:
+            coll.update_one({'name': name}, {'$addToSet': {'views': user}})
+
+        return post
+
     def data_delete(self, data):
         coll = self.database[data['collection']]
 
@@ -349,12 +358,10 @@ class Mongo:
             coll.delete_one({'_id': data['_id'], '_user': data['_user']})
 
             return True
-        
+
         except pymongo.errors.PyMongoError as e:
             print(e)
             return False
-
-
 
 
 #  we initialize a new connection to mongodb

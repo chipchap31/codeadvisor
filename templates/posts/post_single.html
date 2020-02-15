@@ -1,0 +1,64 @@
+{% extends "view/base.html" %}
+{% block content %}
+
+<div class='col_7'>
+  <div class='mt_20 align_center x_space-between'>
+    <a class='color_indigo' href='{{referrer}}'><i data-feather='arrow-left-circle'></i></a>
+    <a class="button button_sm bg_green" href="/feedbacks/{{ post['name'] }}">Add feedback</a>
+  </div>
+
+  <div class='project_item  mt_20 bg_light_blue rounded p_30'>
+    <div class="align_center x_space-between">
+      <div>
+        {% for label in post['stack_labels'] %}
+        <span class="tag">{{ label }}</span>
+        {% endfor %}
+        <h3 class="mt_10">{{ post['name'] }}</h3>
+
+        <em class="text_small color_grey">posted by
+          <a class="color_grey" href="/users/{{ post['_user'] }}">{{ post['_user']}}</a> on {{ post['posted_at'].strftime("%d/%m/%Y") }}</em>
+
+      </div>
+      {% if post['homepage'] %}
+
+      {% else %}
+      <div class="icon_button_sm bg_green">
+        <i onclick="dialog.open({{ post['_id'] }})" data-feather="globe"></i>
+
+      </div>
+      {% endif %}
+
+    </div>
+    <div class="mt_20">
+      <canvas id="{{ post['name'] }}"></canvas>
+    </div>
+    <p class="mt_10">{{ post.description or 'You did not provide any description for this repository.' }}</p>
+
+    <div class="mt_10">
+      <div>
+        <span class="text_small color_grey">Feedbacks ({{ post['feedbacks'] | length }})</span>
+        <span class="text_small color_grey">Views ({{ post['views'] | length}})</span>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+<div id="dialog_{{ post['_id'] }}" class="dialog">
+  <div class="inner">
+    <h3>Sorry...</h3>
+    <p>The live website for {{ post['name']}} is unvailable!</p>
+    <div class="align_center">
+
+      <button class="mt_20 button button_sm bg_red" onclick="dialog.close({{ post['_id'] }})">Close</button>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  doughnut.init({{post | tojson}})
+</script>
+
+{% endblock %}

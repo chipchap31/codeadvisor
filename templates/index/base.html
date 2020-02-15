@@ -2,32 +2,32 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>code advisor</title>
-    <link rel="stylesheet" href="{{ url_for("static", filename="css/master.css")}}">
-    <script src="https://unpkg.com/feather-icons"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>code advisor</title>
+  <link rel="stylesheet" href="{{ url_for("static", filename="css/master.css")}}">
+  <script src="https://unpkg.com/feather-icons"></script>
 </head>
 
 <body class="bg_blue">
-    <nav class='bg_indigo py_20'>
-        <div class='container x_space-between d_flex align_center'>
-            <a href='/' class='color_white decor-none'>codeadvisor</a>
-            <ul class='d_flex align_center'>
-                <li>
-                    <a href='/login' class='color_white'>Login</a>
-                </li>
-                <li class='ml_20'>
-                    <a href='/register' class='button button_sm decor-none bg_green'>Register</a>
-                </li>
+  <nav class='bg_indigo py_20'>
+    <div class='container x_space-between d_flex align_center'>
+      <a href='/' class='color_white decor-none'>codeadvisor</a>
+      <ul class='d_flex align_center'>
+        <li>
+          <a href='/login' class='color_white'>Login</a>
+        </li>
+        <li class='ml_20'>
+          <a href='/register' class='button button_sm decor-none bg_green'>Register</a>
+        </li>
 
-            </ul>
-        </div>
-    </nav>
-    
-    {% block content %}
-    {% endblock %}
+      </ul>
+    </div>
+  </nav>
+
+  {% block content %}
+  {% endblock %}
 
 </body>
 

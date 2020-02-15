@@ -1,7 +1,5 @@
 from middlewares.user_middlewares import require_login
-
-from flask import Blueprint, render_template, request, make_response, redirect
-import requests
+from flask import Blueprint, render_template, request, make_response, redirect, abort
 from mongo import database
 import json
 
@@ -10,18 +8,28 @@ index = Blueprint('index', __name__)
 
 @index.route("/")
 def home():
-    # we define a reusable method @ user_authenticate that redirects the
+
+    # current limit of posts
+
+    # we define a reusable method @ require_login that redirects the
     # page depending on whether the user is logged In or not
     user = require_login(request.cookies)
 
-    if user:
-        # true if the user is currently logged in
+    # check if the user's cookies exist
+    if not user:
+        return render_template('index/index.html')
 
-        if user['role']:
-            return render_template("view/dashboard.html", user_auth=user, posts=database.post_fetch())
+    # check if the the user already set their role
+    # this could be either advisor or a student
 
-        return render_template("view/set_role.html", user_auth=user)
-    return render_template("index/index.html")
+    if not user['role']:
+        return render_template('view/set_role.html', user_auth=user)
+
+    # fetch all of the posts of the students
+    posts = database.post_fetch()  # returns the posts of all students
+    limit = request.args.get('limit') or len(posts)
+    # below we render the dashboard
+    return render_template('view/dashboard.html', user_auth=user, posts=posts, limit=limit)
 
 
 @index.route("/register", methods=["POST", "GET"])
@@ -45,7 +53,7 @@ def login():
         user_fetch = database.login_user(request.form)
 
         if not user_fetch:
-            # no user was found
+            # no user  found
             return render_template("index/login.html", error=True, message=database.fetch_error())
 
         response = make_response(redirect("/"))

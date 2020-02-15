@@ -1,0 +1,43 @@
+{% extends "view/base.html" %}
+{% block content %}
+
+<div class='col_7'>
+  <div class='mt_20'>
+    <a class='color_indigo' href='{{referrer}}'><i data-feather='arrow-left-circle'></i></a>
+
+  </div>
+  <div class='project_item  mt_20 bg_light_blue rounded p_30'>
+    <div class="align_center x_space-between">
+      <div>
+        <h3 class="bar">{{ project['name'] }}</h3>
+
+        <span class="text_small color_grey">Language: {{ project['language'] }}</span>
+
+
+      </div>
+
+      <i class="color_green" onclick="dialog.open()" data-feather="globe"></i>
+
+    </div>
+
+    <p class="mt_10">{{ project.description or 'You did not provide any description for this repository.' }}</p>
+    <div class="mt_20">
+      <canvas id="{{ project['name'] }}"></canvas>
+    </div>
+    <div class="d_flex x_space-between align_center  mt_20">
+      <em class="text_small color_grey">Last updated at {{ project.updated_at.strftime("%d/%m/%Y") }}</em>
+      <form class="hidden" method="POST" action="/projects/{{project['name']}}">
+        <button class="button button_sm bg_green" type="submit">Post</button>
+      </form>
+    </div>
+  </div>
+
+
+</div>
+
+
+<script>
+  doughnut.init({{project | tojson}})
+</script>
+
+{% endblock %}

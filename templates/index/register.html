@@ -3,69 +3,63 @@
 
 
 <header id="hero">
-    <div class='container'>
-        <div class='row mt_30'>
-            <div class='col_4'>
-                <h1>Create an account</h1>
-                <p class='mt_10 color_white'>Lorem ipsum dolor sit amet, consectetur.</p>
+  <div class='container'>
+    <div class='row mt_30'>
+      <div class='col_4'>
+        <h1>Create an account</h1>
+        <p class='mt_10 color_white'>Lorem ipsum dolor sit amet, consectetur.</p>
 
-                <form class="mt_20" action="/register" method="POST">
-                    <div class='row d_flex x_space-between'>
-                        <div class='col_5'>
+        <form class="mt_20" action="/register" method="POST">
+          <div class='row d_flex x_space-between'>
+            <div class='col_5'>
 
-                            <label for='first_name'>First name</label>
-                            <input value="{{ input["first_name"] if error else ''}}" class="my_10" id='first_name'
-                                name='first_name' type='text' placeholder="Your first name">
+              <label for='first_name'>First name</label>
+              <input value="{{ input["first_name"] if error else ''}}" class="my_10" id='first_name' name='first_name' type='text' placeholder="Your first name">
 
-                        </div>
-                        <div class='col_5'>
-                            <label for='last_name'>Last name</label>
-                            <input value="{{ input["last_name"] if error else ''}}" class="my_10" id='last_name'
-                                name='last_name' type='text' placeholder="Your last name">
-
-                        </div>
-                    </div>
-
-                    <label for='user_name'>Username</label>
-                    <input value="{{ input["user_name"] if error else '' }}" required class="my_10" id='user_name'
-                        name='user_name' type='text' placeholder="Your username">
-
-                    {% if error %}
-                    <div class='mb_10 color_error'>
-                        {{message["user_name"] if message["user_name"]}}
-                    </div>
-                    {% endif %}
-
-
-                    <label for='email'>Email address</label>
-                    <input value="{{ input["email"] if error else ''}}" required class="my_10" id='email' name='email'
-                        type='email' placeholder="Your email address">
-                    {% if error %}
-                    <div class='mb_10 color_error'>
-                        {{message["email"] if message["email"] }}
-                    </div>
-                    {% endif %}
-                    <label for='password'>Password</label>
-                    <input required class="my_10" id='password' name='password' type='password'
-                        placeholder="Your password">
-
-                    {% if error %}
-                    <div class='mb_10 color_error'>
-                        {{message["password"]}}
-                    </div>
-                    {% endif %}
-                    <label for='password2'>Confirm password</label>
-                    <input required class="my_10" id='password2' name='password2' type='password'
-                        placeholder="Please re-type your password">
-
-                    <button class='button button_md bg_green mt_20' type='submit'>Register</button>
-                    <div class='mt_20'>
-                        <p>Already have an account? <a href="/login">login</a></p>
-                    </div>
-                </form>
             </div>
-        </div>
+            <div class='col_5'>
+              <label for='last_name'>Last name</label>
+              <input value="{{ input["last_name"] if error else ''}}" class="my_10" id='last_name' name='last_name' type='text' placeholder="Your last name">
+
+            </div>
+          </div>
+
+          <label for='user_name'>Username</label>
+          <input value="{{ input["user_name"] if error else '' }}" required class="my_10" id='user_name' name='user_name' type='text' placeholder="Your username">
+
+          {% if error %}
+          <div class='mb_10 color_error'>
+            {{message["user_name"] if message["user_name"]}}
+          </div>
+          {% endif %}
+
+
+          <label for='email'>Email address</label>
+          <input value="{{ input["email"] if error else ''}}" required class="my_10" id='email' name='email' type='email' placeholder="Your email address">
+          {% if error %}
+          <div class='mb_10 color_error'>
+            {{message["email"] if message["email"] }}
+          </div>
+          {% endif %}
+          <label for='password'>Password</label>
+          <input required class="my_10" id='password' name='password' type='password' placeholder="Your password">
+
+          {% if error %}
+          <div class='mb_10 color_error'>
+            {{message["password"]}}
+          </div>
+          {% endif %}
+          <label for='password2'>Confirm password</label>
+          <input required class="my_10" id='password2' name='password2' type='password' placeholder="Please re-type your password">
+
+          <button class='button button_md bg_green mt_20' type='submit'>Register</button>
+          <div class='mt_20'>
+            <p>Already have an account? <a href="/login">login</a></p>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </header>
 
 {% endblock %}

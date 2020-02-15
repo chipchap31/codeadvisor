@@ -2,75 +2,71 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>code advisor</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/master.css')}}">
-    <script src="https://unpkg.com/feather-icons"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <script src="{{ url_for('static', filename='scripts/master.js') }}"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>code advisor</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/master.css')}}">
+  <script src="https://unpkg.com/feather-icons"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <script src="{{ url_for('static', filename='scripts/master.js') }}"></script>
 </head>
 
 <body class="bg_blue">
-    <nav class='bg_indigo p_20'>
-        <div class='container d_flex x_space-between align_center'>
-            <a href='/' class='logo open color_white'>codeadvisor</a>
-            <div class='account color_white '>
-                <ul>
-                    <li class="dropdown"><a class="align_center color_white decor-none"
-                            href="/{{user_auth['user_name']}}">{{user_auth["user_name"]}}
-                            <i data-feather="chevron-down"></i></a>
-                        <ul>
-                            <li><a class="color_white decor_none" href="/users/{{user_auth['user_name']}}">Profile</a></li>
-                            <li><a class="color_white decor_none" href="/logout">Logout</a></li>
+  <nav class='bg_indigo p_20'>
+    <div class='container d_flex x_space-between align_center'>
+      <a href='/' class='logo open color_white'>codeadvisor</a>
+      <div class='account color_white '>
+        <ul>
+          <li class="dropdown"><a class="align_center color_white decor-none" href="/{{user_auth['user_name']}}">{{user_auth["user_name"]}}
+              <i data-feather="chevron-down"></i></a>
+            <ul>
+              <li><a class="color_white decor_none" href="/users/{{user_auth['user_name']}}">Profile</a></li>
+              <li><a class="color_white decor_none" href="/logout">Logout</a></li>
 
-                        </ul>
-                    </li>
-                </ul>
+            </ul>
+          </li>
+        </ul>
 
-            </div>
-
-        </div>
-    </nav>
-
-    <div class='container'>
-        <div class='row d_flex'>
-            <div class='col_2'>
-                <ul class="pt_20">
-                    <li class=""><a href="/" class="align_center color_white"><i class='mr_10 ' data-feather="home"></i>
-                            Home</a>
-                    </li>
-                    {%if user_auth['role'] == 'student'%}
-                    <li class="mt_20"><a href="/posts" class="align_center color_white"><i class='mr_10' data-feather="droplet"></i>Posts</a></li>
-                    <li class="mt_20"><a href="/projects" class="align_center color_white"><i class='mr_10' data-feather="file"></i>Projects</a></li>
-                    {% else %}
-                    <li class='mt_20'>
-                        <a href='/feedbacks'>Feedbacks</a>
-                    </li>
-                    {%endif%}
-
-
-                </ul>
-            </div>
-
-
-            {% block content %}
-            {% endblock %}
-
-        </div>
+      </div>
 
     </div>
+  </nav>
+
+  <div class='container'>
+    <div class='row d_flex'>
+      <div class='col_2'>
+        <ul class="pt_20">
+          <li class=""><a href="/" class="align_center color_white"><i class='mr_10 ' data-feather="home"></i>
+              Home</a>
+          </li>
+          {%if user_auth['role'] == 'student'%}
+          <li class="mt_20"><a href="/posts" class="align_center color_white"><i class='mr_10' data-feather="droplet"></i>Posts</a></li>
+          <li class="mt_20"><a href="/projects" class="align_center color_white"><i class='mr_10' data-feather="file"></i>Projects</a></li>
+          {% else %}
+          <li class='mt_20'>
+            <a href='/feedbacks'>Feedbacks</a>
+          </li>
+          {%endif%}
 
 
-
-
+        </ul>
+      </div>
+      {% block content %}
+      {% endblock %}
+    </div>
+  </div>
+  <footer class="mt_20 p_30 bg_grey">
+    <div class="container d_flex x_center">
+      <p class="color_white text_small">codeadvisor &copy; 2020</p>
+    </div>
+  </footer>
 
 </body>
 
 
 <script>
-    feather.replace()
+  feather.replace()
 </script>
 
 </html>

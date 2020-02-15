@@ -36,7 +36,7 @@ def project_new():
                 return render_template("view/project_new.html", user_auth=user)
 
             if not user['git_username']:
-                return render_template("view/git_username.html", user_auth=user)
+                return render_template("view/projects_setup.html", user_auth=user)
 
             # render all of the user's repositories
             projects = git_request(f"/users/{user['git_username']}/repos")
@@ -65,8 +65,9 @@ def delete_project(id):
     return redirect('/projects')
 
 
-@users.route("/users/set_git_username")
-def set_git_username():
+@users.route("/users/<user_name>")
+def profile(user_name):
     user = require_login(request.cookies)
+
     if user:
-        return render_template('view/git_username.html', user_auth=user)
+        return user
