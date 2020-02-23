@@ -14,7 +14,30 @@ def post_fetch():
     if not user:
         return abort(401)
 
-    return render_template('posts/posts.html', user_auth=user, posts=database.post_fetch(user=user['user_name']))
+    posts = database.post_fetch(
+        user=user['user_name'], sort=request.args.get('sort') or 'posted_at')
+
+    posts_len = len(posts)
+    # get current page
+    curr_page = int(request.args.get('page')
+                    ) if request.args.get('page') else 1
+
+    if curr_page == 1:
+        posts_limit = posts[:5]
+
+    else:
+        posts_limit = posts[(5 * curr_page) - 5: ((5 * curr_page) - 5) * 2]
+
+    return render_template('posts/posts.html', user_auth=user, config={
+        'posts': posts_limit,
+        'posts_len': posts_len,
+        'pagination': round(posts_len / 5) + 2,
+        'curr_page': curr_page,
+        'ref': request.referrer,
+        'curr_sort': request.args.get('sort') or 'posted_at',
+        'render_next': (curr_page * 5) + len(posts_limit) - 5 < posts_len,
+
+    })
 
 
 @posts.route('/posts/delete')
@@ -32,7 +55,7 @@ def post_delete():
 @posts.route('/posts/<name>')
 def repository_view(name):
     user = require_login(request.cookies)
-
+    print(user)
     if not user:
         return abort(401)
 

@@ -196,7 +196,6 @@ class Mongo:
         coll = self.database["projects"]
 
         # document to save in project collection
-
         doc = {
             "project_title": project_data['project_title'],
             "github_repo": project_data['github_repo'],
@@ -323,10 +322,10 @@ class Mongo:
             print(e)
             return False
 
-    def post_fetch(self, name=False, user=False, sort='newest', limit=5):
+    def post_fetch(self, name='', user=False, sort='posted_at'):
         """
 
-        :param name:
+        :param name: string
         :param user: dict
         :param sort: str
         :param limit: int
@@ -337,13 +336,16 @@ class Mongo:
         user = {'_user': user} if user else {}
 
         if not name:
+            # if no user defined, below is the default find
 
-            return list(coll.find(user).limit(limit))
+            # check if sort is defined0
 
+            return list(coll.find(user).sort([(sort, pymongo.ASCENDING if sort == 'posted_at' else pymongo.DESCENDING)]))
+
+        # the code block below finds a single post
         post = coll.find_one({'name': name})
 
         # avoid adding the username if the owner is viewing
-
         if post['_user'] != user['_user']:
             coll.update_one({'name': name}, {'$addToSet': {'views': user}})
 

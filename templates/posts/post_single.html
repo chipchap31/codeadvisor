@@ -3,8 +3,9 @@
 
 <div class='col_7'>
   <div class='mt_20 align_center x_space-between'>
-    <a class='color_indigo' href='{{referrer}}'><i data-feather='arrow-left-circle'></i></a>
-    <a class="button button_sm bg_green" href="/feedbacks/{{ post['name'] }}">Add feedback</a>
+    <a class='color_white' href='{{referrer}}'><i data-feather='arrow-left-circle'></i></a>
+
+    </a>
   </div>
 
   <div class='project_item  mt_20 bg_light_blue rounded p_30'>
@@ -16,30 +17,69 @@
         <h3 class="mt_10">{{ post['name'] }}</h3>
 
         <em class="text_small color_grey">posted by
-          <a class="color_grey" href="/users/{{ post['_user'] }}">{{ post['_user']}}</a> on {{ post['posted_at'].strftime("%d/%m/%Y") }}</em>
+          <a class="color_grey" href="/users/{{ post['_user'] }}">{{ post['_user']}}</a> on
+          {{ post['posted_at'].strftime("%d/%m/%Y") }}</em>
 
       </div>
-      {% if post['homepage'] %}
+      <div class="align_center">
+        {% if post['homepage'] %}
+        <a target="_blank" class="icon_button_sm bg_green" href="{{ post['homepage'] }}"><i
+            data-feather='globe'></i></a>
+        {% else %}
+        <div class="icon_button_sm bg_green">
+          <i onclick="dialog.open({{ post['_id'] }})" data-feather="globe"></i>
 
-      {% else %}
-      <div class="icon_button_sm bg_green">
-        <i onclick="dialog.open({{ post['_id'] }})" data-feather="globe"></i>
+        </div>
+        {% endif %}
+        <a target="_blank" title='Source code' class="ml_10 icon_button_sm bg_green" href="{{ post['html_url'] }}"><i
+            data-feather='code'></i></a>
+
+
 
       </div>
-      {% endif %}
+
 
     </div>
     <div class="mt_20">
       <canvas id="{{ post['name'] }}"></canvas>
     </div>
+    <h4>Description</h4>
     <p class="mt_10">{{ post.description or 'You did not provide any description for this repository.' }}</p>
 
-    <div class="mt_10">
-      <div>
-        <span class="text_small color_grey">Feedbacks ({{ post['feedbacks'] | length }})</span>
-        <span class="text_small color_grey">Views ({{ post['views'] | length}})</span>
-      </div>
+    
+    <div class="mt_30 feedback_wrapper">
+      <button onclick="toggleFeedback.toggle(event)" class='feedback_button button open button_sm bg_green'
+        type='button'>Add feedback</button>
+      <h4>Your feedback</h4>
+      <p class='color_grey'>Please rate the following languages from 1 - 10 being 10 is the highest and depending on the
+        following:</p>
+      <ul class='list'>
+        <li class='color_grey mt_10'>Appropriate use of each language.</li>
+        <li class='color_grey mt_10'>Proper indentations.</li>
+        <li class='color_grey mt_10'>Comments.</li>
+        <li class='color_grey mt_10'>Code structure.</li>
+        <li class='color_grey mt_10'>Validity</li>
+      </ul>
+      <form class='mt_20' action='/feedback/new' method='POST'>
+        {% for label in post['stack_labels'] %}
+        <label class='mt_30'>Please choose the suitable rate for {{ label }} codes.</label>
+        <div class='d_flex mt_10'>
+          {% for i in range(1, 11)%}
+          <div class='align_center'>
+            <input value='{{i}}' name="{{ label.casefold() }}-rate" type='radio'><span class='ml_10'>{{i}}</span>
+          </div>
+
+          {% endfor %}
+        </div>
+        <label class='mt_30'>Share some advice and resources to improve.</label>
+        <textarea class='bg_white rounded mt_10' name="{{ label.casefold() }}-description"></textarea>
+        {% endfor %}
+
+        <button class='mt_20 ml_10 mb_10 button button_md bg_green' type='submit'>Post feedback</button>
+      </form>
     </div>
+
+
   </div>
 
 

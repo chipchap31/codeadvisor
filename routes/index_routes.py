@@ -26,10 +26,29 @@ def home():
         return render_template('view/set_role.html', user_auth=user)
 
     # fetch all of the posts of the students
-    posts = database.post_fetch()  # returns the posts of all students
-    limit = request.args.get('limit') or len(posts)
+    posts = database.post_fetch(sort=request.args.get(
+        'sort') or 'posted_at')  # returns the posts of all students
+    posts_len = len(posts)
+
+    curr_page = int(request.args.get('page')
+                    ) if request.args.get('page') else 1
+
+    if curr_page == 1:
+        posts_limit = posts[:5]
+    else:
+
+        posts_limit = posts[(5 * curr_page) - 5: ((5 * curr_page) - 5) * 2]
+
     # below we render the dashboard
-    return render_template('view/dashboard.html', user_auth=user, posts=posts, limit=limit)
+    return render_template('view/dashboard.html', user_auth=user, config={
+        "posts": posts_limit,
+        "posts_len": posts_len,
+        "pagination": round(posts_len / 5) + 2,
+        'curr_page': curr_page,
+        'ref': request.referrer,
+        'curr_sort': request.args.get('sort') or 'posted_at',
+        'render_next': (curr_page * 5) + len(posts_limit) - 5 < posts_len,
+    })
 
 
 @index.route("/register", methods=["POST", "GET"])

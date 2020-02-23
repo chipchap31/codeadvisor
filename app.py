@@ -7,7 +7,7 @@ from routes.index_routes import index
 from routes.post_routes import posts
 from routes.user_routes import users
 from routes.project_routes import projects
-
+from routes.feedback_routes import feedback
 app = Flask(__name__)
 
 app.secret_key = os.environ.get("FLASH_KEY")
@@ -16,6 +16,7 @@ app.register_blueprint(index)
 app.register_blueprint(users)
 app.register_blueprint(projects)
 app.register_blueprint(posts)
+app.register_blueprint(feedback)
 
 
 @app.errorhandler(404)

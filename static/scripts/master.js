@@ -1,5 +1,5 @@
 "use strict";
-var dialog = (function() {
+var dialog = (function () {
 
 	function open(id) {
 
@@ -20,7 +20,7 @@ var dialog = (function() {
 
 
 // @method pie renders the data information for the languages used
-var doughnut = (function() {
+var doughnut = (function () {
 	// @ method init draws the chart
 	function init(data) {
 
@@ -53,7 +53,7 @@ var doughnut = (function() {
 			options: {
 				tooltips: {
 					callbacks: {
-						label: function(o, i) {
+						label: function (o, i) {
 							return i['labels'][o['index']] + ': ' + i['datasets'][0]['data'][o['index']] + '%';
 						}
 					}
@@ -70,20 +70,20 @@ var doughnut = (function() {
 
 
 
-var server = (function() {
+var server = (function () {
 	function post(data) {
 		return fetch(data.path, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					"Access-Control-Origin": "*"
-				},
-				body: JSON.stringify(body)
-			})
-			.then(function(res) {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				"Access-Control-Origin": "*"
+			},
+			body: JSON.stringify(body)
+		})
+			.then(function (res) {
 				return res.json();
 			})
-			.then(function(res) {
+			.then(function (res) {
 				return res
 			});
 	}
@@ -94,4 +94,19 @@ var server = (function() {
 })()
 
 
-// removed load more
+var toggleFeedback = (function () {
+
+
+	function toggle(event) {
+		var target = document.querySelector('.feedback_wrapper');
+		// add 'open' class to change the max-height to none
+		target.classList.add("open");
+
+		// get the clicked feedback button
+		// remove the 'open' class 
+		event.target.classList.remove('open')
+
+	}
+
+	return { toggle }
+})()

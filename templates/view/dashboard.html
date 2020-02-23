@@ -2,8 +2,31 @@
 {% block content %}
 <div class='col_7 mt_20'>
 
-  {% if posts|length > 0 %}
-  {% for project in posts %}
+  {% if config.posts|length > 0 %}
+
+  <div class='d_flex align_center'>
+    <span class='mr_10 color_white'>Sort By:</span>
+    <ul>
+      <li class='dropdown'>
+        <a class='align_center color_white' href="/?page={{ config.curr_page }}&sort={{ 'posted_at' if config.curr_sort == 'posted_at' else config.curr_sort }}">
+          {{ 'Newest' if config.curr_sort == 'posted_at' else config.curr_sort }}<i data-feather="chevron-down"></i></a>
+        <ul>
+          <li>
+            <a class='decor_none color_dark_blue' href='/?page={{ config.curr_page }}&sort=posted_at'>Newest</a>
+          </li>
+          <li>
+            <a class='decor_none color_dark_blue' href='/?page={{ config.curr_page }}&sort=feedbacks'>Feedbacks</a>
+          </li>
+          <li>
+            <a class='decor_none color_dark_blue' href='/?page={{ config.curr_page }}&sort=views'>Views</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+
+  {% for project in config.posts %}
   <div class="mt_20 bg_light_blue p_20 rounded">
     <div class="align_center x_space-between">
       <div>
@@ -53,18 +76,21 @@
       </div>
 
     </div>
-
   </div>
   {% endfor %}
-
-
-  <div class="d_flex y_center mt_20 f_column">
-    {% if posts | length > 5 %}
-    <a href="#" class="button button_sm bg_green">Load more</a>
+  <div class="mt_20 align_center x_center">
+    {% if config.curr_page != 1 %}
+    <a href="{{config.ref}}" class="color_white align_center mr_30"><i class="mr_10" data-feather='arrow-left'></i>prev</a>
     {% endif %}
-    <p class="mt_10">Showing {{ limit }} of {{posts | length}} results</p>
-  </div>
+    {% for i in range(1,config.pagination) %}
+    <a class="ml_10 color_white" href="/?page={{ i  }}&sort={{ 'posted_at' if config.curr_sort == 'posted_at' else config.curr_sort }}">{{ i }}</a>
+    {% endfor %}
+    {% if config.render_next %}
+    <a title='next' href="/?page={{ config.curr_page + 1 }}&sort={{ 'posted_at' if config.curr_sort == 'posted_at' else config.curr_sort }}" class="ml_30 color_white align_center">next
+      <i data-feather='arrow-right' class="ml_10"></i></a>
 
+    {% endif %}
+  </div>
   {% endif %}
 
 

@@ -34,29 +34,30 @@ def project():
         }
 
     # make a request to github api that returns the repositories of the username provide
+    # fetch all github projects
 
-    git_projects = git_request(f"/users/{user['git_username']}/repos")
-    project_len = len(git_projects)
-    # get page number from the path
-    page = int(request.args.get('page')) if request.args.get('page') else 1
+    projects = list(map(essentials, git_request(
+        f"/users/{user['git_username']}/repos")))
+    # this is the number of the public repos of the current user
+    projects_len = len(projects)
+    print(round(projects_len / 5))
+    curr_page = int(request.args.get('page')
+                    ) if request.args.get('page') else 1
 
-    # if the variable page does not exist
-    # limit the projects rendered to five
-    if request.args.get('page'):
-        git_projects = list(map(essentials, git_projects))[
-            (5 * page) - 5:((5 * page) - 5) * 2]
+    if curr_page == 1:
+        project_limit = projects[:5]
     else:
-        git_projects = list(map(essentials, git_projects))[:5]
-
-    # arrange the list depending on the updated date
-    git_projects.sort(key=lambda r: r['updated_at'], reverse=True)
-
-    return render_template('projects/projects.html', config={
-        'curr_page': page + 1,
+        project_limit = projects[(5 * curr_page) -
+                                 5: ((5 * curr_page) - 5) * 2]
+    return render_template('projects/projects.html', user_auth=user, config={
+        "projects": project_limit,
+        "projects_len": projects_len,
+        "pagination": round(projects_len / 5) + 1,
+        'curr_page': curr_page,
         'ref': request.referrer,
-        'projects': git_projects,
-        'render_next': (page * 5) + len(git_projects) - 5 < project_len
-    }, user_auth=user)
+        'curr_sort': request.args.get('sort') or 'posted_at',
+        'render_next': (curr_page * 5) + len(project_limit) - 5 < projects_len,
+    })
 
 
 @projects.route("/projects/<repo>", methods=['GET', 'POST'])
