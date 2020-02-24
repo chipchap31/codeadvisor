@@ -79,18 +79,32 @@
   </div>
   {% endfor %}
   <div class="mt_20 align_center x_center">
+    
     {% if config.curr_page != 1 %}
     <a href="{{config.ref}}" class="color_white align_center mr_30"><i class="mr_10" data-feather='arrow-left'></i>prev</a>
     {% endif %}
+    
+    {% if config.curr_page != 1 %}
     {% for i in range(1,config.pagination) %}
     <a class="ml_10 color_white" href="/?page={{ i  }}&sort={{ 'posted_at' if config.curr_sort == 'posted_at' else config.curr_sort }}">{{ i }}</a>
     {% endfor %}
+    {% endif %}
+    
     {% if config.render_next %}
     <a title='next' href="/?page={{ config.curr_page + 1 }}&sort={{ 'posted_at' if config.curr_sort == 'posted_at' else config.curr_sort }}" class="ml_30 color_white align_center">next
       <i data-feather='arrow-right' class="ml_10"></i></a>
 
     {% endif %}
   </div>
+  {% else %}
+   <div class="mt_20 text_center bg_light_blue p_20 rounded">
+    <h2>It's empty here</h2>
+    <p>Be the first one to post a project!</p>
+    <div class='d_flex x_center'>
+    <a class='button  align_center  button_sm bg_green mt_30' href='/projects'>Browse projects <i data-feather='arrow-right'></i></a>
+  
+    </div>
+     </div>
   {% endif %}
 
 

@@ -87,10 +87,9 @@ class Mongo:
             "email": form_data["email"],
             "first_name": form_data["first_name"] or None,
             "last_name": form_data["last_name"] or None,
-            "role": None,
             "password": bcrypt.hashpw(str.encode(form_data["password"]), bcrypt.gensalt()),
             "registered": datetime.now(),
-            "git_username": None
+            "git_username": form_data['git_username']
         }
 
         coll.insert_one(user_new)
@@ -136,7 +135,6 @@ class Mongo:
             "email": user_fetch["email"],
             "first_name": user_fetch["first_name"],
             "user_name": user_fetch["user_name"],
-            "role": user_fetch["role"],
             "git_username": user_fetch['git_username']
         }
 

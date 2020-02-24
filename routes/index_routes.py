@@ -19,12 +19,6 @@ def home():
     if not user:
         return render_template('index/index.html')
 
-    # check if the the user already set their role
-    # this could be either advisor or a student
-
-    if not user['role']:
-        return render_template('view/set_role.html', user_auth=user)
-
     # fetch all of the posts of the students
     posts = database.post_fetch(sort=request.args.get(
         'sort') or 'posted_at')  # returns the posts of all students

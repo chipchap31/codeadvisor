@@ -40,14 +40,10 @@
           <li class=""><a href="/" class="align_center color_white"><i class='mr_10 ' data-feather="home"></i>
               Home</a>
           </li>
-          {%if user_auth['role'] == 'student'%}
+          
           <li class="mt_20"><a href="/posts" class="align_center color_white"><i class='mr_10' data-feather="droplet"></i>Posts</a></li>
           <li class="mt_20"><a href="/projects" class="align_center color_white"><i class='mr_10' data-feather="file"></i>Projects</a></li>
-          {% else %}
-          <li class='mt_20'>
-            <a href='/feedbacks'>Feedbacks</a>
-          </li>
-          {%endif%}
+         
 
 
         </ul>

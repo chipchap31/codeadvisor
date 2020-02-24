@@ -40,17 +40,17 @@
 
 
     </div>
-    <div class="mt_20">
+    <div class="mt_20 chart_wrapper">
       <canvas id="{{ post['name'] }}"></canvas>
     </div>
-    <h4>Description</h4>
+    <h4 class='mt_20'>Description</h4>
     <p class="mt_10">{{ post.description or 'You did not provide any description for this repository.' }}</p>
 
-    
-    <div class="mt_30 feedback_wrapper">
+    <h4 class='mt_30'>Your feedback</h4>
+    <div class="feedback_wrapper">
       <button onclick="toggleFeedback.toggle(event)" class='feedback_button button open button_sm bg_green'
         type='button'>Add feedback</button>
-      <h4>Your feedback</h4>
+      
       <p class='color_grey'>Please rate the following languages from 1 - 10 being 10 is the highest and depending on the
         following:</p>
       <ul class='list'>

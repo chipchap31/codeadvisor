@@ -60,7 +60,7 @@
 
         <a href="/posts/{{ project['name'] }}" class="button button_sm bg_green">View</a>
         {% if project['_user'] == user_auth['user_name'] %}
-        <button onclick="dialog.open({{ project['_id'] + 1  }})" class="icon_button_sm bg_red ml_10"><i data-feather="trash"></i></button>
+        <button onclick="dialog.open({{ project['_id'] + 1  }})" class="icon_button_sm bg_light_grey color_grey ml_10"><i data-feather="trash"></i></button>
         {% endif %}
       </div>
 
@@ -106,16 +106,28 @@
     {% if config.curr_page != 1 %}
     <a href="{{config.ref}}" class="color_white align_center mr_30"><i class="mr_10" data-feather='arrow-left'></i>prev</a>
     {% endif %}
+
+     {% if config.curr_page != 1 %}
     {% for i in range(1,config.pagination) %}
     <a class="ml_10 color_white" href="/posts?page={{ i  }}&sort={{ 'posted_at' if config.curr_sort == 'posted_at' else config.curr_sort }}">{{ i }}</a>
     {% endfor %}
+    {% endif %}
+
     {% if config.render_next %}
     <a title='next' href="/posts?page={{ config.curr_page + 1 }}&sort={{ 'posted_at' if config.curr_sort == 'posted_at' else config.curr_sort }}" class="ml_30 color_white align_center">next
       <i data-feather='arrow-right' class="ml_10"></i></a>
 
     {% endif %}
   </div>
-
+    {% else %}
+   <div class="mt_20 text_center bg_light_blue p_20 rounded">
+    <h2>It's empty here</h2>
+    <p>Your posted project will appear here</p>
+    <div class='d_flex x_center'>
+    <a class='button  align_center  button_sm bg_green mt_30' href='/projects'>Browse projects <i data-feather='arrow-right'></i></a>
+  
+    </div>
+     </div>
   {% endif %}
 
 

@@ -28,7 +28,17 @@
     <p class="mt_10">{{ project.description or 'You did not provide any description for this repository.' }}</p>
     <div class="d_flex align_center x_space-between mt_20">
       <em class="mb_10 text_small color_grey">Last updated at {{ project.updated_at.strftime("%d/%m/%Y") }}</em>
-      <a href="/projects/{{project['name']}}" class="button button_sm bg_green">View</a>
+      
+      <div class='d_flex'>
+
+        
+        <a href="/projects/{{project['name']}}" class="button button_sm bg_green">View</a>
+        
+        <form class="hidden" method="POST" action="/projects/{{project['name']}}">
+          <button class="button button_sm bg_grey ml_10" type="submit">Post</button>
+        </form>
+      </div>
+      
     </div>
 
   </div>
