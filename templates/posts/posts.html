@@ -24,6 +24,7 @@
 
       </ul>
     </div>
+
   {% for project in config.posts %}
   <div class="mt_20 bg_light_blue p_20 rounded">
     <div class="align_center x_space-between">
@@ -34,14 +35,13 @@
         <h3 class="mt_10">{{ project['name'] }}</h3>
         <em class="text_small color_grey">posted by
           <a class="color_grey" href="/users/{{ project['_user'] }}">{{ project['_user']}}</a> on {{ project['posted_at'].strftime("%d/%m/%Y") }}</em>
-
       </div>
       <div class="d_flex">
         {% if project['homepage'] %}
         <a class="icon_button_sm bg_green" target="_blank" href="{{ project['homepage'] }}"><i data-feather="globe"></i></a>
         {% else %}
-        <div class="icon_button_sm bg_green">
-          <i data-feather="globe" onclick="dialog.open({{ project['_id'] }})"></i>
+        <div role='toggleOpen' data-target="{{ 'dialog_%s' % project['_id'] }}" class="icon_button_sm bg_green" >
+          <i  data-feather="globe" ></i>
         </div>
 
         {% endif %}
@@ -69,14 +69,14 @@
   </div>
 
 
-  <div id="dialog_{{ project['_id']  }}" class="dialog">
+  <div id="{{ 'dialog_%s' % project['_id'] }}" class="dialog">
     <div class="inner">
       <h3>Sorry...</h3>
       <p>The live website for {{ project['name']}} is unvailable!</p>
       <div>
         <a target="_blank" class="mt_20 button button_sm bg_green" href="{{ project['html_url'] }}">Add live website</a>
 
-        <button class="mt_20 ml_10 button button_sm bg_red" onclick="dialog.close({{ project['_id'] }})">Close</button>
+        <button class="mt_20 ml_10 button button_sm bg_red" role='toggleOpen' data-target="{{ 'dialog_%s' % project['_id'] }}">Close</button>
       </div>
 
     </div>
@@ -97,11 +97,9 @@
     </div>
 
   </div>
-
-
-
-
   {% endfor %}
+
+  
   <div class="mt_20 align_center x_center">
     {% if config.curr_page != 1 %}
     <a href="{{config.ref}}" class="color_white align_center mr_30"><i class="mr_10" data-feather='arrow-left'></i>prev</a>

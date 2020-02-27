@@ -22,13 +22,14 @@
 
       </div>
       <div class="align_center">
+        
         {% if post['homepage'] %}
         <a target="_blank" class="icon_button_sm bg_green" href="{{ post['homepage'] }}"><i
             data-feather='globe'></i></a>
+       
         {% else %}
-        <div class="icon_button_sm bg_green">
-          <i onclick="dialog.open({{ post['_id'] }})" data-feather="globe"></i>
-
+        <div role='toggleOpen' data-target='{{ post['_id'] }}' class="icon_button_sm bg_green">
+          <i data-feather="globe"></i>
         </div>
         {% endif %}
         <a target="_blank" title='Source code' class="ml_10 icon_button_sm bg_green" href="{{ post['html_url'] }}"><i
@@ -43,16 +44,29 @@
     <div class="mt_20 chart_wrapper">
       <canvas id="{{ post['name'] }}"></canvas>
     </div>
+   
     <h4 class='mt_20'>Description</h4>
-    <p class="mt_10">{{ post.description or 'You did not provide any description for this repository.' }}</p>
+    {% if not post.description %}
+      <span class='color_error'>This does not have any description.</span>
+    {% else %}
+      <p class="mt_10">{{ post.description }}</p>
+
+    {% endif %}
+    
+    <h4 class='mt_20'>Feedbacks ({{post['feedbacks'] | length}})</h4>
+
+    {% if post['feedbacks'] | length <= 0 %}
+      <span class='color_error'>No available feedbacks at the moment</span>
+    {% endif %}
 
     <h4 class='mt_30'>Your feedback</h4>
-    <div class="feedback_wrapper">
-      <button onclick="toggleFeedback.toggle(event)" class='feedback_button button open button_sm bg_green'
+    <div id='feedback' class="feedback_wrapper">
+      <button role='toggleOpen' data-target='feedback' class='feedback_button button open button_sm bg_green'
         type='button'>Add feedback</button>
       
       <p class='color_grey'>Please rate the following languages from 1 - 10 being 10 is the highest and depending on the
         following:</p>
+      
       <ul class='list'>
         <li class='color_grey mt_10'>Appropriate use of each language.</li>
         <li class='color_grey mt_10'>Proper indentations.</li>
@@ -60,23 +74,31 @@
         <li class='color_grey mt_10'>Code structure.</li>
         <li class='color_grey mt_10'>Validity</li>
       </ul>
-      <form class='mt_20' action='/feedback/new' method='POST'>
+     
+      <form class='mt_20' action='/posts/{{ post["name"]}}' method='POST'>
         {% for label in post['stack_labels'] %}
+        {% set label_loop = loop %}
         <label class='mt_30'>Please choose the suitable rate for {{ label }} codes.</label>
         <div class='d_flex mt_10'>
           {% for i in range(1, 11)%}
-          <div class='align_center'>
-            <input value='{{i}}' name="{{ label.casefold() }}-rate" type='radio'><span class='ml_10'>{{i}}</span>
+          <div class='align_center mr_10'>
+            <input value='{{i}}' name="rate{{label_loop.index}}" required type='radio'><span>{{i}}</span>
           </div>
 
           {% endfor %}
         </div>
-        <label class='mt_30'>Share some advice and resources to improve.</label>
-        <textarea class='bg_white rounded mt_10' name="{{ label.casefold() }}-description"></textarea>
+        <label class='mt_30'>Share some advice and online resources on what to work on.</label>
+        <textarea placeholder='Type your message here...' class='bg_white rounded mt_10' name="desc{{ label_loop.index}}"></textarea>
         {% endfor %}
-
-        <button class='mt_20 ml_10 mb_10 button button_md bg_green' type='submit'>Post feedback</button>
-      </form>
+        <div class='mt_20 d_flex'>
+          <button data-target='feedback' type='button' role='toggleOpen' class='button button_sm bg_grey mr_10'>Cancel</button>
+          <button  class='button button_sm bg_green' type='submit'>Post feedback</button>
+     
+        </div>
+          <input type='hidden' name='labels' value="{{ post['stack_labels'] }}">
+          <input type='hidden' name='name' value="{{ post['name'] }}">
+          <input type='hidden' name='id' value="{{ post['_id'] }}">
+         </form>
     </div>
 
 
@@ -89,10 +111,8 @@
     <h3>Sorry...</h3>
     <p>The live website for {{ post['name']}} is unvailable!</p>
     <div class="align_center">
-
       <button class="mt_20 button button_sm bg_red" onclick="dialog.close({{ post['_id'] }})">Close</button>
     </div>
-
   </div>
 
 </div>

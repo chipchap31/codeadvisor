@@ -14,5 +14,17 @@ def feedback_new():
 
     user = require_login(request.cookies)
 
-    print(request.cookies)
-    return request.cookies
+    if not user:
+        return abort(401)
+
+    data = {
+        "_user": user['_id'],
+        "form": request.form
+    }
+
+    if not database.create_feedback(data):
+        return abort(500)
+
+    # get the project title from the form
+
+    return redirect("/posts")

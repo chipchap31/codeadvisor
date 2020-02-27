@@ -4,28 +4,42 @@
 <div class='col_7'>
   <div class='mt_20'>
     <a class='color_indigo' href='{{referrer}}'><i data-feather='arrow-left-circle'></i></a>
-
   </div>
   <div class='project_item  mt_20 bg_light_blue rounded p_30'>
     <div class="align_center x_space-between">
       <div>
         <h3 class="bar">{{ project['name'] }}</h3>
-
-        <span class="text_small color_grey">Language: {{ project['language'] }}</span>
-
+        
+        <em class="text_small color_grey">Last updated at {{ project.updated_at.strftime("%d/%m/%Y") }}</em>
+      </div>
+      <div class='align_center'>
+              
+        {% if project['homepage'] %}
+        <a target="_blank" class="icon_button_sm bg_green" href="{{ project['homepage'] }}"><i
+            data-feather='globe'></i></a>
+        {% else %}
+        <div class="icon_button_sm bg_green">
+          <i onclick="dialog.open({{ project['_id'] }})" data-feather="globe"></i>
+        </div>
+        {% endif %}
+        <a target="_blank" title='Source code' class="ml_10 icon_button_sm bg_green" href="{{ project['html_url'] }}"><i
+            data-feather='code'></i></a>
 
       </div>
-
-      <i class="color_green" onclick="dialog.open()" data-feather="globe"></i>
-
+      
     </div>
 
-    <p class="mt_10">{{ project.description or 'You did not provide any description for this repository.' }}</p>
-    <div class="mt_20">
+    <div class="mt_20 chart_wrapper">
       <canvas id="{{ project['name'] }}"></canvas>
     </div>
-    <div class="d_flex x_space-between align_center  mt_20">
-      <em class="text_small color_grey">Last updated at {{ project.updated_at.strftime("%d/%m/%Y") }}</em>
+
+    {% if not project.description %}
+    <div class='mt_20'>
+      <span class='color_error'>You did not provide any description for this repository.</span>
+    </div>
+    {% endif %}
+    <div class="d_flex x_flex-end align_center  mt_20">
+      
       <form class="hidden" method="POST" action="/projects/{{project['name']}}">
         <button class="button button_sm bg_green" type="submit">Post</button>
       </form>

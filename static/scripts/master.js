@@ -1,23 +1,4 @@
 "use strict";
-var dialog = (function () {
-
-	function open(id) {
-
-		var target = document.getElementById(`dialog_${id}`);
-		target.classList.add('open')
-	}
-
-	function close(id) {
-		var target = document.getElementById(`dialog_${id}`);
-		target.classList.remove('open')
-	}
-	return {
-		open,
-		close
-	}
-
-})()
-
 
 // @method pie renders the data information for the languages used
 var doughnut = (function () {
@@ -73,13 +54,13 @@ var doughnut = (function () {
 var server = (function () {
 	function post(data) {
 		return fetch(data.path, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				"Access-Control-Origin": "*"
-			},
-			body: JSON.stringify(body)
-		})
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					"Access-Control-Origin": "*"
+				},
+				body: JSON.stringify(body)
+			})
 			.then(function (res) {
 				return res.json();
 			})
@@ -93,20 +74,48 @@ var server = (function () {
 	}
 })()
 
+var toggleOpen = (function () {
 
-var toggleFeedback = (function () {
+	function init() {
+
+		// get all buttons with role 'toggleOpen'
+		var targets = document.querySelectorAll("[role='toggleOpen']");
 
 
-	function toggle(event) {
-		var target = document.querySelector('.feedback_wrapper');
-		// add 'open' class to change the max-height to none
-		target.classList.add("open");
+		Array.from(targets).forEach(function (element) {
+			// for each target add event listener
 
-		// get the clicked feedback button
-		// remove the 'open' class 
-		event.target.classList.remove('open')
+
+			element.addEventListener('click', onClickElement)
+		})
+
+
+		function onClickElement(event) {
+			// get the element to add the open or close 
+			// target to toggle
+			// get attribute
+			var elementToToggle = document.getElementById(event.target.getAttribute("data-target"))
+			if (elementToToggle.classList.contains('open')) {
+				elementToToggle.classList.remove('open')
+			} else {
+				elementToToggle.classList.add('open')
+			}
+		}
 
 	}
 
-	return { toggle }
+	return {
+		init
+	}
 })()
+
+function onFeedbackPost() {
+
+}
+
+
+document.addEventListener('DOMContentLoaded', function () {
+	// call the functions
+	toggleOpen.init()
+
+})

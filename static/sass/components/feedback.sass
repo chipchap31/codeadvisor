@@ -13,16 +13,16 @@
     left: 0
 .feedback_wrapper.open
     max-height: none
-    overflow: auto
+    overflow: visible
 .feedback_wrapper.open::before
     content: none
 
 .feedback_wrapper .feedback_button
+    display: block
     position: absolute
     top: 50%
     left: 50%
     transform: translate(-50%,-50%)
     z-index: 99
+.feedback_wrapper.open .feedback_button
     display: none
-.feedback_wrapper .feedback_button.open
-    display: block

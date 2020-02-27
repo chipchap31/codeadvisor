@@ -43,8 +43,8 @@
         {% if project['homepage'] %}
         <a class="icon_button_sm bg_green" target="_blank" href="{{ project['homepage'] }}"><i data-feather="globe"></i></a>
         {% else %}
-        <div class="icon_button_sm bg_green">
-          <i data-feather="globe" onclick="dialog.open({{ project['_id'] }})"></i>
+        <div role='toggleOpen' data-target="dialog_{{ project['_id'] }}" class="icon_button_sm bg_green">
+          <i data-feather="globe"></i>
         </div>
         {% endif %}
 
@@ -72,7 +72,7 @@
       <div class="align_center">
         <a target="_blank" class="mt_20 button button_sm bg_green" href="{{ project['html_url'] }}">Add live website</a>
 
-        <button class="mt_20 ml_10 button button_sm bg_red" onclick="dialog.close({{ project['_id'] }})">Close</button>
+        <button class="mt_20 ml_10 button button_sm bg_red" role="toggleOpen" data-target="dialog_{{ project['_id'] }}">Close</button>
       </div>
 
     </div>
@@ -102,13 +102,9 @@
     <p>Be the first one to post a project!</p>
     <div class='d_flex x_center'>
     <a class='button  align_center  button_sm bg_green mt_30' href='/projects'>Browse projects <i data-feather='arrow-right'></i></a>
-  
+
     </div>
      </div>
   {% endif %}
-
-
 </div>
-
-
 {% endblock %}

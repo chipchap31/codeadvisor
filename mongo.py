@@ -140,156 +140,6 @@ class Mongo:
 
         return json.dumps(cookie) if not self.error else False
 
-    def set_role(self, user_name: str, role: str):
-        """
-        Description
-        ------------
-        At this stage, user is already registered and logged in
-        Allows user to set the role
-
-        Parameters
-        -----------
-
-        user_name : str
-            current user's username
-        role : str
-
-        """
-        coll = self.database["users"]
-        try:
-            coll.update_one({'user_name': user_name}, {'$set': {"role": role}})
-            return True
-        except pymongo.errors.PyMongoError as e:
-            print(e)
-            return False
-
-    def create_project(self, project_data, user_name):
-        """
-            Description
-            --------------
-            Creates new project if the role of the user is student
-
-            Parameters
-            --------------
-            project_data : dict
-                - contains the form data send from route '/project/new'
-            model : {
-                project_tile: str,
-                site_url: str,
-                front_end: list,
-                description: str,
-                back_end : str
-            }
-            user_name : str
-                - current user's username
-
-            Returns
-            --------------
-            bool
-                - Returns True if data was saved successfully
-                else creates an error
-
-        """
-
-        coll = self.database["projects"]
-
-        # document to save in project collection
-        doc = {
-            "project_title": project_data['project_title'],
-            "github_repo": project_data['github_repo'],
-            "site_url": project_data['site_url'] or None,
-            "front_end": project_data.getlist('front_end'),
-            "back_end": project_data["back_end"] or None,
-            "description": project_data["description"],
-            "_user": str(user_name),
-            "views": [],
-            "created": datetime.now(),
-            "feedbacks": []
-        }
-        try:
-            coll.insert_one(doc)
-            return True
-        except pymongo.errors.PyMongoError:
-            raise Exception("Failed to create new project")
-            return False
-
-    def fetch_projects(self, data):
-        coll = self.database["projects"]
-
-        query = {"_user": data['user']} if data['user'] else {}
-
-        if data['sort'] == 'newest':
-            return list(coll.find(query)
-                        .limit(data['limit'] or 5)
-                        .sort([('created', pymongo.DESCENDING)]))
-        elif data['sort'] == "feedbacks":
-            return list(coll.find(query)
-                        .limit(data['limit'] or 5)
-                        .sort([('feedbacks', pymongo.DESCENDING)]))
-
-        elif data['sort'] == 'views':
-            return list(coll.find(query)
-                        .limit(data['limit'] or 5)
-                        .sort([('views', pymongo.DESCENDING)]))
-
-        else:
-            return list(coll.find(query)
-                        .limit(data['limit'] or 5)
-                        .sort([('created', pymongo.ASCENDING)]))
-
-    def project_single(self, project_id, user_id):
-        """
-            Uses project collection.
-
-            Adds the user id to the 'view' field of a single project and
-
-            Returns the single project depending on the '_id' field.
-
-            Parameters
-            ---------------
-            project_id : string
-                single project's id
-            user_id : string
-                current user's unique id
-
-            Returns
-            ---------------
-            type: json
-
-            model: {
-            "_id": str,
-            "_user": str,
-            "back_end": str,
-            "created": date,
-            "description": str,
-            "feedbacks": list,
-            "front_end": list,
-            "github_repo": str,
-            "project_title": str,
-            "site_url": str,
-            "views": list
-            }
-        """
-        coll = self.database['projects']
-        try:
-            coll.update_one({'_id': ObjectId(project_id)}, {
-                            '$addToSet': {"views": {"_user": ObjectId(user_id)}}})
-            req = json.dumps(coll.find_one(
-                {'_id': ObjectId(project_id)}), indent=4, sort_keys=True, default=str)
-            return json.loads(req)
-        except pymongo.errors.PyMongoError as e:
-            raise Exception(e)
-
-    def set_git_username(self, target, value):
-        coll = self.database['users']
-        try:
-            coll.update_one({'user_name': target}, {
-                            '$set': {'git_username': value}})
-            return True
-        except pymongo.errors.PyMongoError as e:
-            print(e)
-            return False
-
     def create_post(self, data):
         coll = self.database['posts']
         # determine if the post already exist in the collection
@@ -359,6 +209,15 @@ class Mongo:
 
             return True
 
+        except pymongo.errors.PyMongoError as e:
+            print(e)
+            return False
+
+    def create_feedback(self, data):
+        coll = self.database['feedbacks']
+        try:
+            coll.insert_one(data)
+            return True
         except pymongo.errors.PyMongoError as e:
             print(e)
             return False
