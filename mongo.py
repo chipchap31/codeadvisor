@@ -214,13 +214,53 @@ class Mongo:
             return False
 
     def create_feedback(self, data):
-        coll = self.database['feedbacks']
+        """Inserts a feedback to a collection 
+
+            Args:
+            data: dictionary to be inserted to feedback collection
+
+            typical use:
+                @ post_routes.py 
+                doc = {
+                        'feedback': List,
+                        'post_name': String,
+                        'post_id': Number,
+                        '_user': String,
+                        'posted_at': Date(Str)
+                    }
+                database.create_feedback(doc)
+
+
+            Returns:
+                Boolean - true if success and then false if there 
+                are any errors.
+        """
+        feedbacks = self.database['feedbacks']
+        posts = self.database['posts']
         try:
-            coll.insert_one(data)
+            # check if the user already added a comment on the selected feedback
+            if feedbacks.find_one({'_user': data['_user'], 'post_name': data['post_name']}):
+                return False
+
+            # add the data to the feedback collectiosn
+            feedback_doc = feedbacks.insert_one(data)
+            feedback_id = str(feedback_doc.inserted_id)
+
+            # update the post
+            # add the id to the feedback field of the post
+            # depending on the id
+            posts.update_one({'_id': data['post_id']}, {'$addToSet': {
+                'feedbacks': feedback_id
+            }})
+
             return True
         except pymongo.errors.PyMongoError as e:
             print(e)
             return False
+
+    def feedback_fetch(self, data):
+        feedbacks = self.database['feedbacks']
+        result = feedbacks.find(data)
 
 
 #  we initialize a new connection to mongodb

@@ -88,7 +88,8 @@ def repository_view(name):
         }
 
         if not database.create_feedback(doc):
-            return abort(500)
+            return render_template('posts/post_single.html',
+                                   user_auth=user, feedback_error=True, post=database.post_fetch(name=name, user=user['user_name']))
 
         return redirect('/posts/' + name)
 

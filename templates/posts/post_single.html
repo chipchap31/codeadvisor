@@ -3,7 +3,7 @@
 
 <div class='col_7'>
   <div class='mt_20 align_center x_space-between'>
-    <a class='color_white' href='{{referrer}}'><i data-feather='arrow-left-circle'></i></a>
+    <a class='color_white' href='/posts'><i data-feather='arrow-left-circle'></i></a>
 
     </a>
   </div>
@@ -106,12 +106,22 @@
 
 
 </div>
+<div id='feedback_error' class="dialog {{ 'open' if feedback_error else None }}" >
+  <div class='inner'>
+    <h3>Warning!</h3>
+    <p>You can only add one feedback for each post.</p>
+    <div class="align_center">
+      <a href='/'></a>
+      <button role='toggleOpen' data-target='feedback_error' class="mt_20 button button_sm bg_red">Close</button>
+    </div>
+  </div>
+</div>
 <div id="dialog_{{ post['_id'] }}" class="dialog">
   <div class="inner">
     <h3>Sorry...</h3>
     <p>The live website for {{ post['name']}} is unvailable!</p>
     <div class="align_center">
-      <button class="mt_20 button button_sm bg_red" onclick="dialog.close({{ post['_id'] }})">Close</button>
+      <button class="mt_20 button button_sm bg_red">Close</button>
     </div>
   </div>
 
