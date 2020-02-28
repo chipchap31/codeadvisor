@@ -273,53 +273,50 @@ class Mongo:
             }
         """
         feedbacks = self.database['feedbacks']
+        id = {"_id": ObjectId(data['_id'])}
 
-        # like = bool(feedbacks.find_one({
-        #     'like': {
-        #         "$in": [data['_user']]
-        #     },
-        #     '_id': ObjectId(data['_id'])
-        # }))
-
-        # dislike = bool(feedbacks.find_one({
-        #     'dislike': {
-        #         "$in": [data['_user']]
-        #     },
-        #     '_id': ObjectId(data['_id'])
-        # }))
-
-        # feedbacks.update_one(
-        #     {"_id": data['_id']},
-        #     {
-        #         'like': {
-        #             '$addToSet' if data['impression'] == 'like' else "$pull": {
-        #                 data['_user']
-        #             }
-        #         },
-        #         'dislike': {
-        #             '$addToSet' if data['impression'] == 'dislike' else "$pull": {
-        #                 data['_user']
-        #             }
-
-        #         }
-        #     }
-        # )
-        feedbacks.update_one({
-            '_id': ObjectId(data['_id'])
-        },
-            {'$addToSet' if data['impression'] == 'like' else '$pull': {
-                "like": data['_user']
+        # check if the user id is already in like array
+        like = bool(feedbacks.find_one({
+            'like': {
+                "$in": [data['_user']]
             },
-            '$addToSet' if data['impression'] == 'dislike' else '$pull': {
-                'dislike': data['_user']
-            }})
-        # feedbacks.update_one({'_id': ObjectId(data['_id'])}, {
-        #     "$addToSet": {
-        #         "like" if data['impression'] ==l 'ike'
-        #         else 'dislike': data['_user']
-        #     }
-        # })
-        # return {}
+            '_id': ObjectId(data['_id'])
+        }))
+
+        if like and data['impression'] == 'like':
+
+            feedbacks.update_one(id, {
+                "$pull": {
+                    "like": data['_user']
+                }
+            })
+            return
+
+        dislike = bool(feedbacks.find_one({
+            'dislike': {
+                "$in": [data['_user']]
+            },
+            '_id': ObjectId(data['_id'])
+        }))
+        # check if the dislike is already pressed
+        if dislike and data['impression'] == 'dislike':
+            feedbacks.update_one(id, {
+                "$pull": {
+                    "dislike": data['_user']
+                }
+            })
+            return
+
+        # if the user id is not yet added to like or dislike
+        feedbacks.update_one(id,
+                             {'$addToSet' if data['impression'] == 'like' else '$pull': {
+                                 "like": data['_user']
+                             },
+                                 '$addToSet' if data['impression'] == 'dislike' else '$pull': {
+                                 'dislike': data['_user']
+                             }})
+
+        return True
 
 
 #  we initialize a new connection to mongodb
