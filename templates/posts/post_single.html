@@ -14,7 +14,7 @@
         {% for label in post['stack_labels'] %}
         <span class="tag">{{ label }}</span>
         {% endfor %}
-        <h3 class="mt_10">{{ post['name'] }}</h3>
+        <h3 class="mt_10 bold">{{ post['name'] }}</h3>
 
         <em class="text_small color_grey">posted by
           <a class="color_grey" href="/users/{{ post['_user'] }}">{{ post['_user']}}</a> on
@@ -22,11 +22,11 @@
 
       </div>
       <div class="align_center">
-        
+
         {% if post['homepage'] %}
         <a target="_blank" class="icon_button_sm bg_green" href="{{ post['homepage'] }}"><i
             data-feather='globe'></i></a>
-       
+
         {% else %}
         <div role='toggleOpen' data-target='{{ post['_id'] }}' class="icon_button_sm bg_green">
           <i data-feather="globe"></i>
@@ -36,37 +36,115 @@
             data-feather='code'></i></a>
 
 
-
       </div>
-
-
     </div>
     <div class="mt_20 chart_wrapper">
       <canvas id="{{ post['name'] }}"></canvas>
     </div>
-   
+
     <h4 class='mt_20'>Description</h4>
     {% if not post.description %}
-      <span class='color_error'>This does not have any description.</span>
+    <span class='color_error'>This does not have any description.</span>
     {% else %}
-      <p class="mt_10">{{ post.description }}</p>
+    <p class="mt_10">{{ post.description }}</p>
 
     {% endif %}
+  </div>
+
+  
+
+  {# feedback collections #}
+  <div class='align_center mt_20'>
+    <h4>Feedbacks</h4><span class='color_grey ml_10'>({{ feedbacks | length}})</span>
+
+  </div>
+  {% if not feedbacks %}
+  <div>no feedback</div>
+  {% else %}
+  
+  {% for feedback in feedbacks %}
+  {% set feedback_loop = loop %}
+  <div class='bg_light_blue rounded p_30 mt_20'>
+    <div class='align_center x_space-between'>
+      <div>
+        <h4 class='bold'>{{ feedback['_username'] }}</h4>
+        <span class=' color_grey text_small'>posted at {{feedback['posted_at'].strftime("%d/%m/%Y") }}</span>
+      </div>
+
+      <div
+      role='toggleOpen'
+      data-target='feedback_collapse_{{ feedback_loop.index }},feedback{{feedback_loop.index}},second_collapse{{ feedback_loop.index  }}' 
+      id="feedback_collapse_{{ loop.index }}"  
+      class='toggle icon_button_sm bg_grey'><i data-feather='chevron-up'></i></div>
+    </div>  
+   
     
-    <h4 class='mt_20'>Feedbacks ({{post['feedbacks'] | length}})</h4>
+    
+    <div id='feedback{{feedback_loop.index}}' class='feedback_wrapper mt_10'>
+      
+       <div role='toggleOpen' data-target='feedback{{feedback_loop.index}},feedback_collapse_{{ feedback_loop.index }},second_collapse{{ feedback_loop.index  }}' 
+       class='feedback_button open icon_button_sm bg_green'><i data-feather='chevron-down'></i></div>
+      {% for obj in feedback['feedback'] %}
+      {% for key, value in obj.items() %}
 
-    {% if post['feedbacks'] | length <= 0 %}
-      <span class='color_error'>No available feedbacks at the moment</span>
-    {% endif %}
+      <div class='mb_10'>
+        <h5 class='bold'>{{ key }}</h5>
+        <span class='color_grey'>rate: {{ value.rate }} out of 10</span>
 
-    <h4 class='mt_30'>Your feedback</h4>
-    <div id='feedback' class="feedback_wrapper">
+        <div class='mt_10'>
+          {% if not value.advice %}
+          <p class='color_error'>No advice given for {{ key }}.</p>
+          {% else %}
+          <p>{{ value.advice }}<p>
+              {% endif %}
+        </div>
+
+
+      </div>
+
+      {% endfor %}
+
+      {% endfor %}
+     
+     
+    </div>
+    <div class='align_center x_space-between'>
+    <div class='mt_20 align_center'>
+      <div class='align_center'>
+        <i class='color_grey' data-feather='thumbs-up'></i>    
+        <span class='ml_10'>10</span>
+      </div>
+      <div class='align_center ml_20'>
+        <i class='color_grey' data-feather='thumbs-down'></i>
+        <span class='ml_10'>10</span>
+      </div>
+    </div>
+
+
+    <div
+      role='toggleOpen'
+      data-target='feedback_collapse_{{ feedback_loop.index  }},feedback{{feedback_loop.index}},second_collapse{{ feedback_loop.index  }}' 
+      id="second_collapse{{ feedback_loop.index}}"  
+      class='toggle icon_button_sm bg_grey'><i data-feather='chevron-up'></i></div>
+    </div>
+    
+    
+  </div>
+
+  
+  {% endfor %}
+  {% endif %}
+  {# Your feedback starts here #}
+  <h4 class='mt_30'>Your feedback</h4>
+  <div class='bg_light_blue rounded p_30 mt_20'>
+
+    <div id='feedback' class="feedback_wrapper ">
       <button role='toggleOpen' data-target='feedback' class='feedback_button button open button_sm bg_green'
         type='button'>Add feedback</button>
-      
+
       <p class='color_grey'>Please rate the following languages from 1 - 10 being 10 is the highest and depending on the
         following:</p>
-      
+
       <ul class='list'>
         <li class='color_grey mt_10'>Appropriate use of each language.</li>
         <li class='color_grey mt_10'>Proper indentations.</li>
@@ -74,7 +152,7 @@
         <li class='color_grey mt_10'>Code structure.</li>
         <li class='color_grey mt_10'>Validity</li>
       </ul>
-     
+
       <form class='mt_20' action='/posts/{{ post["name"]}}' method='POST'>
         {% for label in post['stack_labels'] %}
         {% set label_loop = loop %}
@@ -88,25 +166,31 @@
           {% endfor %}
         </div>
         <label class='mt_30'>Share some advice and online resources on what to work on.</label>
-        <textarea placeholder='Type your message here...' class='bg_white rounded mt_10' name="desc{{ label_loop.index}}"></textarea>
+        <textarea placeholder='Type your message here...' class='bg_white rounded mt_10'
+          name="advice{{ label_loop.index}}"></textarea>
         {% endfor %}
         <div class='mt_20 d_flex'>
-          <button data-target='feedback' type='button' role='toggleOpen' class='button button_sm bg_grey mr_10'>Cancel</button>
-          <button  class='button button_sm bg_green' type='submit'>Post feedback</button>
-     
-        </div>
-          <input type='hidden' name='labels' value="{{ post['stack_labels'] }}">
-          <input type='hidden' name='name' value="{{ post['name'] }}">
-          <input type='hidden' name='id' value="{{ post['_id'] }}">
-         </form>
-    </div>
+          <button data-target='feedback' type='button' role='toggleOpen'
+            class='button button_sm bg_grey mr_10'>Cancel</button>
+          <button class='button button_sm bg_green' type='submit'>Post feedback</button>
 
+        </div>
+        <input type='hidden' name='labels' value="{{ post['stack_labels'] }}">
+        <input type='hidden' name='name' value="{{ post['name'] }}">
+        <input type='hidden' name='id' value="{{ post['_id'] }}">
+        <input type='hidden' name='developed_by' value="{{ post['_user'] }}">
+      </form>
+    </div>
 
   </div>
 
 
 </div>
-<div id='feedback_error' class="dialog {{ 'open' if feedback_error else None }}" >
+
+
+  
+
+<div id='feedback_error' class="dialog {{ 'open' if feedback_error else None }}">
   <div class='inner'>
     <h3>Warning!</h3>
     <p>You can only add one feedback for each post.</p>

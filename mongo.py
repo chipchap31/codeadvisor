@@ -261,6 +261,7 @@ class Mongo:
     def feedback_fetch(self, data):
         feedbacks = self.database['feedbacks']
         result = feedbacks.find(data)
+        return result
 
 
 #  we initialize a new connection to mongodb

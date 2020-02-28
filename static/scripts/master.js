@@ -84,8 +84,6 @@ var toggleOpen = (function () {
 
 		Array.from(targets).forEach(function (element) {
 			// for each target add event listener
-
-
 			element.addEventListener('click', onClickElement)
 		})
 
@@ -94,11 +92,14 @@ var toggleOpen = (function () {
 			// get the element to add the open or close 
 			// target to toggle
 			// get attribute
-			var elementToToggle = document.getElementById(event.target.getAttribute("data-target"))
-			if (elementToToggle.classList.contains('open')) {
-				elementToToggle.classList.remove('open')
-			} else {
-				elementToToggle.classList.add('open')
+			var targetArray = event.target.getAttribute("data-target").split(',');
+
+			for (let target of targetArray) {
+				target = document.getElementById(target)
+				var isOpen = target.classList.contains('open')
+
+				isOpen ? target.classList.remove('open') : target.classList.add('open')
+
 			}
 		}
 
@@ -108,10 +109,6 @@ var toggleOpen = (function () {
 		init
 	}
 })()
-
-function onFeedbackPost() {
-
-}
 
 
 document.addEventListener('DOMContentLoaded', function () {

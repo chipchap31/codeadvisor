@@ -73,7 +73,7 @@ def repository_view(name):
             feedback_arr.append({
                 label: {
                     "rate": int(data['rate%s' % index]),
-                    "description": data['desc%s' % index]
+                    "advice": data['advice%s' % index]
                 }
 
             })
@@ -84,7 +84,10 @@ def repository_view(name):
             'post_name': data['name'],
             'post_id': int(data['id']),
             '_user': user['_id'],
-            'posted_at': datetime.now()
+            '_username': user['user_name'],
+            'posted_at': datetime.now(),
+            'likes': 0,
+            'dislikes': 0
         }
 
         if not database.create_feedback(doc):
@@ -93,5 +96,9 @@ def repository_view(name):
 
         return redirect('/posts/' + name)
 
+    # get the feedback for this posts
+
+    feedbacks = list(database.feedback_fetch({'post_name': name}))
+    print(feedbacks)
     return render_template('posts/post_single.html', user_auth=user, referrer=request.referrer, post=database.post_fetch(
-        name=name, user=user['user_name']))
+        name=name, user=user['user_name']), feedbacks=feedbacks)
