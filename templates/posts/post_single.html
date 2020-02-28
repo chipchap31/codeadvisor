@@ -71,18 +71,14 @@
         <span class=' color_grey text_small'>posted at {{feedback['posted_at'].strftime("%d/%m/%Y") }}</span>
       </div>
 
-      <div
-      role='toggleOpen'
-      data-target='feedback_collapse_{{ feedback_loop.index }},feedback{{feedback_loop.index}},second_collapse{{ feedback_loop.index  }}' 
-      id="feedback_collapse_{{ loop.index }}"  
-      class='toggle icon_button_sm bg_grey'><i data-feather='chevron-up'></i></div>
+      <i data-feather='more-vertical'></i>
     </div>  
    
     
     
     <div id='feedback{{feedback_loop.index}}' class='feedback_wrapper mt_10'>
       
-       <div role='toggleOpen' data-target='feedback{{feedback_loop.index}},feedback_collapse_{{ feedback_loop.index }},second_collapse{{ feedback_loop.index  }}' 
+       <div role='toggleOpen' data-target='feedback{{feedback_loop.index}},second_collapse{{ feedback_loop.index  }}' 
        class='feedback_button open icon_button_sm bg_green'><i data-feather='chevron-down'></i></div>
       {% for obj in feedback['feedback'] %}
       {% for key, value in obj.items() %}
@@ -111,29 +107,26 @@
     <div class='align_center x_space-between'>
     <div class='mt_20 align_center'>
       <div class='align_center'>
-        <i class='color_grey' data-feather='thumbs-up'></i>    
-        <span class='ml_10'>10</span>
+        <i onclick="server.post({path: '/posts/{{ feedback['_id']}}/like', body: null})" class='color_grey' data-feather='thumbs-up'></i>    
+        <span class='ml_10'>{{feedback['like'] | length}}</span>
       </div>
       <div class='align_center ml_20'>
-        <i class='color_grey' data-feather='thumbs-down'></i>
-        <span class='ml_10'>10</span>
+        <i
+        onclick="server.post({path: '/posts/{{ feedback['_id']}}/dislike', body: null})"
+         class='color_grey' data-feather='thumbs-down'></i>
+        <span class='ml_10'>{{feedback['dislike'] | length}}</span>
       </div>
     </div>
-
-
     <div
       role='toggleOpen'
-      data-target='feedback_collapse_{{ feedback_loop.index  }},feedback{{feedback_loop.index}},second_collapse{{ feedback_loop.index  }}' 
+      data-target='feedback{{feedback_loop.index}},second_collapse{{ feedback_loop.index  }}' 
       id="second_collapse{{ feedback_loop.index}}"  
-      class='toggle icon_button_sm bg_grey'><i data-feather='chevron-up'></i></div>
+      class='toggle icon_button_sm bg_green'><i data-feather='chevron-up'></i></div>
     </div>
-    
-    
   </div>
-
-  
   {% endfor %}
   {% endif %}
+
   {# Your feedback starts here #}
   <h4 class='mt_30'>Your feedback</h4>
   <div class='bg_light_blue rounded p_30 mt_20'>
@@ -162,7 +155,6 @@
           <div class='align_center mr_10'>
             <input value='{{i}}' name="rate{{label_loop.index}}" required type='radio'><span>{{i}}</span>
           </div>
-
           {% endfor %}
         </div>
         <label class='mt_30'>Share some advice and online resources on what to work on.</label>

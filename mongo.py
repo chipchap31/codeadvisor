@@ -214,13 +214,13 @@ class Mongo:
             return False
 
     def create_feedback(self, data):
-        """Inserts a feedback to a collection 
+        """Inserts a feedback to a collection
 
             Args:
             data: dictionary to be inserted to feedback collection
 
             typical use:
-                @ post_routes.py 
+                @ post_routes.py
                 doc = {
                         'feedback': List,
                         'post_name': String,
@@ -232,7 +232,7 @@ class Mongo:
 
 
             Returns:
-                Boolean - true if success and then false if there 
+                Boolean - true if success and then false if there
                 are any errors.
         """
         feedbacks = self.database['feedbacks']
@@ -262,6 +262,64 @@ class Mongo:
         feedbacks = self.database['feedbacks']
         result = feedbacks.find(data)
         return result
+
+    def feedback_impression(self, data):
+        """
+        typical use:
+            {
+                '_user': user['_id'],
+                '_id': feedback_id,
+                'impression': impression
+            }
+        """
+        feedbacks = self.database['feedbacks']
+
+        # like = bool(feedbacks.find_one({
+        #     'like': {
+        #         "$in": [data['_user']]
+        #     },
+        #     '_id': ObjectId(data['_id'])
+        # }))
+
+        # dislike = bool(feedbacks.find_one({
+        #     'dislike': {
+        #         "$in": [data['_user']]
+        #     },
+        #     '_id': ObjectId(data['_id'])
+        # }))
+
+        # feedbacks.update_one(
+        #     {"_id": data['_id']},
+        #     {
+        #         'like': {
+        #             '$addToSet' if data['impression'] == 'like' else "$pull": {
+        #                 data['_user']
+        #             }
+        #         },
+        #         'dislike': {
+        #             '$addToSet' if data['impression'] == 'dislike' else "$pull": {
+        #                 data['_user']
+        #             }
+
+        #         }
+        #     }
+        # )
+        feedbacks.update_one({
+            '_id': ObjectId(data['_id'])
+        },
+            {'$addToSet' if data['impression'] == 'like' else '$pull': {
+                "like": data['_user']
+            },
+            '$addToSet' if data['impression'] == 'dislike' else '$pull': {
+                'dislike': data['_user']
+            }})
+        # feedbacks.update_one({'_id': ObjectId(data['_id'])}, {
+        #     "$addToSet": {
+        #         "like" if data['impression'] ==l 'ike'
+        #         else 'dislike': data['_user']
+        #     }
+        # })
+        # return {}
 
 
 #  we initialize a new connection to mongodb

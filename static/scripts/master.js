@@ -59,7 +59,7 @@ var server = (function () {
 					"Content-Type": "application/json",
 					"Access-Control-Origin": "*"
 				},
-				body: JSON.stringify(body)
+				body: JSON.stringify(data.body | null)
 			})
 			.then(function (res) {
 				return res.json();

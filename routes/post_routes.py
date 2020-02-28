@@ -86,8 +86,8 @@ def repository_view(name):
             '_user': user['_id'],
             '_username': user['user_name'],
             'posted_at': datetime.now(),
-            'likes': 0,
-            'dislikes': 0
+            'like': [],
+            'dislike': []
         }
 
         if not database.create_feedback(doc):
@@ -99,6 +99,20 @@ def repository_view(name):
     # get the feedback for this posts
 
     feedbacks = list(database.feedback_fetch({'post_name': name}))
-    print(feedbacks)
+
     return render_template('posts/post_single.html', user_auth=user, referrer=request.referrer, post=database.post_fetch(
         name=name, user=user['user_name']), feedbacks=feedbacks)
+
+
+@posts.route('/posts/<feedback_id>/<impression>', methods=["POST"])
+def feedback_option(feedback_id, impression):
+    user = require_login(request.cookies)
+
+    if not user:
+        return abort(401)
+    database.feedback_impression({
+        '_user': user['_id'],
+        '_id': feedback_id,
+        'impression': impression
+    })
+    return {}
