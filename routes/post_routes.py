@@ -61,6 +61,7 @@ def repository_view(name):
         return abort(401)
 
     if request.method == "POST":
+        # Creates a feedback if the method is post
         data = request.form
         labels = ast.literal_eval(request.form.get('labels'))
         doc, feedback_arr = {}, []

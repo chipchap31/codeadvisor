@@ -1,6 +1,6 @@
 {% extends "view/base.html" %}
 {% block content %}
-<div class='col_7 mt_20'>
+<div class="col_7 mt_20 {{ 'padded-bottom' if config.posts | length < 2 }}">
 
   {% if config.posts|length > 0 %}
   <div class='d_flex align_center mt_20 '>
@@ -26,7 +26,7 @@
     </div>
 
   {% for project in config.posts %}
-  <div class="mt_20 bg_light_blue p_20 rounded">
+  <div class="mt_20 bg_light_blue p_20 rounded ">
     <div class="align_center x_space-between">
       <div>
         {% for label in project['stack_labels'] %}
@@ -60,7 +60,7 @@
 
         <a href="/posts/{{ project['name'] }}" class="button button_sm bg_green">View</a>
         {% if project['_user'] == user_auth['user_name'] %}
-        <button onclick="dialog.open({{ project['_id'] + 1  }})" class="icon_button_sm bg_light_grey color_grey ml_10"><i data-feather="trash"></i></button>
+        <button role='toggleOpen' data-target='dialog_{{ project["_id"] + 1}}' class="icon_button_sm bg_light_grey color_grey ml_10"><i data-feather="trash"></i></button>
         {% endif %}
       </div>
 
@@ -69,7 +69,7 @@
   </div>
 
 
-  <div id="{{ 'dialog_%s' % project['_id'] }}" class="dialog">
+  <div id="dialog_{{ project['_id'] }}" class="dialog">
     <div class="inner">
       <h3>Sorry...</h3>
       <p>The live website for {{ project['name']}} is unvailable!</p>
@@ -90,7 +90,7 @@
       <h3>This cannot be undone!</h3>
       <p>Are you sure you want to delete {{ project['name']}}?</p>
       <div>
-        <button class="button button_sm bg_green" onclick="dialog.close({{ project['_id'] + 1 }})">Cancel</button>
+        <button class="button button_sm bg_green" role='toggleOpen' data-target='dialog_{{ project["_id"] + 1}}'>Cancel</button>
         <a href="/posts/delete?id={{project['_id']}}&user={{ project['_user'] }}" class="mt_20 ml_10 button button_sm bg_grey">Delete</a>
       </div>
 

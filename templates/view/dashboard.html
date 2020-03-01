@@ -1,6 +1,6 @@
 {% extends "view/base.html" %}
 {% block content %}
-<div class='col_7 mt_20'>
+<div class="col_7 mt_20 {{ 'padded-bottom' if config.posts | length < 2 }}">
 
   {% if config.posts|length > 0 %}
 

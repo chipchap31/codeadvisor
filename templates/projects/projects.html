@@ -13,14 +13,16 @@
       </div>
       <div class="align_center">
         {% if project['homepage'] %}
-        <a class="icon_button_sm bg_green" target="_blank" href="{{ project['homepage'] }}"><i data-feather="globe"></i></a>
+        <a class="icon_button_sm bg_green" target="_blank" href="{{ project['homepage'] }}"><i
+            data-feather="globe"></i></a>
         {% else %}
         <div role='toggleOpen' data-target="dialog_{{ project['id']}}" class="icon_button_sm bg_green">
-          <i data-feather="globe" ></i>
+          <i data-feather="globe"></i>
         </div>
         {% endif %}
 
-        <a target="_blank" title='Source code' class="ml_10 icon_button_sm bg_green" href="{{ project['html_url'] }}"><i data-feather='code'></i></a>
+        <a target="_blank" title='Source code' class="ml_10 icon_button_sm bg_green" href="{{ project['html_url'] }}"><i
+            data-feather='code'></i></a>
 
       </div>
     </div>
@@ -28,17 +30,17 @@
     <p class="mt_10">{{ project.description or 'You did not provide any description for this repository.' }}</p>
     <div class="d_flex align_center x_space-between mt_20">
       <em class="mb_10 text_small color_grey">Last updated at {{ project.updated_at.strftime("%d/%m/%Y") }}</em>
-      
+
       <div class='d_flex'>
 
-        
+
         <a href="/projects/{{project['name']}}" class="button button_sm bg_green">View</a>
-        
+
         <form class="hidden" method="POST" action="/projects/{{project['name']}}">
           <button class="button button_sm bg_grey ml_10" type="submit">Post</button>
         </form>
       </div>
-      
+
     </div>
 
   </div>
@@ -50,7 +52,11 @@
       <div>
         <a target="_blank" class="mt_20 button button_sm bg_green" href="{{ project['html_url'] }}">Add live website</a>
 
-        <button type="button" class="mt_20 ml_10 button button_sm bg_red" onclick="dialog.close({{ project['id'] }})">Close</button>
+        <button 
+        role='toggleOpen'
+        data-target="dialog_{{ project['id'] }}"
+        type="button" 
+        class="mt_20 ml_10 button button_sm bg_red">Close</button>
       </div>
 
     </div>
@@ -59,21 +65,35 @@
   {% endfor %}
   <div class="mt_20 align_center x_center">
     {% if config.curr_page != 1 %}
-    <a href="{{config.ref}}" class="color_white align_center mr_30"><i class="mr_10" data-feather='arrow-left'></i>prev</a>
+    <a href="{{config.ref}}" class="color_white align_center mr_30"><i class="mr_10"
+        data-feather='arrow-left'></i>prev</a>
     {% endif %}
 
 
-   
+
     {% for i in range(1, config.pagination) %}
-    <a class="ml_10 color_white" href="/projects?page={{ i  }}&sort={{ 'posted_at' if config.curr_sort == 'posted_at' else config.curr_sort }}">{{ i }}</a>
+    <a class="ml_10 color_white"
+      href="/projects?page={{ i  }}&sort={{ 'posted_at' if config.curr_sort == 'posted_at' else config.curr_sort }}">{{ i }}</a>
     {% endfor %}
-    
+
     {% if config.render_next %}
-    <a title='next' href="/projects?page={{ config.curr_page }}&sort={{ 'posted_at' if config.curr_sort == 'posted_at' else config.curr_sort }}" class="ml_30 color_white align_center">next
+    <a title='next'
+      href="/projects?page={{ config.curr_page }}&sort={{ 'posted_at' if config.curr_sort == 'posted_at' else config.curr_sort }}"
+      class="ml_30 color_white align_center">next
       <i data-feather='arrow-right' class="ml_10"></i></a>
 
     {% endif %}
   </div>
+
+  {% else %}
+  <div class='mt_20 bg_light_blue rounded p_20 text_center'>
+    <h3 class='color_error'>Github is empty.</h3>
+    <p class='mt_20'>The username {{ user_auth['git_username'] }} does not contain any repository. If 
+    you entered the wrong username click the button below.</p>
+
+    <a class='button button_sm bg_green mt_30' href='/profile'>Edit username</a>
+  </div>
+
   {% endif %}
 </div>
 

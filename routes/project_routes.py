@@ -92,7 +92,8 @@ def project_repo(repo):
     }
 
     # checks if the method is post and the
-    if not database.create_post(data) and request.method == 'POST':
+    if request.method == 'POST':
+        database.create_post(data)
         return redirect('/posts')
 
     return render_template('projects/project_single.html', referrer=request.referrer, user_auth=user, project=data)

@@ -43,12 +43,14 @@
     </div>
 
     <h4 class='mt_20'>Description</h4>
+    <div class='mt_20'>
     {% if not post.description %}
     <span class='color_error'>This does not have any description.</span>
     {% else %}
     <p class="mt_10">{{ post.description }}</p>
-
     {% endif %}
+    </div>
+    
   </div>
 
   

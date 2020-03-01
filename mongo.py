@@ -187,8 +187,8 @@ class Mongo:
             # if no user defined, below is the default find
 
             # check if sort is defined0
-
-            return list(coll.find(user).sort([(sort, pymongo.ASCENDING if sort == 'posted_at' else pymongo.DESCENDING)]))
+            print(sort)
+            return list(coll.find(user).sort([(sort, pymongo.DESCENDING if sort == 'posted_at' else pymongo.ASCENDING)]))
 
         # the code block below finds a single post
         post = coll.find_one({'name': name})
