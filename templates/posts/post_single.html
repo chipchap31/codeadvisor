@@ -107,14 +107,37 @@
     <div class='align_center x_space-between'>
     <div class='mt_20 align_center'>
       <div class='align_center'>
-        <i onclick="server.post({path: '/posts/{{ feedback['_id']}}/like', body: null})" class='color_grey' data-feather='thumbs-up'></i>    
-        <span class='ml_10'>{{feedback['like'] | length}}</span>
+        
+        <div 
+        id='like{{ feedback_loop.index}}'
+        role='toggleLike'
+        data-target='dislike{{ feedback_loop.index }}'
+        
+        onclick="server.post({path: '/posts/{{ feedback['_id']}}/like', body: null})"
+        
+        class='icon color_grey {{ "open" if user_auth["_id"] in feedback["like"]}} like' >
+        
+        <i 
+        data-feather='thumbs-up'></i>    
+        </div>
+        
+      
+        <span id='like{{ feedback_loop.index }}_amount' class='ml_10'>{{feedback['like'] | length}}</span>
       </div>
       <div class='align_center ml_20'>
-        <i
+        <div
+        role='toggleLike'
+        data-target='like{{feedback_loop.index}}'
+
+        id='dislike{{ feedback_loop.index }}'
         onclick="server.post({path: '/posts/{{ feedback['_id']}}/dislike', body: null})"
-         class='color_grey' data-feather='thumbs-down'></i>
-        <span class='ml_10'>{{feedback['dislike'] | length}}</span>
+         class='icon color_grey {{ "open" if user_auth["_id"] in feedback["dislike"] }} dislike'
+        >
+        <i
+         data-feather='thumbs-down'></i>
+        </div>
+        
+        <span  id='dislike{{ feedback_loop.index }}_amount' class='ml_10'>{{feedback['dislike'] | length}}</span>
       </div>
     </div>
     <div

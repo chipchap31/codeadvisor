@@ -100,8 +100,10 @@ def repository_view(name):
 
     feedbacks = list(database.feedback_fetch({'post_name': name}))
 
-    return render_template('posts/post_single.html', user_auth=user, referrer=request.referrer, post=database.post_fetch(
-        name=name, user=user['user_name']), feedbacks=feedbacks)
+    return render_template('posts/post_single.html',
+                           user_auth=user,
+                           referrer=request.referrer, post=database.post_fetch(
+                               name=name, user=user['user_name']), feedbacks=feedbacks)
 
 
 @posts.route('/posts/<feedback_id>/<impression>', methods=["POST"])

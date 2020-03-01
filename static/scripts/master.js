@@ -110,9 +110,79 @@ var toggleOpen = (function () {
 	}
 })()
 
+var toggleLike = (function () {
+	function init() {
+		var targets = document.querySelectorAll("[role='toggleLike']");
+		Array.from(targets).forEach(function (element) {
+			// for each target add event listener
+			element.addEventListener('click', onClickElement)
+		})
 
+
+
+		function onClickElement(event) {
+
+			// when user clicks on like or dislike
+			// the block of code below runs
+
+
+			// get the data-target
+			var target = event.target.getAttribute("data-target");
+			target = document.getElementById(target);
+			var targetId = target.getAttribute('id');
+			var targetIsOpen = target.classList.contains('open');
+
+			// target amount of like or dislike 
+			var targetAmount = document.getElementById(`${targetId}_amount`);
+			var targetAmountNum = Number(targetAmount.textContent);
+
+
+			if (targetIsOpen) {
+				target.classList.remove('open')
+				targetAmount.innerHTML = targetAmountNum - 1
+			}
+
+			// when user clicks the trigger 
+			var trigger = event.target;
+			var triggerId = trigger.getAttribute('id');
+			// true if the trigger is already pressed.
+			var triggerIsOpen = trigger.classList.contains('open');
+
+			// triggerAmount is the amount it is pressed
+			// in the front end this could be either like or dislike amount
+
+			var triggerAmount = document.getElementById(`${triggerId}_amount`);
+			// convert the triggerAmount to Number
+			var triggerAmountNum = Number(triggerAmount.textContent)
+
+
+			if (triggerIsOpen) {
+				trigger.classList.remove('open')
+				// get the number of likes
+				triggerAmount.innerHTML = triggerAmountNum - 1
+			} else {
+				trigger.classList.add('open')
+				triggerAmount.innerHTML = triggerAmountNum + 1
+			}
+
+
+
+
+
+
+
+
+		}
+
+	}
+	return {
+		init
+	}
+
+})()
+// initialize all of the function after the document loaded
 document.addEventListener('DOMContentLoaded', function () {
 	// call the functions
 	toggleOpen.init()
-
+	toggleLike.init()
 })

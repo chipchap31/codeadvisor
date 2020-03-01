@@ -96,8 +96,3 @@ def project_repo(repo):
         return redirect('/posts')
 
     return render_template('projects/project_single.html', referrer=request.referrer, user_auth=user, project=data)
-
-
-@projects.route("/projects/load")
-def project_load():
-    return {"message": 'hello world'}
