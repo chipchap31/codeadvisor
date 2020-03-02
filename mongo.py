@@ -7,6 +7,7 @@ from datetime import datetime
 import bcrypt
 import json
 from bson.objectid import ObjectId
+from functools import *
 
 
 class Mongo:
@@ -317,6 +318,56 @@ class Mongo:
                              }})
 
         return True
+
+    def fetch_user(self, user_name):
+        user_collection = self.database['users']
+        post_collection = self.database['posts']
+        feeback_collection = self.database['feedbacks']
+
+        user_fetch = user_collection.find_one({"user_name": user_name})
+        if not user_fetch:
+            return False
+        curr_user = {
+            "first_name": user_fetch['first_name'],
+            "last_name": user_fetch['last_name'],
+            "email": user_fetch['email'],
+            "registered": user_fetch['registered'],
+            "git_username": user_fetch['git_username']
+        }
+
+        # fetch the posts of the user
+        post_amount = post_collection.find({'_user': user_name}).count()
+        feedback_amount = feeback_collection.find(
+            {'_username': user_name}).count()
+        feedback_info = tuple(feeback_collection.aggregate([
+            {
+                "$match": {
+                    "_username": user_name
+                }
+            },
+            {
+
+                "$project": {
+                    "like_amount": {"$size": "$like"},
+                    "dislike_amount": {"$size": "$dislike"}
+                }
+            }
+
+
+        ]))
+        # get the amount of likes and dislikes
+
+        def getTotal(target):
+            arr = map(lambda x: x[target], feedback_info)
+            return reduce(lambda x, y: x + y, arr)
+
+        return {
+            "post_amount": post_amount,
+            "user_fetch": curr_user,
+            'feedback_amount': feedback_amount,
+            'like_amount': getTotal('like_amount'),
+            'dislike_amount': getTotal('dislike_amount')
+        }
 
 
 #  we initialize a new connection to mongodb

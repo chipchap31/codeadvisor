@@ -1,0 +1,41 @@
+{% extends "view/base.html" %}
+{% block content %}
+
+<div class='col_7'>
+    <div class='p_20 bg_light_blue rounded mt_20'>
+        
+        <h2>Profile</h2>
+
+        <div class='mt_10 d_flex x_space-between'>
+            <div class='col_6'>
+                <h5 class='bold'>Name</h5>
+                <p>{{ curr_user.first_name + " " + curr_user.last_name }}</p>
+                
+                <h5 class='bold mt_10'>Github username</h5>
+                <p>{{ curr_user.git_username }}</p>
+
+                <h5 class='bold mt_10'>Email</h5>
+                <p>{{ curr_user.email }}</p>
+
+                <h5 class='bold mt_10'>Date joined</h5>
+                <p>{{ curr_user.registered.strftime("%d/%m/%Y")}}</p>
+            </div>
+            <div class='col_6 '>
+                <h5 class='bold'>Name</h5>
+                <p>{{ curr_user.first_name + " " + curr_user.last_name }}</p>
+                
+                <h5 class='bold mt_10'>Github username</h5>
+                <p>{{ curr_user.git_username }}</p>
+
+                <h5 class='bold mt_10'>Email</h5>
+                <p>{{ curr_user.email }}</p>
+
+                <h5 class='bold mt_10'>Date joined</h5>
+                <p>{{ curr_user.registered.strftime("%d/%m/%Y")}}</p>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+{% endblock%}
