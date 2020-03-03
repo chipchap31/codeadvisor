@@ -17,5 +17,4 @@ def profile(username):
     if not data:
         return {}
 
-    #render_template("users/profile.html", user_auth=user, curr_user=curr_user)
-    return data
+    return render_template("users/profile.html", user_auth=user, curr_user=data)

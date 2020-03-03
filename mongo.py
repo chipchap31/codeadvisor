@@ -37,8 +37,6 @@ class Mongo:
             # change this database when in production
             self.database = client["ms3_dev"]
 
-            print("Mongo is connected!")
-
             return None
         except pymongo.errors.ConnectionFailure as e:
             # print an error if the connection is a failure
@@ -188,7 +186,7 @@ class Mongo:
             # if no user defined, below is the default find
 
             # check if sort is defined0
-            print(sort)
+
             return list(coll.find(user).sort([(sort, pymongo.DESCENDING if sort == 'posted_at' else pymongo.ASCENDING)]))
 
         # the code block below finds a single post
@@ -332,7 +330,8 @@ class Mongo:
             "last_name": user_fetch['last_name'],
             "email": user_fetch['email'],
             "registered": user_fetch['registered'],
-            "git_username": user_fetch['git_username']
+            "git_username": user_fetch['git_username'],
+            "user_name": user_fetch['user_name']
         }
 
         # fetch the posts of the user
@@ -362,12 +361,43 @@ class Mongo:
             return reduce(lambda x, y: x + y, arr)
 
         return {
+            **curr_user,
             "post_amount": post_amount,
-            "user_fetch": curr_user,
             'feedback_amount': feedback_amount,
             'like_amount': getTotal('like_amount'),
             'dislike_amount': getTotal('dislike_amount')
         }
+
+    def getTopAdvisor(self):
+        feedback_collection = self.database['feedbacks']
+        feedback_aggregate = tuple(feedback_collection.aggregate([
+            {
+                "$project": {
+                    "like_amount": {
+                        "$size": "$like"
+                    },
+                    "user_name": "$_username"
+                }
+            }
+        ]))
+        unique_users = tuple(
+            set(map(lambda x: x['user_name'], feedback_aggregate)))
+
+        result = []
+
+        for user in unique_users:
+            # get the total likes for each user
+            array = tuple(filter(
+                lambda x: x['user_name'] == user, feedback_aggregate))
+
+            like_info = reduce(lambda x, y: {
+                'user_name': x['user_name'],
+                'like_amount': x['like_amount'] + y['like_amount']
+            }, array)
+
+            result.append(like_info)
+
+        return sorted(result, key=lambda x: x['like_amount'], reverse=True)[:2]
 
 
 #  we initialize a new connection to mongodb

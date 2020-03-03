@@ -5,33 +5,38 @@
     <div class='p_20 bg_light_blue rounded mt_20'>
         
         <h2>Profile</h2>
-
+      
         <div class='mt_10 d_flex x_space-between'>
             <div class='col_6'>
                 <h5 class='bold'>Name</h5>
-                <p>{{ curr_user.first_name + " " + curr_user.last_name }}</p>
+                <p class='mt_10'>{{ curr_user.first_name + " " + curr_user.last_name }}</p>
+                
+                <h5 class='bold mt_10'>Username</h5>
+                <p class='mt_10'>{{ curr_user.user_name}}</p>
                 
                 <h5 class='bold mt_10'>Github username</h5>
-                <p>{{ curr_user.git_username }}</p>
+                <p class='mt_10'>{{ curr_user.git_username }}</p>
 
                 <h5 class='bold mt_10'>Email</h5>
-                <p>{{ curr_user.email }}</p>
+                <p class='mt_10'>{{ curr_user.email }}</p>
 
-                <h5 class='bold mt_10'>Date joined</h5>
-                <p>{{ curr_user.registered.strftime("%d/%m/%Y")}}</p>
+                
             </div>
             <div class='col_6 '>
-                <h5 class='bold'>Name</h5>
-                <p>{{ curr_user.first_name + " " + curr_user.last_name }}</p>
+                <h5 class='bold'>Posts info</h5>
+                <p class='mt_10'><span class='bold'>Total: </span>{{ curr_user.post_amount}} posts</p>
                 
-                <h5 class='bold mt_10'>Github username</h5>
-                <p>{{ curr_user.git_username }}</p>
+                <h5 class='bold mt_10'>Feedback info</h5>
+                <p class='mt_10'><span class='bold'>Total</span>: {{ curr_user.feedback_amount }} 
+                <span class='bold'>Likes</span>: {{ curr_user.like_amount }} 
+                <span class='bold'>Dislikes</span>: {{ curr_user.dislike_amount }}
+                </p>    
 
-                <h5 class='bold mt_10'>Email</h5>
-                <p>{{ curr_user.email }}</p>
 
                 <h5 class='bold mt_10'>Date joined</h5>
-                <p>{{ curr_user.registered.strftime("%d/%m/%Y")}}</p>
+                <p class='mt_10'>{{ curr_user.registered.strftime("%d/%m/%Y")}}</p>
+
+                
             </div>
         </div>
     </div>

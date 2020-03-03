@@ -34,7 +34,7 @@
         {% endfor %}
         <h3 class="mt_10">{{ project['name'] }}</h3>
         <em class="text_small color_grey">posted by
-          <a class="color_grey" href="/users/{{ project['_user'] }}">{{ project['_user']}}</a> on {{ project['posted_at'].strftime("%d/%m/%Y") }}</em>
+          <a class="color_grey" href="/{{ project['_user'] }}">{{ project['_user']}}</a> on {{ project['posted_at'].strftime("%d/%m/%Y") }}</em>
       </div>
       <div class="d_flex">
         {% if project['homepage'] %}

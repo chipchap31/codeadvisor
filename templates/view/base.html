@@ -34,8 +34,8 @@
   </nav>
 
   <div class='container'>
-    <div class='row d_flex'>
-      <div class='col_2'>
+    <div class='row d_flex x_space-between'>
+      <div class='col_1'>
         <ul class="pt_20">
           <li class=""><a href="/" class="align_center color_white"><i class='mr_10 ' data-feather="home"></i>
               Home</a>
@@ -48,6 +48,12 @@
       </div>
       {% block content %}
       {% endblock %}
+      <div class='col_3 mt_20'>
+        <div class='bg_light_blue rounded p_20'>
+          <h3>Top Advisors</h3>
+
+        </div>
+      </div>
     </div>
   </div>
   <footer class="mt_20 p_30 bg_grey">

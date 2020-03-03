@@ -8,8 +8,7 @@ index = Blueprint('index', __name__)
 
 @index.route("/")
 def home():
-
-    # current limit of posts
+    print(list(database.getTopAdvisor()))
 
     # we define a reusable method @ require_login that redirects the
     # page depending on whether the user is logged In or not
