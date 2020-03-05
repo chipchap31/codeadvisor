@@ -183,11 +183,11 @@ class Mongo:
         user = {'_user': user} if user else {}
 
         if not name:
-            # if no user defined, below is the default find
+            # if no user defined below, find all
 
-            # check if sort is defined0
+            # check if sort is defined
 
-            return list(coll.find(user).sort([(sort, pymongo.DESCENDING if sort == 'posted_at' else pymongo.ASCENDING)]))
+            return list(coll.find(user).sort([(sort,  pymongo.DESCENDING)]))
 
         # the code block below finds a single post
         post = coll.find_one({'name': name})
@@ -368,7 +368,7 @@ class Mongo:
             'dislike_amount': getTotal('dislike_amount')
         }
 
-    def getTopAdvisor(self):
+    def get_top_advisor(self):
         feedback_collection = self.database['feedbacks']
         feedback_aggregate = tuple(feedback_collection.aggregate([
             {
@@ -397,7 +397,7 @@ class Mongo:
 
             result.append(like_info)
 
-        return sorted(result, key=lambda x: x['like_amount'], reverse=True)[:2]
+        return sorted(result, key=lambda x: x['like_amount'], reverse=True)[:3]
 
 
 #  we initialize a new connection to mongodb

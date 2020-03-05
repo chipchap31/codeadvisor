@@ -17,7 +17,6 @@ app.register_blueprint(projects)
 app.register_blueprint(posts)
 app.register_blueprint(feedback)
 app.register_blueprint(users)
-thisdict = dict(brand="Ford", model="Mustang", year=1964)
 
 
 @app.errorhandler(404)

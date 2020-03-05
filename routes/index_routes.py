@@ -8,7 +8,6 @@ index = Blueprint('index', __name__)
 
 @index.route("/")
 def home():
-    print(list(database.getTopAdvisor()))
 
     # we define a reusable method @ require_login that redirects the
     # page depending on whether the user is logged In or not
@@ -32,15 +31,17 @@ def home():
 
         posts_limit = posts[(5 * curr_page) - 5: ((5 * curr_page) - 5) * 2]
 
+    top_advisors = database.get_top_advisor()
     # below we render the dashboard
     return render_template('view/dashboard.html', user_auth=user, config={
         "posts": posts_limit,
         "posts_len": posts_len,
-        "pagination": round(posts_len / 5) + 2,
+        "pagination": round(posts_len / 5) + 1,
         'curr_page': curr_page,
         'ref': request.referrer,
         'curr_sort': request.args.get('sort') or 'posted_at',
         'render_next': (curr_page * 5) + len(posts_limit) - 5 < posts_len,
+        'top_advisors': top_advisors
     })
 
 
@@ -79,16 +80,3 @@ def logout():
     response = make_response(redirect("/"))
     response.delete_cookie('user_data')
     return response
-
-
-@index.route("/select_role")
-def select_role():
-    user = require_login(request.cookies)
-    if user:
-        role = request.args.get("role")
-        database.set_role(user['user_name'], role)
-        response = make_response(redirect("/"))
-        user['role'] = role
-
-        response.set_cookie("user_data", json.dumps(user))
-        return response

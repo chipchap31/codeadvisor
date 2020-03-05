@@ -4,7 +4,7 @@
 <div class='col_7'>
     <div class='p_20 bg_light_blue rounded mt_20'>
         
-        <h2>Profile</h2>
+        <h2 class="bar">Profile</h2>
       
         <div class='mt_10 d_flex x_space-between'>
             <div class='col_6'>
@@ -15,10 +15,16 @@
                 <p class='mt_10'>{{ curr_user.user_name}}</p>
                 
                 <h5 class='bold mt_10'>Github username</h5>
-                <p class='mt_10'>{{ curr_user.git_username }}</p>
+                <div class='mt_10'>
+                <a target='_blank' href='https://github.com/{{ curr_user.git_username}}' class='color_dark_blue mt_10'>github.com/{{ curr_user.git_username }}</a>
 
+                </div>
+                
                 <h5 class='bold mt_10'>Email</h5>
-                <p class='mt_10'>{{ curr_user.email }}</p>
+                <div class='mt_10'>
+                <a target='_blank' href='mailto:{{ curr_user.email }}' class='color_dark_blue mt_10'>{{ curr_user.email }}</a>
+
+                </div>
 
                 
             </div>

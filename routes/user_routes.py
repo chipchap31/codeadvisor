@@ -3,7 +3,7 @@ from datetime import datetime
 
 
 from flask import Blueprint, render_template, request, redirect, make_response
-from middlewares.user_middlewares import require_student, require_login
+from middlewares.user_middlewares import require_login
 from mongo import database
 
 
@@ -16,5 +16,7 @@ def profile(username):
     data = database.fetch_user(username)
     if not data:
         return {}
-
-    return render_template("users/profile.html", user_auth=user, curr_user=data)
+    top_advisors = database.get_top_advisor()
+    return render_template("users/profile.html", config={
+        "top_advisors": top_advisors
+    }, referrer=request.referrer, user_auth=user, curr_user=data)

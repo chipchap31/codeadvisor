@@ -2,12 +2,13 @@
 {% block content %}
 
 <div class='col_7'>
+  <h2 class='color_white mt_20'>Github repositories</h2>
   {% if config.projects | length > 0 %}
   {% for project in config.projects %}
   <div class="mt_20 bg_light_blue p_20 rounded">
     <div class="align_center x_space-between">
       <div>
-        <h3 class="bar">{{ project['name'] }}</h3>
+        <h3 class="bar color_indigo">{{ project['name'] }}</h3>
         <span class="text_small color_grey">Language: {{ project['language'] }}</span>
 
       </div>
@@ -70,15 +71,20 @@
     {% endif %}
 
 
-
+    {% if config.render_next or config.curr_page != 1%}
     {% for i in range(1, config.pagination) %}
     <a class="ml_10 color_white"
       href="/projects?page={{ i  }}&sort={{ 'posted_at' if config.curr_sort == 'posted_at' else config.curr_sort }}">{{ i }}</a>
     {% endfor %}
+    {% endif %}
+    
+    
+
+
 
     {% if config.render_next %}
     <a title='next'
-      href="/projects?page={{ config.curr_page }}&sort={{ 'posted_at' if config.curr_sort == 'posted_at' else config.curr_sort }}"
+      href="/projects?page={{ config.curr_page + 1  }}&sort={{ 'posted_at' if config.curr_sort == 'posted_at' else config.curr_sort }}"
       class="ml_30 color_white align_center">next
       <i data-feather='arrow-right' class="ml_10"></i></a>
 

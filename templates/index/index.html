@@ -2,9 +2,62 @@
 {% block content %}
 
 <header>
-  <div class='container'>
-    hello hero
+  <div class='container d_flex x_center  mt_60'>
+    <div class="col_5">
+      <h1 class='bar'>Code Advisor</h1>
+      <p class='color_white'>Share your codes and get instant feedback!</p>
+      <a href='/register' class='button button_md bg_green mt_30'>Get started!</a>
+    </div>
+
+    <div class='col_5'>
+      <img src="{{ url_for('static', filename='images/people-coding.jpg')}}">
+    </div>
   </div>
 </header>
+
+<section id='about' class='bg_orange mt_100'>
+  <div class="container">
+    <div class='inner bg_light_blue rounded p_60 col_5'>
+      <h2 class='bar'>About</h3>
+        <div class='mt_20 text_center'>
+          <p>Code advisor is a platform for students where they can share their codes from Github and learn from the
+            feedbacks of fellow students.</p>
+          <p class='mt_10'>It is a platform where students can showcase their knowledge.</p>
+        </div>
+    </div>
+  </div>
+
+</section>
+
+<section id='testimonial' class='m'>
+  <div class='container'>
+    <div class='mt_20 text_center'>
+      <h2>Testimonial</h2>
+      <p class='color_white'>What does people say about Code Advisor?</p>
+    </div>
+    <div class='row mt_40 d_flex x_space-around'>
+      <div class='col_4 m_10 bg_light_blue p_20 rounded'>
+      <h3 class='bar mb_10'>Mayer R.</h3>
+        <p>"We're loving it. Code advisor is the real deal! It's really wonderful."</p>
+                   
+      </div>
+
+      <div class='col_4 m_10 bg_light_blue p_20 rounded'>
+      <h3 class='bar mb_10'>Hazel V.</h3>
+        <p>"We have no regrets! I will let my mum know about this, 
+        she could really make use of code advisor! I will recommend you to my colleagues. The very best."</p>
+        
+      </div>
+
+      <div class='col_4 m_10 bg_light_blue p_20 rounded'>
+      
+        <h3 class='bar mb_10'>Erasmus N.</h3>
+        <p>"Thanks to code advisor, we've just launched our 5th website!"</p>
+        
+      </div>
+    </div>
+
+  </div>
+</section>
 
 {% endblock %}

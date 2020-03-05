@@ -33,7 +33,7 @@
         {% for label in project['stack_labels'] %}
         <span class="tag">{{ label }}</span>
         {% endfor %}
-        <h3 class="mt_10">{{ project['name'] }}</h3>
+        <h3 class="mt_10 color_indigo">{{ project['name'] }}</h3>
         <em class="text_small color_grey">posted by
           <a class="color_grey" href="/{{ project['_user'] }}">{{ project['_user']}}</a> on {{ project['posted_at'].strftime("%d/%m/%Y") }}</em>
 
@@ -84,9 +84,9 @@
     <a href="{{config.ref}}" class="color_white align_center mr_30"><i class="mr_10" data-feather='arrow-left'></i>prev</a>
     {% endif %}
     
-    {% if config.curr_page != 1 %}
+    {% if config.render_next or config.curr_page != 1%}
     {% for i in range(1,config.pagination) %}
-    <a class="ml_10 color_white" href="/?page={{ i  }}&sort={{ 'posted_at' if config.curr_sort == 'posted_at' else config.curr_sort }}">{{ i }}</a>
+      <a class="ml_10 color_white" href="/?page={{ i  }}&sort={{ 'posted_at' if config.curr_sort == 'posted_at' else config.curr_sort }}">{{ i }}</a>
     {% endfor %}
     {% endif %}
     
@@ -102,7 +102,6 @@
     <p>Be the first one to post a project!</p>
     <div class='d_flex x_center'>
     <a class='button  align_center  button_sm bg_green mt_30' href='/projects'>Browse projects <i data-feather='arrow-right'></i></a>
-
     </div>
      </div>
   {% endif %}

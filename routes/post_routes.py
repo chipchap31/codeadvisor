@@ -29,6 +29,8 @@ def post_fetch():
     else:
         posts_limit = posts[(5 * curr_page) - 5: ((5 * curr_page) - 5) * 2]
 
+    top_advisors = database.get_top_advisor()
+
     return render_template('posts/posts.html', user_auth=user, config={
         'posts': posts_limit,
         'posts_len': posts_len,
@@ -37,7 +39,7 @@ def post_fetch():
         'ref': request.referrer,
         'curr_sort': request.args.get('sort') or 'posted_at',
         'render_next': (curr_page * 5) + len(posts_limit) - 5 < posts_len,
-
+        "top_advisors": top_advisors
     })
 
 
@@ -101,7 +103,12 @@ def repository_view(name):
 
     feedbacks = list(database.feedback_fetch({'post_name': name}))
 
+    top_advisors = database.get_top_advisor()
+
     return render_template('posts/post_single.html',
+                           config={
+                               "top_advisors": top_advisors
+                           },
                            user_auth=user,
                            referrer=request.referrer, post=database.post_fetch(
                                name=name, user=user['user_name']), feedbacks=feedbacks)

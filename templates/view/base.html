@@ -18,7 +18,8 @@
       <a href='/' class='logo open color_white'>codeadvisor</a>
       <div class='account color_white '>
         <ul>
-          <li class="dropdown"><a class="align_center color_white decor-none" href="/{{user_auth['user_name']}}">{{user_auth["user_name"]}}
+          <li class="dropdown"><a class="align_center color_white decor-none"
+              href="/{{user_auth['user_name']}}">{{user_auth["user_name"]}}
               <i data-feather="chevron-down"></i></a>
             <ul>
               <li><a class="color_white decor_none" href="/{{user_auth['user_name']}}">Profile</a></li>
@@ -40,18 +41,27 @@
           <li class=""><a href="/" class="align_center color_white"><i class='mr_10 ' data-feather="home"></i>
               Home</a>
           </li>
-          
-          <li class="mt_20"><a href="/posts" class="align_center color_white"><i class='mr_10' data-feather="droplet"></i>Posts</a></li>
-          <li class="mt_20"><a href="/projects" class="align_center color_white"><i class='mr_10' data-feather="file"></i>Projects</a></li>
-        
+
+          <li class="mt_20"><a href="/posts" class="align_center color_white"><i class='mr_10'
+                data-feather="droplet"></i>Posts</a></li>
+          <li class="mt_20"><a href="/projects" class="align_center color_white"><i class='mr_10'
+                data-feather="file"></i>Projects</a></li>
+
         </ul>
       </div>
       {% block content %}
       {% endblock %}
       <div class='col_3 mt_20'>
-        <div class='bg_light_blue rounded p_20'>
-          <h3>Top Advisors</h3>
-
+        <h3 class='color_white'>Top Advisors</h3>
+        <div class='bg_light_blue rounded mt_20 p_20'>
+          <ul>
+          {% for user in config.top_advisors %}
+            <li class="{{'mb_10' if loop.length != loop.index }} align_center x_space-between">
+            <span>{{ loop.index }}. <a class='color_dark_blue' href="/{{ user.user_name }}">{{user.user_name}}</a></span>
+            <span>Likes {{ user.like_amount }}</span>
+            </li>
+          {% endfor %}
+          </ul>
         </div>
       </div>
     </div>

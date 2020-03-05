@@ -3,7 +3,7 @@ from datetime import datetime
 
 import requests
 from flask import Blueprint, render_template, request, redirect, make_response
-from middlewares.user_middlewares import require_student, require_login
+from middlewares.user_middlewares import require_login
 from mongo import database
 from github import git_request
 
@@ -40,7 +40,7 @@ def project():
         f"/users/{user['git_username']}/repos")))
     # this is the number of the public repos of the current user
     projects_len = len(projects)
-    print(round(projects_len / 5))
+
     curr_page = int(request.args.get('page')
                     ) if request.args.get('page') else 1
 
@@ -49,6 +49,9 @@ def project():
     else:
         project_limit = projects[(5 * curr_page) -
                                  5: ((5 * curr_page) - 5) * 2]
+
+    top_advisors = database.get_top_advisor()
+
     return render_template('projects/projects.html', user_auth=user, config={
         "projects": project_limit,
         "projects_len": projects_len,
@@ -57,6 +60,7 @@ def project():
         'ref': request.referrer,
         'curr_sort': request.args.get('sort') or 'posted_at',
         'render_next': (curr_page * 5) + len(project_limit) - 5 < projects_len,
+        "top_advisors": top_advisors
     })
 
 
@@ -96,4 +100,10 @@ def project_repo(repo):
         database.create_post(data)
         return redirect('/posts')
 
-    return render_template('projects/project_single.html', referrer=request.referrer, user_auth=user, project=data)
+    top_advisors = database.get_top_advisor()
+
+    return render_template('projects/project_single.html',
+                           config={
+                               "top_advisors": database.get_top_advisor()
+                           },
+                           referrer=request.referrer, user_auth=user, project=data)

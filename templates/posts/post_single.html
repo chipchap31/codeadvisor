@@ -14,7 +14,7 @@
         {% for label in post['stack_labels'] %}
         <span class="tag">{{ label }}</span>
         {% endfor %}
-        <h3 class="mt_10 bold">{{ post['name'] }}</h3>
+        <h3 class="mt_10 color_indigo">{{ post['name'] }}</h3>
 
         <em class="text_small color_grey">posted by
           <a class="color_grey" href="/users/{{ post['_user'] }}">{{ post['_user']}}</a> on
@@ -28,7 +28,7 @@
             data-feather='globe'></i></a>
 
         {% else %}
-        <div role='toggleOpen' data-target='{{ post['_id'] }}' class="icon_button_sm bg_green">
+        <div role='toggleOpen' data-target='dialog_{{ post['_id'] }}' class="icon_button_sm bg_green">
           <i data-feather="globe"></i>
         </div>
         {% endif %}
@@ -42,51 +42,54 @@
       <canvas id="{{ post['name'] }}"></canvas>
     </div>
 
-    <h4 class='mt_20'>Description</h4>
+    <h4 class='mt_20 color_indigo'>Description</h4>
     <div class='mt_20'>
-    {% if not post.description %}
-    <span class='color_error'>This does not have any description.</span>
-    {% else %}
-    <p class="mt_10">{{ post.description }}</p>
-    {% endif %}
+      {% if not post.description %}
+      <span class='color_error'>This does not have any description.</span>
+      {% else %}
+      <p class="mt_10">{{ post.description }}</p>
+      {% endif %}
     </div>
-    
+
   </div>
 
-  
+
 
   {# feedback collections #}
   <div class='align_center mt_20'>
-    <h4>Feedbacks</h4><span class='color_grey ml_10'>({{ feedbacks | length}})</span>
+    <h4 class='color_white'>Feedbacks</h4><span class='color_white ml_10'>({{ feedbacks | length}})</span>
 
   </div>
   {% if not feedbacks %}
-  <div>no feedback</div>
+  <div class='bg_light_blue p_20 d_flex y_center mt_20 rounded f_column'> 
+    <h3>It's empty here!</h3>
+    <p>There are no feedbacks at the moment.</p>
+  </div>
   {% else %}
-  
+
   {% for feedback in feedbacks %}
   {% set feedback_loop = loop %}
   <div class='bg_light_blue rounded p_30 mt_20'>
     <div class='align_center x_space-between'>
       <div>
-        <h4 class='bold'>{{ feedback['_username'] }}</h4>
+        <h4><a class="color_indigo" href="/{{ feedback['_username'] }}">{{ feedback['_username'] }}</a></h4>
         <span class=' color_grey text_small'>posted at {{feedback['posted_at'].strftime("%d/%m/%Y") }}</span>
       </div>
 
       <i data-feather='more-vertical'></i>
-    </div>  
-   
-    
-    
+    </div>
+
+
+
     <div id='feedback{{feedback_loop.index}}' class='feedback_wrapper mt_10'>
-      
-       <div role='toggleOpen' data-target='feedback{{feedback_loop.index}},second_collapse{{ feedback_loop.index  }}' 
-       class='feedback_button open icon_button_sm bg_green'><i data-feather='chevron-down'></i></div>
+
+      <div role='toggleOpen' data-target='feedback{{feedback_loop.index}},second_collapse{{ feedback_loop.index  }}'
+        class='feedback_button open icon_button_sm bg_green'><i data-feather='chevron-down'></i></div>
       {% for obj in feedback['feedback'] %}
       {% for key, value in obj.items() %}
 
       <div class='mb_10'>
-        <h5 class='bold'>{{ key }}</h5>
+        <h5 class='color_indigo'>{{ key }}</h5>
         <span class='color_grey'>rate: {{ value.rate }} out of 10</span>
 
         <div class='mt_10'>
@@ -103,60 +106,46 @@
       {% endfor %}
 
       {% endfor %}
-     
-     
+
+
     </div>
     <div class='align_center x_space-between'>
-    <div class='mt_20 align_center'>
-      <div class='align_center'>
-        
-        <div 
-        id='like{{ feedback_loop.index}}'
-        role='toggleLike'
-        data-target='dislike{{ feedback_loop.index }}'
-        
-        onclick="server.post({path: '/posts/{{ feedback['_id']}}/like', body: null})"
-        
-        class='icon color_grey {{ "open" if user_auth["_id"] in feedback["like"]}} like' >
-        
-        <i 
-        data-feather='thumbs-up'></i>    
-        </div>
-        
-      
-        <span id='like{{ feedback_loop.index }}_amount' class='ml_10'>{{feedback['like'] | length}}</span>
-      </div>
-      <div class='align_center ml_20'>
-        <div
-        role='toggleLike'
-        data-target='like{{feedback_loop.index}}'
+      <div class='mt_20 align_center'>
+        <div class='align_center'>
 
-        id='dislike{{ feedback_loop.index }}'
-        onclick="server.post({path: '/posts/{{ feedback['_id']}}/dislike', body: null})"
-         class='icon color_grey {{ "open" if user_auth["_id"] in feedback["dislike"] }} dislike'
-        >
-        <i
-         data-feather='thumbs-down'></i>
+          <div id='like{{ feedback_loop.index}}' role='toggleLike' data-target='dislike{{ feedback_loop.index }}'
+            onclick="server.post({path: '/posts/{{ feedback['_id']}}/like', body: null})"
+            class='icon color_grey {{ "open" if user_auth["_id"] in feedback["like"]}} like'>
+
+            <i data-feather='thumbs-up'></i>
+          </div>
+
+
+          <span id='like{{ feedback_loop.index }}_amount' class='ml_10'>{{feedback['like'] | length}}</span>
         </div>
-        
-        <span  id='dislike{{ feedback_loop.index }}_amount' class='ml_10'>{{feedback['dislike'] | length}}</span>
+        <div class='align_center ml_20'>
+          <div role='toggleLike' data-target='like{{feedback_loop.index}}' id='dislike{{ feedback_loop.index }}'
+            onclick="server.post({path: '/posts/{{ feedback['_id']}}/dislike', body: null})"
+            class='icon color_grey {{ "open" if user_auth["_id"] in feedback["dislike"] }} dislike'>
+            <i data-feather='thumbs-down'></i>
+          </div>
+
+          <span id='dislike{{ feedback_loop.index }}_amount' class='ml_10'>{{feedback['dislike'] | length}}</span>
+        </div>
       </div>
-    </div>
-    <div
-      role='toggleOpen'
-      data-target='feedback{{feedback_loop.index}},second_collapse{{ feedback_loop.index  }}' 
-      id="second_collapse{{ feedback_loop.index}}"  
-      class='toggle icon_button_sm bg_green'><i data-feather='chevron-up'></i></div>
+      <div role='toggleOpen' data-target='feedback{{feedback_loop.index}},second_collapse{{ feedback_loop.index  }}'
+        id="second_collapse{{ feedback_loop.index}}" class='toggle icon_button_sm bg_green'><i
+          data-feather='chevron-up'></i></div>
     </div>
   </div>
   {% endfor %}
   {% endif %}
 
   {# Your feedback starts here #}
-  <h4 class='mt_30'>Your feedback</h4>
+  <h4 class='mt_30 color_white'>Your feedback</h4>
   <div class='bg_light_blue rounded p_30 mt_20'>
 
-    <div id='feedback' class="feedback_wrapper ">
+    <div id='feedback' class="feedback_wrapper">
       <button role='toggleOpen' data-target='feedback' class='feedback_button button open button_sm bg_green'
         type='button'>Add feedback</button>
 
@@ -205,7 +194,7 @@
 </div>
 
 
-  
+
 
 <div id='feedback_error' class="dialog {{ 'open' if feedback_error else None }}">
   <div class='inner'>
@@ -219,10 +208,11 @@
 </div>
 <div id="dialog_{{ post['_id'] }}" class="dialog">
   <div class="inner">
-    <h3>Sorry...</h3>
+    <h3>Warning</h3>
     <p>The live website for {{ post['name']}} is unvailable!</p>
     <div class="align_center">
-      <button class="mt_20 button button_sm bg_red">Close</button>
+      <button role='toggleOpen' data-target="dialog_{{ post['_id'] }}"
+        class="mt_20 button button_sm bg_red">Close</button>
     </div>
   </div>
 
