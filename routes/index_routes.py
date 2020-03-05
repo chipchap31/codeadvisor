@@ -51,11 +51,13 @@ def register():
 
         # register a new user
         if database.register_user(request.form):
-            return "Registered"
+            return render_template('index/register_ok.html', config={
+                'user_name': request.form.get('user_name')
+            })
         else:
             return render_template("index/register.html", input=request.form, error=True,
                                    message=database.fetch_error())
-        return "Posted"
+
     return render_template("index/register.html")
 
 

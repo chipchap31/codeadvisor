@@ -127,7 +127,10 @@ class Mongo:
                 self.login_error["password"] = "Password does not match our record"
 
         # return the user found if didn't catch any error
+        if self.error:
+            return False
         # extract the data we want to save for the cookie
+
         cookie = {
 
             "_id": str(user_fetch["_id"]),
