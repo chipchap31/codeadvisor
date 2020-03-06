@@ -3,6 +3,7 @@ from flask import Blueprint, redirect, request, abort, render_template
 from middlewares.user_middlewares import require_login
 from mongo import database
 from datetime import datetime
+from math import ceil
 import ast
 posts = Blueprint('posts', __name__)
 
@@ -28,13 +29,13 @@ def post_fetch():
 
     else:
         posts_limit = posts[(5 * curr_page) - 5: ((5 * curr_page) - 5) * 2]
-
+    # get the info for the top advisors
     top_advisors = database.get_top_advisor()
 
     return render_template('posts/posts.html', user_auth=user, config={
         'posts': posts_limit,
         'posts_len': posts_len,
-        'pagination': round(posts_len / 5) + 2,
+        'pagination': ceil(posts_len / 5) + 2,
         'curr_page': curr_page,
         'ref': request.referrer,
         'curr_sort': request.args.get('sort') or 'posted_at',

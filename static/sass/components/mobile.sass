@@ -1,0 +1,42 @@
+/**
+ * Media query for iphone 6/7/8/8 plus and iphone X
+ **/
+@media only screen and (max-width: 420px)
+    [class*="col_"]
+        width: 100%
+    .container
+        width: 100%
+        max-width: 90%
+    #index-title
+        text-align: center
+        h1::before
+            left: 30px
+
+    #index-image
+        display: none
+    #about
+        .inner
+            top: 30px
+    #testimonial
+        .row
+            flex-direction: column
+            div
+                margin: 20px 0 0 0
+    .form_inline
+        flex-direction: column
+    .nav-dash, .dash-advisor
+        display: none
+    .project-item
+        flex-direction: column
+        align-items: start
+        .project-inner
+            margin-bottom: 20px
+
+    .radio_wrapper
+        flex-wrap: wrap
+        justify-content: space-around
+        div
+            margin: 10px
+    .dropdown
+        ul
+            left: -60px

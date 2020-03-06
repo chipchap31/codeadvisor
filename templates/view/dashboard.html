@@ -28,8 +28,8 @@
 
   {% for project in config.posts %}
   <div class="mt_20 bg_light_blue p_20 rounded">
-    <div class="align_center x_space-between">
-      <div>
+    <div class="project-item align_center x_space-between">
+      <div class='project-inner'>
         {% for label in project['stack_labels'] %}
         <span class="tag">{{ label }}</span>
         {% endfor %}

@@ -8,9 +8,9 @@
     </a>
   </div>
 
-  <div class='project_item  mt_20 bg_light_blue rounded p_30'>
-    <div class="align_center x_space-between">
-      <div>
+  <div class=' mt_20 bg_light_blue rounded p_30'>
+    <div class="project-item  align_center x_space-between">
+      <div class='project-inner'>
         {% for label in post['stack_labels'] %}
         <span class="tag">{{ label }}</span>
         {% endfor %}
@@ -76,7 +76,16 @@
         <span class=' color_grey text_small'>posted at {{feedback['posted_at'].strftime("%d/%m/%Y") }}</span>
       </div>
 
-      <i data-feather='more-vertical'></i>
+      
+
+      <ul>
+        <li class='dropdown'><i data-feather='more-vertical'></i>
+          <ul>
+              <li>Delete</li>
+          </ul>
+        </li>
+        
+      </ul>
     </div>
 
 
@@ -164,9 +173,9 @@
         {% for label in post['stack_labels'] %}
         {% set label_loop = loop %}
         <label class='mt_30'>Please choose the suitable rate for {{ label }} codes.</label>
-        <div class='d_flex mt_10'>
+        <div class='radio_wrapper d_flex mt_10'>
           {% for i in range(1, 11)%}
-          <div class='align_center mr_10'>
+          <div class='mt_10 align_center mr_10'>
             <input value='{{i}}' name="rate{{label_loop.index}}" required type='radio'><span>{{i}}</span>
           </div>
           {% endfor %}

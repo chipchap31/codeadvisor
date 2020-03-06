@@ -13,14 +13,13 @@
 </head>
 
 <body class="bg_blue">
-  <nav class='bg_indigo p_20'>
+  <nav class='bg_indigo py_20'>
     <div class='container d_flex x_space-between align_center'>
       <a href='/' class='logo color_white'>Code<span class='color_salomie'>a</span>dvisor</a>
       <div class='account color_white '>
         <ul>
-          <li class="dropdown"><a class="align_center color_white decor-none"
-              href="/{{user_auth['user_name']}}">{{user_auth["user_name"]}}
-              <i data-feather="chevron-down"></i></a>
+          <li class="dropdown align_center">{{user_auth["user_name"]}}
+              <i data-feather="chevron-down"></i>
             <ul>
               <li><a class="color_white decor_none" href="/{{user_auth['user_name']}}">Profile</a></li>
               <li><a class="color_white decor_none" href="/logout">Logout</a></li>
@@ -35,8 +34,8 @@
   </nav>
 
   <div class='container'>
-    <div class='row d_flex x_space-between'>
-      <div class='col_1'>
+    <div class='row dash d_flex x_space-between'>
+      <div class='col_1 nav-dash'>
         <ul class="pt_20">
           <li ><a href="/" class="align_center color_white"><i class='mr_10 ' data-feather="home"></i>
               Home</a>
@@ -51,7 +50,7 @@
       </div>
       {% block content %}
       {% endblock %}
-      <div class='col_3 mt_20'>
+      <div class='col_3 mt_20 dash-advisor'>
         <h3 class='color_white'>Top Advisors</h3>
         <div class='bg_light_blue rounded mt_20 p_20'>
           <ul>

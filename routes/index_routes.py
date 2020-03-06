@@ -2,7 +2,7 @@ from middlewares.user_middlewares import require_login
 from flask import Blueprint, render_template, request, make_response, redirect, abort
 from mongo import database
 import json
-
+from math import ceil
 index = Blueprint('index', __name__)
 
 
@@ -36,7 +36,7 @@ def home():
     return render_template('view/dashboard.html', user_auth=user, config={
         "posts": posts_limit,
         "posts_len": posts_len,
-        "pagination": round(posts_len / 5) + 1,
+        "pagination": ceil(posts_len / 5) + 1,
         'curr_page': curr_page,
         'ref': request.referrer,
         'curr_sort': request.args.get('sort') or 'posted_at',
@@ -79,6 +79,7 @@ def login():
 
 @index.route("/logout")
 def logout():
+    """Destroys the cookie defined by logging in"""
     response = make_response(redirect("/"))
     response.delete_cookie('user_data')
     return response

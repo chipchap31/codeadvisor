@@ -52,7 +52,9 @@ var doughnut = (function () {
 
 
 var server = (function () {
+
 	function post(data) {
+		// the server.post() creates a request to the server via POST
 		return fetch(data.path, {
 				method: "POST",
 				headers: {

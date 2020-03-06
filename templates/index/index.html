@@ -1,16 +1,16 @@
 {% extends "index/base.html" %}
 {% block content %}
 
-<header>
+<header >
   <div class='container d_flex x_center  mt_60'>
-    <div class="col_5">
+    <div id='index-title' class="col_5">
       <h1 class='bar'>Code Advisor</h1>
       <p class='color_white'>Share your codes and get instant feedback!</p>
       <a href='/register' class='button button_md bg_green mt_30'>Get started!</a>
     </div>
 
-    <div class='col_5'>
-      <img src="{{ url_for('static', filename='images/people-coding.jpg')}}">
+    <div id='index-image' class='col_5'>
+      <img  src="{{ url_for('static', filename='images/people-coding.jpg')}}">
     </div>
   </div>
 </header>
@@ -29,7 +29,7 @@
 
 </section>
 
-<section id='testimonial' class='m'>
+<section id='testimonial'>
   <div class='container'>
     <div class='mt_20 text_center'>
       <h2>Testimonial</h2>

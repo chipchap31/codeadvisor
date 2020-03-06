@@ -12,6 +12,7 @@ users = Blueprint('users', __name__)
 
 @users.route("/<username>")
 def profile(username):
+    """Renders the profile info of the user"""
     user = require_login(request.cookies)
     data = database.fetch_user(username)
     if not data:
