@@ -4,16 +4,18 @@
 <div class='col_7'>
   <div class='mt_20 align_center x_space-between'>
     <a class='color_white' href='/posts'><i data-feather='arrow-left-circle'></i></a>
-
     </a>
   </div>
 
   <div class=' mt_20 bg_light_blue rounded p_30'>
-    <div class="project-item  align_center x_space-between">
-      <div class='project-inner'>
-        {% for label in post['stack_labels'] %}
+    <div class='mb_10'>
+    {% for label in post['stack_labels'] %}
         <span class="tag">{{ label }}</span>
         {% endfor %}
+    </div>
+    <div class="project-item  align_center x_space-between">
+      <div class='project-inner'>
+        
         <h3 class="mt_10 color_indigo">{{ post['name'] }}</h3>
 
         <em class="text_small color_grey">posted by
@@ -61,7 +63,7 @@
 
   </div>
   {% if not feedbacks %}
-  <div class='bg_light_blue p_20 d_flex y_center mt_20 rounded f_column'> 
+  <div class='bg_light_blue p_20 d_flex y_center mt_20 rounded f_column'>
     <h3>It's empty here!</h3>
     <p>There are no feedbacks at the moment.</p>
   </div>
@@ -76,15 +78,15 @@
         <span class=' color_grey text_small'>posted at {{feedback['posted_at'].strftime("%d/%m/%Y") }}</span>
       </div>
 
-      
+
 
       <ul>
         <li class='dropdown'><i data-feather='more-vertical'></i>
           <ul>
-              <li>Delete</li>
+            <li>Delete</li>
           </ul>
         </li>
-        
+
       </ul>
     </div>
 

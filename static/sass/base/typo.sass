@@ -23,6 +23,36 @@ em
         position: absolute
         top: 25px
         li
+            cursor: pointer
+            width: 100px
+            height: 40px
+            text-align: center
+            line-height: 40px
+            background-color: white
+            a
+                display: block
+                color: $dark_blue
+            &:hover
+                background-color: #dee3e6
+
+        li:last-child
+            border-bottom-right-radius: 5px
+            border-bottom-left-radius: 5px
+        li:first-child
+            border-top-right-radius: 5px
+            border-top-left-radius: 5px
+    &:hover
+        ul
+            display: block
+
+.post-dropdown
+    position: relative
+    ul
+        display: none
+        position: absolute
+        top: 25px
+        li
+            cursor: pointer
             width: 100px
             height: 40px
             text-align: center

@@ -8,8 +8,11 @@
     <span class='mr_10 color_white'>Sort By:</span>
     <ul>
       <li class='dropdown'>
-        <a class='align_center color_white' href="/?page={{ config.curr_page }}&sort={{ 'posted_at' if config.curr_sort == 'posted_at' else config.curr_sort }}">
-          {{ 'Newest' if config.curr_sort == 'posted_at' else config.curr_sort }}<i data-feather="chevron-down"></i></a>
+       <div class='align_center color_white'>
+          {{ 'Newest' if config.curr_sort == 'posted_at' else config.curr_sort.title() }}<i
+            data-feather="chevron-down"></i>
+
+        </div> 
         <ul>
           <li>
             <a class='decor_none color_dark_blue' href='/?page={{ config.curr_page }}&sort=posted_at'>Newest</a>
@@ -28,11 +31,16 @@
 
   {% for project in config.posts %}
   <div class="mt_20 bg_light_blue p_20 rounded">
-    <div class="project-item align_center x_space-between">
-      <div class='project-inner'>
-        {% for label in project['stack_labels'] %}
+  <div class='mb_10'>
+    {% for label in project['stack_labels'] %}
         <span class="tag">{{ label }}</span>
         {% endfor %}
+    </div>
+    <div class="project-item align_center x_space-between">
+    
+    
+      <div class='project-inner'>
+        
         <h3 class="mt_10 color_indigo">{{ project['name'] }}</h3>
         <em class="text_small color_grey">posted by
           <a class="color_grey" href="/{{ project['_user'] }}">{{ project['_user']}}</a> on {{ project['posted_at'].strftime("%d/%m/%Y") }}</em>

@@ -22,3 +22,43 @@
     color: white
     border-radius: 5px
     padding: 2px
+.menu-mobile
+    display: none
+nav
+    z-index: 1
+
+#menu-container
+    transition: 200ms
+    position: fixed
+    top: 0
+    left: 0
+    opacity: 1
+    z-index: -2
+    opacity: 0
+    pointer-events: none
+    width: 100%
+    padding: 20px
+    background-color: $orange
+    li
+        margin-bottom: 20px
+        a
+            font-size: 23px
+
+#menu-container.open
+    opacity: 1
+    pointer-events: auto
+    z-index: 1
+
+#sticky-nav
+    transition: 200ms
+    position: fixed
+    top: 0
+    width: 100%
+    left: 0
+    opacity: 0
+    z-index: 99
+    pointer-events: none
+
+#sticky-nav.open
+    opacity: 1
+    pointer-events: auto

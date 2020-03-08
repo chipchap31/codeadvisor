@@ -12,14 +12,24 @@
   <script src="{{ url_for('static', filename='scripts/master.js') }}"></script>
 </head>
 
+
 <body class="bg_blue">
   <nav class='bg_indigo py_20'>
     <div class='container d_flex x_space-between align_center'>
-      <a href='/' class='logo color_white'>Code<span class='color_salomie'>a</span>dvisor</a>
+      <div class='align_center'>
+        <div onclick="toggleMenu.toggle()" class='icon color_white mr_10 menu-mobile'>
+          <i data-feather='menu'></i>
+
+        </div>
+
+
+        <a href='/' class='logo color_white'>Code<span class='color_salomie'>a</span>dvisor</a>
+
+      </div>
       <div class='account color_white '>
         <ul>
           <li class="dropdown align_center">{{user_auth["user_name"]}}
-              <i data-feather="chevron-down"></i>
+            <i data-feather="chevron-down"></i>
             <ul>
               <li><a class="color_white decor_none" href="/{{user_auth['user_name']}}">Profile</a></li>
               <li><a class="color_white decor_none" href="/logout">Logout</a></li>
@@ -31,13 +41,72 @@
       </div>
 
     </div>
-  </nav>
 
+
+    
+      <ul id='menu-container'>
+        <li>
+          <a class='color_white' href='/'>Home</a>
+        </li>
+        <li>
+          <a class='color_white' href='/posts'>Posts</a>
+        </li>
+        <li>
+          <a class='color_white' href='/projects'>Projects</a>
+        </li>
+      </ul>
+   
+  </nav>
+  <div id='sticky-nav' class='bg_indigo py_20'>
+
+    <div class='container d_flex x_space-between align_center'>
+      <div class='align_center'>
+        <div onclick="toggleMenu.toggle()" class='icon color_white mr_10 menu-mobile'>
+          <i data-feather='menu'></i>
+
+        </div>
+
+
+        <a href='/' class='logo color_white'>Code<span class='color_salomie'>a</span>dvisor</a>
+
+      </div>
+      <div class='account color_white '>
+        <ul>
+          <li class="dropdown align_center">{{user_auth["user_name"]}}
+            <i data-feather="chevron-down"></i>
+            <ul>
+              <li><a class="color_white decor_none" href="/{{user_auth['user_name']}}">Profile</a></li>
+              <li><a class="color_white decor_none" href="/logout">Logout</a></li>
+
+            </ul>
+          </li>
+        </ul>
+
+      </div>
+
+    </div>
+
+
+    
+      <ul id='menu-container'>
+        <li>
+          <a class='color_white' href='/'>Home</a>
+        </li>
+        <li>
+          <a class='color_white' href='/posts'>Posts</a>
+        </li>
+        <li>
+          <a class='color_white' href='/projects'>Projects</a>
+        </li>
+      </ul>
+   
+ 
+  </div>
   <div class='container'>
     <div class='row dash d_flex x_space-between'>
       <div class='col_1 nav-dash'>
         <ul class="pt_20">
-          <li ><a href="/" class="align_center color_white"><i class='mr_10 ' data-feather="home"></i>
+          <li><a href="/" class="align_center color_white"><i class='mr_10 ' data-feather="home"></i>
               Home</a>
           </li>
 
@@ -54,12 +123,13 @@
         <h3 class='color_white'>Top Advisors</h3>
         <div class='bg_light_blue rounded mt_20 p_20'>
           <ul>
-          {% for user in config.top_advisors %}
+            {% for user in config.top_advisors %}
             <li class="{{'mb_10' if loop.length != loop.index }} align_center x_space-between">
-            <span>{{ loop.index }}. <a class='color_dark_blue' href="/{{ user.user_name }}">{{user.user_name}}</a></span>
-            <span>Likes {{ user.like_amount }}</span>
+              <span>{{ loop.index }}. <a class='color_dark_blue'
+                  href="/{{ user.user_name }}">{{user.user_name}}</a></span>
+              <span>Likes {{ user.like_amount }}</span>
             </li>
-          {% endfor %}
+            {% endfor %}
           </ul>
         </div>
       </div>

@@ -4,66 +4,83 @@
 
   {% if config.posts|length > 0 %}
   <div class='d_flex align_center mt_20 '>
-      <span class='mr_10 color_white'>Sort By:</span>
-      <ul>
-        <li class='dropdown'>
+    <span class='mr_10 color_white'>Sort By:</span>
+    <ul>
+      <li class='dropdown'>
         <div class='align_center color_white'>
-        {{ 'Newest' if config.curr_sort == 'posted_at' else config.curr_sort.title() }}<i data-feather="chevron-down"></i>
-         
+          {{ 'Newest' if config.curr_sort == 'posted_at' else config.curr_sort.title() }}<i
+            data-feather="chevron-down"></i>
+
         </div>
-         <ul>
+        <ul>
 
-            <li>
-              <a class='decor_none color_dark_blue' href='/posts?page={{ config.curr_page }}&sort=newest'>Newest</a>
-            </li>
-            <li>
-              <a class='decor_none color_dark_blue' href='/posts?page={{ config.curr_page }}&sort=feedbacks'>Feedbacks</a>
-            </li>
-            <li>
-              <a class='decor_none color_dark_blue' href='/posts?page={{ config.curr_page }}&sort=views'>Views</a>
-            </li>
-          </ul>
-        </li>
+          <li>
+            <a class='decor_none color_dark_blue' href='/posts?page={{ config.curr_page }}&sort=posted_at'>Newest</a>
+          </li>
+          <li>
+            <a class='decor_none color_dark_blue' href='/posts?page={{ config.curr_page }}&sort=feedbacks'>Feedbacks</a>
+          </li>
+          <li>
+            <a class='decor_none color_dark_blue' href='/posts?page={{ config.curr_page }}&sort=views'>Views</a>
+          </li>
+        </ul>
+      </li>
 
-      </ul>
-    </div>
+    </ul>
+  </div>
 
   {% for project in config.posts %}
-  <div class="mt_20 bg_light_blue p_20 rounded ">
-    <div class="project-item align_center x_space-between">
-      <div class='project-inner d_flex x_space-between'>
-      <div>
-        {% for label in project['stack_labels'] %}
-        <span class="tag">{{ label }}</span>
-        {% endfor %}
-        <h3 class="mt_10 color_indigo">{{ project['name'] }}</h3>
-        <em class="text_small color_grey">posted by
-          <a class="color_grey" href="/{{ project['_user'] }}">{{ project['_user']}}</a> on {{ project['posted_at'].strftime("%d/%m/%Y") }}</em>
-      </div>
-
-      <ul>
-        <li class='dropdown'><i data-feather='more-vertical'></i>
+  <div class="mt_20 bg_light_blue p_20 rounded">
+    <div class='d_flex x_space-between'>
+    <div class='mb_10'>
+      {% for label in project['stack_labels'] %}
+      <span class="tag">{{ label }}</span>
+      {% endfor %}
+    </div>
+    <ul class='ml_20'>
+        <li class='post-dropdown'><i data-feather='more-vertical'></i>
           <ul>
               <li role='toggleOpen' data-target="dialog_{{ project['_id'] + 1 }}">Delete</li>
           </ul>
         </li>
         
       </ul>
-      </div>
-      
-      <div class="d_flex">
-        {% if project['homepage'] %}
-        <a class="icon_button_sm bg_green" target="_blank" href="{{ project['homepage'] }}"><i data-feather="globe"></i></a>
-        {% else %}
-        <div role='toggleOpen' data-target="{{ 'dialog_%s' % project['_id'] }}" class="icon_button_sm bg_green" >
-          <i  data-feather="globe" ></i>
+    </div>
+    
+    <div class="project-item align_center x_space-between">
+
+      <div class='project-inner d_flex x_space-between'>
+        <div>
+
+          <h3 class="mt_10 color_indigo">{{ project['name'] }}</h3>
+          <em class="text_small color_grey">posted by
+            <a class="color_grey" href="/{{ project['_user'] }}">{{ project['_user']}}</a> on
+            {{ project['posted_at'].strftime("%d/%m/%Y") }}</em>
         </div>
 
-        {% endif %}
-        <a target="_blank" title='Source code' class="ml_10 icon_button_sm bg_green" href="{{ project['html_url'] }}"><i data-feather='code'></i></a>
 
       </div>
+
+      <div class="align_center">
+
+        <div class='d_flex'>
+          {% if project['homepage'] %}
+          <a class="icon_button_sm bg_green" target="_blank" href="{{ project['homepage'] }}"><i
+              data-feather="globe"></i></a>
+          {% else %}
+          <div role='toggleOpen' data-target="{{ 'dialog_%s' % project['_id'] }}" class="icon_button_sm bg_green">
+            <i data-feather="globe"></i>
+          </div>
+
+          {% endif %}
+          <a target="_blank" title='Source code' class="ml_10 icon_button_sm bg_green"
+            href="{{ project['html_url'] }}"><i data-feather='code'></i></a>
+
+        </div>
+
+
       </div>
+    </div>
 
     <p class="mt_10">{{ project.description or 'No description available for this project.' }}</p>
     <div class="d_flex align_center x_space-between mt_20">
@@ -71,9 +88,9 @@
         <span class="text_small color_grey">Feedbacks ({{ project['feedbacks'] | length }})</span>
         <span class="text_small color_grey">Views ({{ project['views'] | length}})</span>
       </div>
-  
+
       <a href="/posts/{{ project['name'] }}" class="button button_sm bg_green">View</a>
-        
+
 
 
     </div>
@@ -88,7 +105,8 @@
       <div>
         <a target="_blank" class="mt_20 button button_sm bg_green" href="{{ project['html_url'] }}">Add live website</a>
 
-        <button class="mt_20 ml_10 button button_sm bg_red" role='toggleOpen' data-target="{{ 'dialog_%s' % project['_id'] }}">Close</button>
+        <button class="mt_20 ml_10 button button_sm bg_red" role='toggleOpen'
+          data-target="{{ 'dialog_%s' % project['_id'] }}">Close</button>
       </div>
 
     </div>
@@ -102,8 +120,10 @@
       <h4>This cannot be undone!</h4>
       <p>Are you sure you want to delete {{ project['name']}}?</p>
       <div>
-        <button class="button button_sm bg_green" role='toggleOpen' data-target='dialog_{{ project["_id"] + 1}}'>Cancel</button>
-        <a href="/posts/delete?id={{project['_id']}}&user={{ project['_user'] }}" class="mt_20 ml_10 button button_sm bg_grey">Delete</a>
+        <button class="button button_sm bg_green" role='toggleOpen'
+          data-target='dialog_{{ project["_id"] + 1}}'>Cancel</button>
+        <a href="/posts/delete?id={{project['_id']}}&user={{ project['_user'] }}"
+          class="mt_20 ml_10 button button_sm bg_grey">Delete</a>
       </div>
 
     </div>
@@ -111,34 +131,39 @@
   </div>
   {% endfor %}
 
-  
+
   <div class="mt_20 align_center x_center">
     {% if config.curr_page != 1 %}
-    <a href="{{config.ref}}" class="color_white align_center mr_30"><i class="mr_10" data-feather='arrow-left'></i>prev</a>
+    <a href="{{config.ref}}" class="color_white align_center mr_30"><i class="mr_10"
+        data-feather='arrow-left'></i>prev</a>
     {% endif %}
 
     {% if config.render_next or config.curr_page != 1%}
-      {% for i in range(1,config.pagination) %}
-     <a class="ml_10 color_white" href="/posts?page={{ i  }}&sort={{ 'posted_at' if config.curr_sort == 'posted_at' else config.curr_sort }}">{{ i }}</a>
+    {% for i in range(1,config.pagination) %}
+    <a class="ml_10 color_white"
+      href="/posts?page={{ i  }}&sort={{ 'posted_at' if config.curr_sort == 'posted_at' else config.curr_sort }}">{{ i }}</a>
     {% endfor %}
     {% endif %}
 
 
     {% if config.render_next %}
-    <a title='next' href="/posts?page={{ config.curr_page + 1 }}&sort={{ 'posted_at' if config.curr_sort == 'posted_at' else config.curr_sort }}" class="ml_30 color_white align_center">next
+    <a title='next'
+      href="/posts?page={{ config.curr_page + 1 }}&sort={{ 'posted_at' if config.curr_sort == 'posted_at' else config.curr_sort }}"
+      class="ml_30 color_white align_center">next
       <i data-feather='arrow-right' class="ml_10"></i></a>
 
     {% endif %}
   </div>
-    {% else %}
-   <div class="mt_20 text_center bg_light_blue p_20 rounded">
+  {% else %}
+  <div class="mt_20 text_center bg_light_blue p_20 rounded">
     <h2>It's empty here</h2>
     <p>Your posted project will appear here</p>
     <div class='d_flex x_center'>
-    <a class='button  align_center  button_sm bg_green mt_30' href='/projects'>Browse projects <i data-feather='arrow-right'></i></a>
-  
+      <a class='button  align_center  button_sm bg_green mt_30' href='/projects'>Browse projects <i
+          data-feather='arrow-right'></i></a>
+
     </div>
-     </div>
+  </div>
   {% endif %}
 
 

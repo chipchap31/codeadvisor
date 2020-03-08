@@ -6,8 +6,8 @@
         
         <h2 class="bar">Profile</h2>
       
-        <div class='mt_10 d_flex x_space-between'>
-            <div class='col_6'>
+        <div id='profile' class='mt_10 d_flex x_space-between'>
+            <div class='col_6 mt_10'>
                 <h5 class='bold'>Name</h5>
                 <p class='mt_10'>{{ curr_user.first_name + " " + curr_user.last_name }}</p>
                 
@@ -28,7 +28,7 @@
 
                 
             </div>
-            <div class='col_6 '>
+            <div class='col_6 mt_10'>
                 <h5 class='bold'>Posts info</h5>
                 <p class='mt_10'><span class='bold'>Total: </span>{{ curr_user.post_amount}} posts</p>
                 

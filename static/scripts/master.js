@@ -182,9 +182,75 @@ var toggleLike = (function () {
 	}
 
 })()
+
+var toggleMenu = {
+	// get the nav height 
+	// move the menu container by that height
+	// display the container
+	// create an animation 
+	// or just increase the opacity
+	navH: function () {
+		return document.querySelector('nav').offsetHeight
+	},
+
+
+
+	toggle: function () {
+		var target = document.getElementById('menu-container');
+		var isOpen = target.classList.contains('open');
+
+
+		if (isOpen) {
+			// already clicked 
+			target.classList.remove('open')
+			target.style.top = 0
+		} else {
+			// not clicked 
+			// to toggle 
+
+			// display first 
+			target.classList.add('open')
+			target.style.top = this.navH() + 'px'
+
+
+		}
+	}
+
+
+}
+
+
 // initialize all of the function after the document loaded
 document.addEventListener('DOMContentLoaded', function () {
 	// call the functions
 	toggleOpen.init()
 	toggleLike.init()
+
+	document.onscroll = function () {
+		var target = document.getElementById('menu-container');
+		target.classList.remove('open')
+
+
+	}
+
+
+
+
+
+
 })
+window.addEventListener("scroll", function (event) {
+	var scrollPos = this.scrollY;
+	var far = scrollPos > 100
+	var scrollUp = this.oldScroll > this.scrollY
+	var target = document.getElementById('sticky-nav')
+
+	if (far && scrollUp) {
+		target.classList.add('open')
+	} else {
+		target.classList.remove('open')
+	}
+
+
+	this.oldScroll = this.scrollY;
+});
