@@ -8,31 +8,95 @@
   <title>code advisor</title>
   <link rel="stylesheet" href="{{ url_for("static", filename="css/master.css")}}">
   <script src="https://unpkg.com/feather-icons"></script>
+  <script src="{{ url_for('static', filename='scripts/master.js') }}"></script>
 </head>
 
 <body class="bg_blue">
   <nav class='bg_indigo py_20'>
     <div class='container x_space-between d_flex align_center'>
-      <a href='/' class='color_white logo'>Code<span class='color_salomie'>a</span>dvisor</a>
+      <div class='align_center'>
+        <div onclick="toggleMenu.toggle()" class='icon color_white mr_10 menu-mobile'>
+          <i data-feather='menu'></i>
+          
+        </div>
+          <a href='/' class='color_white logo'>Code<span class='color_salomie'>a</span>dvisor</a>
+        <ul class='d_flex ml_40 nav-dash'>
+          <li><a class='decor_none color_white hover_eff' href='#about'>About</a></li>
+          <li class='ml_10'><a class='decor_none color_white hover_eff' href='#testimonial'>Testimonial</a></li>
+          <li class='ml_10'><a class='decor_none color_white hover_eff' href='#contact'>Contact</a></li>
+        </ul>
+      </div>
+
       <ul class='d_flex align_center'>
         <li>
-          <a href='/login' class='color_white'>Login</a>
+          <a href='/login' class='color_white hover_eff'>Login</a>
         </li>
         <li class='ml_20'>
           <a href='/register' class='button button_sm decor-none bg_green'>Register</a>
         </li>
 
       </ul>
+      <ul id='menu-container'>
+        <li>
+          <a class='color_white' href='#about'>About</a>
+        </li>
+        <li>
+          <a class='color_white' href='#testimonial'>Testimonial</a>
+        </li>
+        <li>
+          <a class='color_white' href='#contact'>Contact</a>
+        </li>
+      </ul>
     </div>
   </nav>
+  <div id='sticky-nav' class='bg_indigo py_20'>
+    <div class='container x_space-between d_flex align_center'>
+      <div class='align_center'>
+        <div onclick="toggleMenu.toggle()" class='icon color_white mr_10 menu-mobile'>
+          <i data-feather='menu'></i>
+          
+        </div>
+      <a href='/' class='color_white logo'>Code<span class='color_salomie'>a</span>dvisor</a>
+        <ul class='d_flex ml_40 nav-dash'>
+          <li><a class='decor_none color_white hover_eff' href='#about'>About</a></li>
+          <li class='ml_10'><a class='decor_none color_white hover_eff' href='#testimonial'>Testimonial</a></li>
+          <li class='ml_10'><a class='decor_none color_white hover_eff' href='#contact'>Contact</a></li>
+        </ul>
+      </div>
+
+      <ul class='d_flex align_center'>
+        <li>
+          <a href='/login' class='color_white hover_eff'>Login</a>
+        </li>
+        <li class='ml_20'>
+          <a href='/register' class='button button_sm decor-none bg_green'>Register</a>
+        </li>
+
+      </ul>
+      <ul id='menu-container'>
+        <li>
+          <a class='color_white' href='#about'>About</a>
+        </li>
+        <li>
+          <a class='color_white' href='#testimonial'>Testimonial</a>
+        </li>
+        <li>
+          <a class='color_white' href='#contact'>Contact</a>
+        </li>
+      </ul>
+    </div>
+  </div>
 
   {% block content %}
   {% endblock %}
   <footer class="mt_20 p_30 bg_grey">
-      <div class="container d_flex x_center">
-        <p class="color_white text_small">codeadvisor &copy; 2020</p>
-      </div>
-    </footer>
+    <div class="container d_flex x_center">
+      <p class="color_white text_small">codeadvisor &copy; 2020</p>
+    </div>
+  </footer>
+  <script>
+    feather.replace()
+  </script>
 </body>
 
 </html>

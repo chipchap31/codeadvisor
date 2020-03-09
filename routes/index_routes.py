@@ -24,7 +24,7 @@ def home():
         if request.method == 'POST':
 
             message = Mail(
-                from_email='noreply@codeadvisor.com',
+                from_email='noreply@codeadvisor.ie',
                 to_emails=request.form.get('email'),
                 subject="noreply",
                 html_content=f'''<html>
@@ -45,7 +45,7 @@ def home():
                 return redirect("/message-ok")
             except Exception as e:
                 print(e.message)
-    return render_template('index/index.html')
+        return render_template('index/index.html')
 
     # fetch all of the posts of the students
     posts = database.post_fetch(sort=request.args.get(
@@ -113,3 +113,8 @@ def logout():
     response = make_response(redirect("/"))
     response.delete_cookie('user_data')
     return response
+
+
+@index.route('/message-ok')
+def message():
+    return render_template('index/message-ok.html')
