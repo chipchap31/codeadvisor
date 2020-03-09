@@ -1,7 +1,7 @@
 {% extends "index/base.html" %}
 {% block content %}
 
-<header >
+<header>
   <div class='container d_flex x_center  mt_60'>
     <div id='index-title' class="col_5">
       <h1 class='bar'>Code Advisor</h1>
@@ -10,7 +10,7 @@
     </div>
 
     <div id='index-image' class='col_5'>
-      <img  src="{{ url_for('static', filename='images/people-coding.jpg')}}">
+      <img src="{{ url_for('static', filename='images/people-coding.jpg')}}">
     </div>
   </div>
 </header>
@@ -37,26 +37,69 @@
     </div>
     <div class='row mt_40 d_flex x_space-around'>
       <div class='col_4 m_10 bg_light_blue p_20 rounded'>
-      <h3 class='bar mb_10'>Mayer R.</h3>
+        <h3 class='bar mb_10'>Mayer R.</h3>
         <p>"We're loving it. Code advisor is the real deal! It's really wonderful."</p>
-                   
+
       </div>
 
       <div class='col_4 m_10 bg_light_blue p_20 rounded'>
-      <h3 class='bar mb_10'>Hazel V.</h3>
-        <p>"We have no regrets! I will let my mum know about this, 
-        she could really make use of code advisor! I will recommend you to my colleagues. The very best."</p>
-        
+        <h3 class='bar mb_10'>Hazel V.</h3>
+        <p>"We have no regrets! I will let my mum know about this,
+          she could really make use of code advisor! I will recommend you to my colleagues. The very best."</p>
+
       </div>
 
       <div class='col_4 m_10 bg_light_blue p_20 rounded'>
-      
+
         <h3 class='bar mb_10'>Erasmus N.</h3>
         <p>"Thanks to code advisor, we've just launched our 5th website!"</p>
-        
+
       </div>
     </div>
 
+  </div>
+</section>
+
+<section id='contact'>
+  <div class='container'>
+
+    <div class='mb_20 text_center'>
+      <h2>Contact</h2>
+      <p class='color_white'>Don't hesitate to contact us using the form or the info below.</p>
+    </div>
+
+    <form action='/' method='POST'>
+      <div class='row align_center x_center'>
+
+        <div class='col_4 mr_20 bg_light_blue p_20 rounded'>
+          <label>Full name</label>
+          <input class='mt_10 mb_10' type='text' name='fullname'>
+          <label>Email</label>
+          <input class='mt_10 mb_10' type='email' name='email' required>
+          <label>Subject</label>
+          <input class='mt_10 mb_10' type='text' name='subject' required>
+          <label>Message</label>
+          <textarea required name='message' class='bg_white rounded mt_10'></textarea>
+
+          <button class='button button_md mt_20 bg_green' type='submit'>Send</button>
+        </div>
+
+        <div class='col_5'>
+          <h4>How can we help?</h4>
+          <p class='color_white mt_20'>Please enter a subject related to your inquiry. 
+          You can also report abusive users just by sending their username and the reason.</p>
+          <h4 class='mt_20'>Drop a message or give us a call.</h4>
+          <ul class=mt_20>
+            <li class='text_big'><a class='color_white' href='mailto:info@codeadvisor.ie'
+                target='_blank'>info@codeadvisor.ie</a></li>
+            <li class='color_white text_big mt_20'>+353 1234567890</li>
+          </ul>
+        </div>
+
+      </div>
+
+
+    </form>
   </div>
 </section>
 

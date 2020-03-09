@@ -1,12 +1,17 @@
+from sendgrid.helpers.mail import Mail
+from sendgrid import SendGridAPIClient
+import os
 from middlewares.user_middlewares import require_login
 from flask import Blueprint, render_template, request, make_response, redirect, abort
 from mongo import database
 import json
 from math import ceil
 index = Blueprint('index', __name__)
+# using SendGrid's Python Library
+# https://github.com/sendgrid/sendgrid-python
 
 
-@index.route("/")
+@index.route("/", methods=["POST", "GET"])
 def home():
 
     # we define a reusable method @ require_login that redirects the
@@ -15,7 +20,32 @@ def home():
 
     # check if the user's cookies exist
     if not user:
-        return render_template('index/index.html')
+
+        if request.method == 'POST':
+
+            message = Mail(
+                from_email='noreply@codeadvisor.com',
+                to_emails=request.form.get('email'),
+                subject="noreply",
+                html_content=f'''<html>
+                                    <body>
+                                        
+                                        <p>Hello {request.form.get('fullname')},</p>
+
+                                            <p>Thank you for your message! We will get back to you as soon as possible.</p> 
+
+                                            <p>Best regards,</p> 
+
+                                            Code advisor help team 
+                                    </body>
+                                </html>''')
+            try:
+                sg = SendGridAPIClient(os.environ.get('SENDGRID_KEY'))
+                response = sg.send(message)
+                return redirect("/message-ok")
+            except Exception as e:
+                print(e.message)
+    return render_template('index/index.html')
 
     # fetch all of the posts of the students
     posts = database.post_fetch(sort=request.args.get(

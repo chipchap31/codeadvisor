@@ -117,10 +117,12 @@
 
         </ul>
       </div>
+
       {% block content %}
       {% endblock %}
+
       <div class='col_3 mt_20 dash-advisor'>
-        <h3 class='color_white'>Top Advisors</h3>
+        
         <div class='bg_light_blue rounded mt_20 p_20'>
           <ul>
             {% for user in config.top_advisors %}
@@ -133,6 +135,26 @@
           </ul>
         </div>
       </div>
+
+
+      <div class='dash-advisor-mob mt_20'>
+      <h3 class='color_white'>Top Advisors</h3>
+        <div class='d_flex mt_10'>
+          {% for user in config.top_advisors %}
+          <div class='mr_20 d_flex f_column y_center'>
+          <div class='like_wrapper'>
+            <div class='advisor_rank'>
+              {{loop.index}}
+            </div>
+              {{ user.like_amount}}          
+          </div>
+          <a href='/{{user.user_name}}' class='text_small color_white'>{{user.user_name}}</a>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+     
     </div>
   </div>
   <footer class="mt_20 p_30 bg_grey">

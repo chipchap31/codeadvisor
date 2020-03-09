@@ -400,7 +400,7 @@ class Mongo:
 
             result.append(like_info)
 
-        return sorted(result, key=lambda x: x['like_amount'], reverse=True)[:3]
+        return sorted(result, key=lambda x: x['like_amount'], reverse=True)[:4]
 
 
 #  we initialize a new connection to mongodb
