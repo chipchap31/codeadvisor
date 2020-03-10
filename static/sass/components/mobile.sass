@@ -1,7 +1,7 @@
 /**
  * Media query for iphone 6/7/8/8 plus and iphone X
  **/
-@media only screen and (max-width: 420px)
+@media only screen and (max-width: 420px) and (orientation: portrait)
     [class*="col_"]
         width: 100%
     .container
@@ -53,3 +53,115 @@
 
     .form_wrap
         margin: 0
+@media only screen and (max-width: 746px) and (orientation: landscape)
+    [class*="col_"]
+        width: 100%
+    .container
+        width: 100%
+        max-width: 80%
+    #index-title
+        text-align: center
+        h1::before
+            left: 120px
+
+    #index-image
+        display: none
+    #about
+        .inner
+            top: 30px
+    #testimonial
+        .row
+            flex-direction: column
+            div
+                margin: 20px 0 0 0
+    .form_inline
+        flex-direction: column
+    .nav-dash, .dash-advisor
+        display: none
+    .project-item
+        flex-direction: column-reverse
+        align-items: start
+        .project-inner
+            margin-bottom: 20px
+
+    .radio_wrapper
+        flex-wrap: wrap
+        justify-content: space-around
+        div
+            margin: 10px
+    .post-dropdown
+        ul
+            left: -50px
+    #profile, #contact .row
+        flex-direction: column
+    .menu-mobile
+        display: block
+    .dash
+        flex-direction: column-reverse
+    .dash-advisor-mob
+        display: block
+    .more_help
+        margin-top: 20px
+
+    .form_wrap
+        margin: 0
+
+@media only screen and (max-width: 800px) and (min-width: 421px) and (orientation: portrait)
+    [class*="col_"]
+        width: 100%
+    .container
+        width: 100%
+        max-width: 90%
+    #index-title
+        text-align: center
+        h1::before
+            left: 200px
+
+    #index-image
+        display: none
+    #about
+        .inner
+            top: 30px
+            max-width: 70%
+    #testimonial
+        .row
+            flex-direction: column
+            div
+                margin: 20px 0 0 0
+    .form_inline
+        flex-direction: column
+    .nav-dash, .dash-advisor
+        display: none
+    .project-item
+        flex-direction: column-reverse
+        align-items: start
+        .project-inner
+            margin-bottom: 20px
+
+    .radio_wrapper
+        flex-wrap: wrap
+        justify-content: space-around
+        div
+            margin: 10px
+    .post-dropdown
+        ul
+            left: -50px
+    #profile, #contact .row
+        flex-direction: column
+    #contact .row
+        max-width: 80%
+        margin: 0 auto
+    .menu-mobile
+        display: block
+    .dash
+        flex-direction: column-reverse
+    .dash-advisor-mob
+        display: block
+    .more_help
+        margin-top: 20px
+
+    .form_wrap
+        margin: 0
+    #testimonial
+        .container
+            max-width: 70%

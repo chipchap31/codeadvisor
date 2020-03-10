@@ -10,7 +10,7 @@
     </div>
 
     <div id='index-image' class='col_5'>
-      <img src="{{ url_for('static', filename='images/people-coding.jpg')}}">
+      <img alt='landing-image' src="{{ url_for('static', filename='images/people-coding.jpg')}}">
     </div>
   </div>
 </header>
@@ -18,7 +18,7 @@
 <section id='about' class='bg_orange mt_100'>
   <div class="container">
     <div class='inner bg_light_blue rounded p_60 col_5'>
-      <h2 class='bar'>About</h3>
+      <h2 class='bar'>About</h2>
         <div class='mt_20 text_center'>
           <p>Code advisor is a platform for students where they can share their codes from Github and learn from the
             feedbacks of fellow students.</p>
@@ -72,14 +72,14 @@
       <div class='row align_center x_center'>
 
         <div class='col_4 mr_20 bg_light_blue p_20 rounded form_wrap'>
-          <label>Full name</label>
-          <input class='mt_10 mb_10' type='text' name='fullname'>
-          <label>Email</label>
-          <input class='mt_10 mb_10' type='email' name='email' required>
-          <label>Subject</label>
-          <input class='mt_10 mb_10' type='text' name='subject' required>
-          <label>Message</label>
-          <textarea required name='message' class='bg_white rounded mt_10'></textarea>
+          <label for='fullname'>Full name</label>
+          <input id='fullname' class='mt_10 mb_10' type='text' name='fullname'>
+          <label for='email'>Email</label>
+          <input id='email' class='mt_10 mb_10' type='email' name='email' required>
+          <label for='subject'>Subject</label>
+          <input id='subject' class='mt_10 mb_10' type='text' name='subject' required>
+          <label for='message'>Message</label>
+          <textarea id='message' required name='message' class='bg_white rounded mt_10'></textarea>
 
           <button class='button button_md mt_20 bg_green' type='submit'>Send</button>
         </div>

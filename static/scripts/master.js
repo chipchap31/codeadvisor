@@ -81,7 +81,7 @@ var toggleOpen = (function () {
 	function init() {
 
 		// get all buttons with role 'toggleOpen'
-		var targets = document.querySelectorAll("[role='toggleOpen']");
+		var targets = document.querySelectorAll("[role='button']");
 
 
 		Array.from(targets).forEach(function (element) {

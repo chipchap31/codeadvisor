@@ -1,10 +1,10 @@
 {% extends "view/base.html" %}
 {% block content %}
-<div class="col_7 mt_20 {{ 'padded-bottom' if config.posts | length < 2 }}">
-
+<div class="col_7  {{ 'padded-bottom' if config.posts | length < 2 }}">
+<h2 class='color_white mt_20'>Projects posted</h2>
   {% if config.posts|length > 0 %}
 
-  <div class='d_flex align_center'>
+  <div class='d_flex align_center mt_10'>
     <span class='mr_10 color_white'>Sort By:</span>
     <ul>
       <li class='dropdown'>
@@ -51,7 +51,7 @@
         {% if project['homepage'] %}
         <a class="icon_button_sm bg_green" target="_blank" href="{{ project['homepage'] }}"><i data-feather="globe"></i></a>
         {% else %}
-        <div role='toggleOpen' data-target="dialog_{{ project['_id'] }}" class="icon_button_sm bg_green">
+        <div role='button' data-target="dialog_{{ project['_id'] }}" class="icon_button_sm bg_green">
           <i data-feather="globe"></i>
         </div>
         {% endif %}
@@ -80,7 +80,7 @@
       <div class="align_center">
         <a target="_blank" class="mt_20 button button_sm bg_green" href="{{ project['html_url'] }}">Add live website</a>
 
-        <button class="mt_20 ml_10 button button_sm bg_red" role="toggleOpen" data-target="dialog_{{ project['_id'] }}">Close</button>
+        <button class="mt_20 ml_10 button button_sm bg_red" role="button" data-target="dialog_{{ project['_id'] }}">Close</button>
       </div>
 
     </div>

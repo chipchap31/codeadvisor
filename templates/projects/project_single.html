@@ -9,10 +9,8 @@
     <div class="align_center x_space-between">
       <div>
         <h3 class="bar">{{ project['name'] }}</h3>
-        
         <em class="text_small color_grey">Last updated at {{ project.updated_at.strftime("%d/%m/%Y") }}</em>
-      </div>
-      <div class='align_center'>
+        <div class='align_center'>
               
         {% if project['homepage'] %}
         <a target="_blank" class="icon_button_sm bg_green" href="{{ project['homepage'] }}"><i
@@ -26,6 +24,8 @@
             data-feather='code'></i></a>
 
       </div>
+      </div>
+      
       
     </div>
 
@@ -33,11 +33,8 @@
       <canvas id="{{ project['name'] }}"></canvas>
     </div>
 
-    {% if not project.description %}
-    <div class='mt_20'>
-      <span class='color_error'>You did not provide any description for this repository.</span>
-    </div>
-    {% endif %}
+    <p class='mt_10'>{{ project['description'] or "You did not provide any description for this repository." }}</p>
+    
     <div class="d_flex x_flex-end align_center  mt_20">
       
       <form class="hidden" method="POST" action="/projects/{{project['name']}}">

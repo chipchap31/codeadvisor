@@ -30,7 +30,7 @@
             data-feather='globe'></i></a>
 
         {% else %}
-        <div role='toggleOpen' data-target='dialog_{{ post['_id'] }}' class="icon_button_sm bg_green">
+        <div role='button' data-target='dialog_{{ post['_id'] }}' class="icon_button_sm bg_green">
           <i data-feather="globe"></i>
         </div>
         {% endif %}
@@ -46,11 +46,9 @@
 
     <h4 class='mt_20 color_indigo'>Description</h4>
     <div class='mt_20'>
-      {% if not post.description %}
-      <span class='color_error'>This does not have any description.</span>
-      {% else %}
-      <p class="mt_10">{{ post.description }}</p>
-      {% endif %}
+      
+      <p class="mt_10">{{ post.description or "No description given" }}</p>
+      
     </div>
 
   </div>
@@ -63,7 +61,7 @@
 
   </div>
   {% if not feedbacks %}
-  <div class='bg_light_blue p_20 d_flex y_center mt_20 rounded f_column'>
+  <div class='bg_light_blue p_20 text_center rounded'>
     <h3>It's empty here!</h3>
     <p>There are no feedbacks at the moment.</p>
   </div>
@@ -77,9 +75,6 @@
         <h4><a class="color_indigo" href="/{{ feedback['_username'] }}">{{ feedback['_username'] }}</a></h4>
         <span class=' color_grey text_small'>posted at {{feedback['posted_at'].strftime("%d/%m/%Y") }}</span>
       </div>
-
-
-
       <ul>
         <li class='dropdown'><i data-feather='more-vertical'></i>
           <ul>
@@ -94,7 +89,7 @@
 
     <div id='feedback{{feedback_loop.index}}' class='feedback_wrapper mt_10'>
 
-      <div role='toggleOpen' data-target='feedback{{feedback_loop.index}},second_collapse{{ feedback_loop.index  }}'
+      <div role='button' data-target='feedback{{feedback_loop.index}},second_collapse{{ feedback_loop.index  }}'
         class='feedback_button open icon_button_sm bg_green'><i data-feather='chevron-down'></i></div>
       {% for obj in feedback['feedback'] %}
       {% for key, value in obj.items() %}
@@ -144,7 +139,7 @@
           <span id='dislike{{ feedback_loop.index }}_amount' class='ml_10'>{{feedback['dislike'] | length}}</span>
         </div>
       </div>
-      <div role='toggleOpen' data-target='feedback{{feedback_loop.index}},second_collapse{{ feedback_loop.index  }}'
+      <div role='button' data-target='feedback{{feedback_loop.index}},second_collapse{{ feedback_loop.index  }}'
         id="second_collapse{{ feedback_loop.index}}" class='toggle icon_button_sm bg_green'><i
           data-feather='chevron-up'></i></div>
     </div>
@@ -157,7 +152,7 @@
   <div class='bg_light_blue rounded p_30 mt_20'>
 
     <div id='feedback' class="feedback_wrapper">
-      <button role='toggleOpen' data-target='feedback' class='feedback_button button open button_sm bg_green'
+      <button role='button' data-target='feedback' class='feedback_button button open button_sm bg_green'
         type='button'>Add feedback</button>
 
       <p class='color_grey'>Please rate the following languages from 1 - 10 being 10 is the highest and depending on the
@@ -187,7 +182,7 @@
           name="advice{{ label_loop.index}}"></textarea>
         {% endfor %}
         <div class='mt_20 d_flex'>
-          <button data-target='feedback' type='button' role='toggleOpen'
+          <button data-target='feedback' type='button' role='button'
             class='button button_sm bg_grey mr_10'>Cancel</button>
           <button class='button button_sm bg_green' type='submit'>Post feedback</button>
 
@@ -213,7 +208,7 @@
     <p>You can only add one feedback for each post.</p>
     <div class="align_center">
       <a href='/'></a>
-      <button role='toggleOpen' data-target='feedback_error' class="mt_20 button button_sm bg_red">Close</button>
+      <button role='button' data-target='feedback_error' class="mt_20 button button_sm bg_red">Close</button>
     </div>
   </div>
 </div>
@@ -222,7 +217,7 @@
     <h3>Warning</h3>
     <p>The live website for {{ post['name']}} is unvailable!</p>
     <div class="align_center">
-      <button role='toggleOpen' data-target="dialog_{{ post['_id'] }}"
+      <button role='button' data-target="dialog_{{ post['_id'] }}"
         class="mt_20 button button_sm bg_red">Close</button>
     </div>
   </div>

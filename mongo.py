@@ -373,6 +373,14 @@ class Mongo:
 
     def get_top_advisor(self):
         feedback_collection = self.database['feedbacks']
+        """
+        
+        below we fetch the all of the feedbacks
+        call the function $project to return 
+        an object { 'like_amount': size of each of like array, 
+        'user_name': users given username
+        }
+        """
         feedback_aggregate = tuple(feedback_collection.aggregate([
             {
                 "$project": {
@@ -383,6 +391,8 @@ class Mongo:
                 }
             }
         ]))
+
+        # get all of the user names
         unique_users = tuple(
             set(map(lambda x: x['user_name'], feedback_aggregate)))
 
@@ -399,7 +409,12 @@ class Mongo:
             }, array)
 
             result.append(like_info)
+        print(result)
 
+        print()
+
+        if not any(x['like_amount'] > 0 for x in result):
+            return []
         return sorted(result, key=lambda x: x['like_amount'], reverse=True)[:4]
 
 
