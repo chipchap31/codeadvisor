@@ -409,13 +409,28 @@ class Mongo:
             }, array)
 
             result.append(like_info)
-        print(result)
-
-        print()
 
         if not any(x['like_amount'] > 0 for x in result):
             return []
         return sorted(result, key=lambda x: x['like_amount'], reverse=True)[:4]
+
+    def delete_feedback(self, id):
+        """find the feedback and delete it """
+        feedback_collection = self.database['feedbacks']
+        posts_coll = self.database['posts']
+
+        try:
+            find = feedback_collection.find_one({'_id': ObjectId(id)})
+
+            feedback_collection.delete_one({'_id': ObjectId(id)})
+            if not find:
+                return False
+            # delete the id from post
+            # posts_coll.update_one({'name': })
+            return find
+        except pymongo.errors.PyMongoError as e:
+            print(e)
+            return False
 
 
 #  we initialize a new connection to mongodb

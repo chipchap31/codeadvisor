@@ -28,3 +28,12 @@ def feedback_new():
     # get the project title from the form
 
     return redirect("/posts")
+
+
+@feedback.route('/feedback/delete/<id>')
+def delete_feedback(id):
+    deleted = database.delete_feedback(id)
+
+    if not deleted:
+        return abort(501)
+    return redirect(f'/posts/{deleted["post_name"]}')

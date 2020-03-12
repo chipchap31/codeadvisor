@@ -9,13 +9,13 @@
 
   <div class=' mt_20 bg_light_blue rounded p_30'>
     <div class='mb_10'>
-    {% for label in post['stack_labels'] %}
-        <span class="tag">{{ label }}</span>
-        {% endfor %}
+      {% for label in post['stack_labels'] %}
+      <span class="tag">{{ label }}</span>
+      {% endfor %}
     </div>
     <div class="project-item  align_center x_space-between">
       <div class='project-inner'>
-        
+
         <h3 class="mt_10 color_indigo">{{ post['name'] }}</h3>
 
         <em class="text_small color_grey">posted by
@@ -46,9 +46,9 @@
 
     <h4 class='mt_20 color_indigo'>Description</h4>
     <div class='mt_20'>
-      
+
       <p class="mt_10">{{ post.description or "No description given" }}</p>
-      
+
     </div>
 
   </div>
@@ -78,11 +78,24 @@
       <ul>
         <li class='dropdown'><i data-feather='more-vertical'></i>
           <ul>
-            <li>Delete</li>
+            <li><span role='button' data-target='delete-{{ feedback["_id"] }}'>Delete</span></li>
           </ul>
         </li>
 
       </ul>
+    </div>
+
+    <div id='delete-{{ feedback["_id"] }}' class='dialog'>
+      <div class="inner">
+        <h3>This cannot be undone!</h3>
+        <p>Are you sure you want to delete this feedback?</p>
+        <div class="align_center">
+          <button role='button' data-target="delete-{{ feedback['_id'] }}"
+            class="mt_20 button mr_10 button_sm bg_green">Cancel</button>
+          <a href="/feedback/delete/{{ feedback['_id'] }}" class="mt_20 button button_sm bg_grey">Delete</a>
+        </div>
+      </div>
+
     </div>
 
 
@@ -217,12 +230,13 @@
     <h3>Warning</h3>
     <p>The live website for {{ post['name']}} is unvailable!</p>
     <div class="align_center">
-      <button role='button' data-target="dialog_{{ post['_id'] }}"
-        class="mt_20 button button_sm bg_red">Close</button>
+      <button role='button' data-target="dialog_{{ post['_id'] }}" class="mt_20 button button_sm bg_red">Close</button>
     </div>
   </div>
 
 </div>
+
+
 
 <script>
   doughnut.init({{post | tojson}})
