@@ -1,7 +1,6 @@
-"use strict";
-
 // @method pie renders the data information for the languages used
 var doughnut = (function () {
+	"use strict";
 	// @ method init draws the chart
 	function init(data) {
 
@@ -52,6 +51,7 @@ var doughnut = (function () {
 
 
 var server = (function () {
+	"use strict";
 
 	function post(data) {
 		// the server.post() creates a request to the server via POST
@@ -77,6 +77,7 @@ var server = (function () {
 })()
 
 var toggleOpen = (function () {
+	"use strict";
 
 	function init() {
 
@@ -113,6 +114,8 @@ var toggleOpen = (function () {
 })()
 
 var toggleLike = (function () {
+	"use strict";
+
 	function init() {
 		var targets = document.querySelectorAll("[role='toggleLike']");
 		Array.from(targets).forEach(function (element) {
@@ -222,6 +225,7 @@ var toggleMenu = {
 
 // initialize all of the function after the document loaded
 document.addEventListener('DOMContentLoaded', function () {
+	"use strict";
 	// call the functions
 	toggleOpen.init()
 	toggleLike.init()

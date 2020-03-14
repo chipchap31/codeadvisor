@@ -48,7 +48,7 @@
 
           {% if error %}
           <div class='mb_10 color_error'>
-            {{message["password"]}}
+            {{message["password"] if message["password"]}}
           </div>
           {% endif %}
           <label for='password2'>Confirm password</label>

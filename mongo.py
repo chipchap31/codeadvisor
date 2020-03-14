@@ -361,7 +361,7 @@ class Mongo:
 
         def getTotal(target):
             arr = map(lambda x: x[target], feedback_info)
-            return reduce(lambda x, y: x + y, arr)
+            return reduce(lambda x, y: x + y, arr, 0)
 
         return {
             **curr_user,
@@ -426,7 +426,9 @@ class Mongo:
             if not find:
                 return False
             # delete the id from post
-            # posts_coll.update_one({'name': })
+            posts_coll.update_one({'_id': find['post_id']}, {"$pull": {
+                "feedbacks": id
+            }})
             return find
         except pymongo.errors.PyMongoError as e:
             print(e)

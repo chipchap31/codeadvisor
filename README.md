@@ -9,7 +9,6 @@ The goal of this project is to provide new coders a platform where they can gain
 
 ## UX DESIGN
 
-
 Sometimes looking for code feedbacks may seem to be too much to ask. The reason for this is because it just takes too much time and effort to read someone's codes. Code advisor is created to make reviewing projects fun and simple. 
 
 During the research phase I found out that:
@@ -21,9 +20,11 @@ During the research phase I found out that:
 
 
 ### User stories 
-
+- As a visitor, I want to be able to register so that I can become a student.
 - As a student, I want to be able to login to my account securely, so I can browse all of the projects and start giving feeedbacks.
 - As a student, I want to be able to see all of my public repositories, so I can easily choose what want to share.
+- As a student, I want to be ables to add a post, so that I can get a feedback improve my coding skills.
+- As a student, I want to be able to add a feedback, so that I can share some comments on each languages.
 - As a student, I want to be able like or dislike a feedback, so I can rate a good or bad feedback.
 - As a student, I want to be able to delete a post because I don't like the feedback I received.
 - As a student, I want to be able to remove feedback, so that I can create a better one.
@@ -47,7 +48,9 @@ To create a beatiful wireframe, I used a software called [Balsamiq](https://bals
 ### In the future
 - I want to allow students to see the code straight away from the project itself, rathen than being redirected to Github.
 - I want to give the students the ability to save a certain projects.
-- I want to give the students to add online resources as a list or when they typed a link it would be highlighted and clickable.    
+- I want to give the students to add online resources as a list or when they typed a link it would be highlighted and clickable.
+- I will get students to validate their email.
+- I will give the students the ability to recover their password via random code, possibly a string of random letters or numbers.
 
 ## Technologies used
 
@@ -68,6 +71,8 @@ To create a beatiful wireframe, I used a software called [Balsamiq](https://bals
 - __[Flask](https://flask.palletsprojects.com/en/1.1.x/)__ - It is a micro framework to provide web service with Python. I used this framework because my application is really small and this allows me to create a development environment start coding instantly.
 ### Other tools
 - __[Github](https://github.com/)__ - It is one of the top version control sytems available. I mainly use it in order or me to have a full control of my codes.
+- __[VS Code](https://code.visualstudio.com/)__ - It is open source code editor. I really like using VS code, because it is free and supports Git.
+
 
 ## Database structure
 User model
@@ -89,25 +94,25 @@ Post model
     _id: Number, // Id of repository
     name: String, // Name of the repository
     _user: String, // refers to the unique user_name
-    stack_labels: [String] // languages used
-    stack_value: [Number] // percentage of each language
+    stack_labels: [String], // languages used
+    stack_value: [Number], // percentage of each language
     description: String,
-    updated_at: Date
-    homepage: String // site url    
-    html_url: String // repository url
-    language: String // most dominant language
-    feedbacks: [String] // Feedback IDs
-    views: [String] // User IDs
-    posted_at: Date
+    updated_at: Date,
+    homepage: String, // site url    
+    html_url: String, // repository url
+    language: String, // most dominant language
+    feedbacks: [String], // Feedback IDs
+    views: [String], // User IDs
+    posted_at: Date,
 }
 ```
 Feedback model
 ```javascript
 {
-    _id: ObjectID(String)
-    feedback: [Object] // Advice for each language
-    post_name: String // reference to the posts / name of the repository
-    post_id: Number // Post ID
+    _id: ObjectID(String),
+    feedback: [Object], // Advice for each language
+    post_name: String, // reference to the posts / name of the repository
+    post_id: Number, // Post ID
     _user: String, // // feedback owner
     _username: String, // post owner,
     posted_at: Date,
@@ -118,4 +123,47 @@ Feedback model
 ```
 ## Testing
 
+For testin, the first thing that I do is make sure that there are no silly mistake like unclosed tags, missing attributes or syntax errors. This can be done using validators for each languages.
 
+- __[WC3 validator ](https://validator.w3.org/)__ - I used this web application to validate my HTML files. During the process I came upon two major errors. The first one was in landing page, I made a mistake of placing the script tag outside the body tag. 
+
+    The second major issue is a duplicate ID. When I copy the nav bar on my project, I didn't realize that I also made a copy of the drop-down content of the sticky nav. As a result the un-ordered list of main nav is the same as the sticky nav.
+
+- __[jigsaw.w3.org/css-validator](https://jigsaw.w3.org/css-validator/)__ - For the CSS files, I didn't expect any errors because I used a library which is called [SASS](https://sass-lang.com/). The reason behind this is because SASS does not compile if there are any errors. This also one of the advantage of using SASS. 
+
+- __[pep8online](http://pep8online.com/)__ - It is online validator for python codes. I checked every python codes and there were no major errors.
+
+The second part of testing is to go over the user stories and to make sure that they actually work. 
+
+> As a visitor, I want to be able to register so that I can become a student.
+
+1. When the register link from the nav bar is clicked, the page is redirected from the landing page to register page.
+1. The required fields shows a warning if the input is empty.
+1. Shows an error if the email or username already exist in the database.
+1. Password requires to match and contain more than 10 characters. Both requirements fine. During the testing session for this functionality, I see that the password field renders the string "False" when theres no error. The simple fix is to add a code that check if there is an error just for password.
+1. After passing all of the requirements, the page is successfully renders a message that registration is completed.
+
+> As a student, I want to be able to login to my account securely, so I can browse all of the projects and start giving feeedbacks.
+
+1. The login link at the nav bar works perfectly.
+1. Submiting an empty fields does not work as the page displays a warning.
+1. When an unregistered username is entered an error message is rendered.
+1. When a registered username is entered but the password is wrong, an error is also successfully rendered.
+
+> As a student, I want to be able to see all of my public repositories, so I can easily choose what want to share.
+
+1. When there is no project posted a link to the project is displayed so that the student can be swiftly redirected to project page and see the list of public repositories.
+2. The Github api is properly set up and the request returns the user's repository data successfully.
+
+> As a student, I want to be ables to add a post, so that I can get a feedback improve my coding skills.
+
+1. The link for the project list is visible and the page loads the project list when clicked.
+1. The repositories are shown.
+1. When the post buttons are pressed on the projects page, the page is automatically redirected to posts page. The project posted is then added at the very top. 
+
+> As a student, I want to be able to add a feedback, so that I can share some comments on each languages.
+
+1. The input and textarea field are very clear and easy to find the students.
+1. The expand button shows the rest of the fields .
+1. If student tries to submit without choosing a rate for all languages, it does not work.
+1. If the students picks a rate for each languages the feedback is submitted and the page redirects to itself.
