@@ -69,12 +69,15 @@
 
   {% for feedback in feedbacks %}
   {% set feedback_loop = loop %}
+
   <div class='bg_light_blue rounded p_30 mt_20'>
     <div class='align_center x_space-between'>
       <div>
         <h4><a class="color_indigo" href="/{{ feedback['_username'] }}">{{ feedback['_username'] }}</a></h4>
         <span class=' color_grey text_small'>posted at {{feedback['posted_at'].strftime("%d/%m/%Y") }}</span>
       </div>
+
+      {% if feedback['_user'] == user_auth['_id']  %}
       <ul>
         <li class='dropdown'><i data-feather='more-vertical'></i>
           <ul>
@@ -83,6 +86,8 @@
         </li>
 
       </ul>
+      {% endif %}
+
     </div>
 
     <div id='delete-{{ feedback["_id"] }}' class='dialog'>
@@ -208,13 +213,7 @@
     </div>
 
   </div>
-
-
 </div>
-
-
-
-
 <div id='feedback_error' class="dialog {{ 'open' if feedback_error else None }}">
   <div class='inner'>
     <h3>Warning!</h3>

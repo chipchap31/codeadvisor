@@ -66,7 +66,7 @@ To create a beatiful wireframe, I used a software called [Balsamiq](https://bals
 - __[Feather Icons](https://feathericons.com/)__ - It is a free icon library that you can instantly implement by using few codes. I use feather because the icons are really simple but has an elegant look.
 - __[Pymongo](https://api.mongodb.com/python/current/)__ - Allows me to use Mongo with Python.
 - __[Jinja](https://jinja.palletsprojects.com/en/2.11.x/)__ - It is a HTML templating language used with Flask. I use this library for me to loop through lists and reuse too much codes such as the header and the footer.
-
+- __[ChartJS](https://www.chartjs.org/)__ - Chart js is an open source library to create elegant charts. For this project, I used it to show the consistency of the repository in percentage.
 ### Framework
 - __[Flask](https://flask.palletsprojects.com/en/1.1.x/)__ - It is a micro framework to provide web service with Python. I used this framework because my application is really small and this allows me to create a development environment start coding instantly.
 ### Other tools
@@ -75,7 +75,7 @@ To create a beatiful wireframe, I used a software called [Balsamiq](https://bals
 
 
 ## Database structure
-User model
+__User model__
 ```javascript
 {
     _id: ObjectID(String),
@@ -88,7 +88,7 @@ User model
     registered: Date
 }
 ```
-Post model
+__Post model__
 ```javascript
 {
     _id: Number, // Id of repository
@@ -106,7 +106,7 @@ Post model
     posted_at: Date,
 }
 ```
-Feedback model
+__Feedback model__
 ```javascript
 {
     _id: ObjectID(String),
@@ -167,3 +167,54 @@ The second part of testing is to go over the user stories and to make sure that 
 1. The expand button shows the rest of the fields .
 1. If student tries to submit without choosing a rate for all languages, it does not work.
 1. If the students picks a rate for each languages the feedback is submitted and the page redirects to itself.
+
+> As a student, I want to be able like or dislike a feedback, so I can rate a good or bad feedback.
+
+1. To be able to like or dislike, there should be a feedback that exist to that particular post. 
+1. When the like button is pressed it turns green which means it is selected and when you refresh the page the like button is still green which means the user id of user is successfully added to like array.
+1. The same testing process for disliking the feedback. Refer to step 2. 
+1. If the like or dislike is already selected and it is click again the corresponding button is deselected.
+
+> As a student, I want to be able to delete a post.
+
+1. In order to delete a post, student must go to the post page to see their own posts.
+1. When the more button in every post is click, the dropdown shows the delete option.
+1. When the delete is click a modal shows right in the middle of the window.
+1. The modal shows the option of delete or cancel clearly.
+1. If the cancel button is clicked, the modal closes.
+1. The page then refreshes when the delete button is pressed and the post is deleted.
+
+> As a student, I want to be able to remove feedback, so that I can create a better one.
+
+1. To be able to delete a feedback, the ID of user of created the feedback must be the same as the current user.
+1. I created a feedback from two different accounts and it works as I can't delete the other feedback.
+1. When I pressed the delete button it refreshes the same page and the feedback is gone.
+
+    During this part I came accross a bug where the icon to delete a feedback renders even though the current ID of the user does not match the creator of the feedback.
+
+
+## Mobile responsiveness
+
+To check for websites responsiveness I used a website called [responsinator](http://www.responsinator.com/). 
+
+Below are the list of devices:
+- iPhone X portrait · width: 375px
+- iPhone X landscape · width: 734px 
+- Android (Pixel 2) portrait · width: 412px
+- Android (Pixel 2) landscape · width: 684px
+- iPhone 6-8 portrait · width: 375px
+- iPhone 6-8 landscape · width: 667px
+- iPhone 6-8 Plump portrait · width: 414px
+- iPhone 6-8 Plump landscape · width: 736px
+- iPad portrait · width: 768px
+- iPad landscape · width: 1024px
+
+The project response very well to these list of devices.
+
+## Deployment
+
+### Environments
+
+### Local deployment
+
+
