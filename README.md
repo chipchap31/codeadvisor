@@ -213,8 +213,64 @@ The project response very well to these list of devices.
 
 ## Deployment
 
-### Environments
+To run this project you must have the following: 
+
+- [Git](https://git-scm.com/)
+- A [MongoDB](https://www.mongodb.com/) account
+- [python3](https://www.python.org/) 
+- [PIP](https://pip.pypa.io/en/stable/)
+- Sendgrid api key
 
 ### Local deployment
+1. Clone the repository in Github
+```
+    $ git clone https://github.com/chipchap31/codeadvisor.git
+```
+2. Open terminal and go to '/codeadvisor' directory and install dependencies.
+
+```
+$ pip3 install requirements.txt
+```
+
+3. Set up the environment variables on your .bash_profile.
+```
+$ sudo nano .bash_profile
+```
+4. Add the variables.
+```
+MONGO_URI="mongodb+srv://<USERNAME>:<PASSWORD>@cluster0-bxxlw.mongodb.n$
+SENDGRID_KEY="<SENDGRID API KEY>"
+GIT_TOKEN="<GIT TOKEN FROM GITHUB>"
+
+export GIT_TOKEN
+export SENDGRID_KEY
+export MONGO_URI
+```
+5. Run the application.
+```
+$ python3 app.py
+```
+
+## Heroku deployment
+
+1. Make sure that you have Heroku installed on your system. This can be simply done by checking the version.
+```
+$ heroku --version
+
+-> heroku/7.39.0 darwin-x64 node-v12.13.0
+```
+
+1. Assuming you have it installed already, create a new app.
+```
+$ heroku create <name of app>
+```
+1. While in the root directory of the app. Commit the project.
+```
+
+$ git init 
+$ git remote -a <name of app>
+$ git add .
+$ git commit -m "<commit message>"
 
 
+```

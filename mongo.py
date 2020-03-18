@@ -35,7 +35,7 @@ class Mongo:
 
             # select the development database
             # change this database when in production
-            self.database = client["ms3_dev"]
+            self.database = client["codeadvisor"]
 
             return None
         except pymongo.errors.ConnectionFailure as e:
