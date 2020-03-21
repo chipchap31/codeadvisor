@@ -1,7 +1,7 @@
 {% extends "view/base.html" %}
 {% block content %}
 <div class="col_7  {{ 'padded-bottom' if config.posts | length < 2 }}">
-<h2 class='color_white mt_20'>Your posts</h2>
+<h2 class='color_white mt_20'>Personal posts</h2>
   {% if config.posts|length > 0 %}
   <div class='d_flex align_center mt_20 '>
     <span class='mr_10 color_white'>Sort By:</span>

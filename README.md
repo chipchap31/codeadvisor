@@ -28,12 +28,13 @@ During the research phase I found out that:
 - As a student, I want to be able like or dislike a feedback, so I can rate a good or bad feedback.
 - As a student, I want to be able to delete a post because I don't like the feedback I received.
 - As a student, I want to be able to remove feedback, so that I can create a better one.
+- As a student, I want to be able to edit my feedback so that I can improve it.
 
 ### Wireframing
 
 To create a beatiful wireframe, I used a software called [Balsamiq](https://balsamiq.com/). To view the pdf format of the wireframe please click here. I have changed some parts of this wireframe depending on the Github API data received. 
 
-
+In order to see the wireframes click [here](https://github.com/chipchap31/codeadvisor/blob/master/wireframes/ms3.pdf)
 ## Features 
 
 ### Existing features
@@ -193,6 +194,12 @@ The second part of testing is to go over the user stories and to make sure that 
 
     During this part I came accross a bug where the icon to delete a feedback renders even though the current ID of the user does not match the creator of the feedback.
 
+> As a student, I want to be able to edit my feedback so that I can improve it.
+1. The dropdown button the shows the edit button in feedback works when hovered.
+1. The edit button works when clicked.
+1. The page is redirected with the id of feedback.
+1. The previous feedback are successfully shown and can be edited.
+1. When the submit button is pressed, the page is redirected to the right page with the changes.
 
 ## Mobile responsiveness
 
@@ -217,6 +224,8 @@ The feedback collected is all from the #peer-code-review channel.
 - The project has the functionality to edit the feedback. The solution is to edit option with the delete option and redirect the user to a another page with the feedback id.
 
 - The same person also pointed out that the footer is not fixed to the bottom when there are not much content. The fix would be to add a class with a fixed position and a set the the bottom style to zero.
+
+- A student pointed out to me that the owner of the project should not be able to add a feedback. She is absolutely right but I this functionality is essential as there are not much users yet.
 
 ## Deployment
 
