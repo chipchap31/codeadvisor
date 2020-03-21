@@ -33,6 +33,7 @@ During the research phase I found out that:
 
 To create a beatiful wireframe, I used a software called [Balsamiq](https://balsamiq.com/). To view the pdf format of the wireframe please click here. I have changed some parts of this wireframe depending on the Github API data received. 
 
+
 ## Features 
 
 ### Existing features
@@ -211,6 +212,12 @@ Below are the list of devices:
 
 The project response very well to these list of devices.
 
+## User testing
+The feedback collected is all from the #peer-code-review channel.
+- The project has the functionality to edit the feedback. The solution is to edit option with the delete option and redirect the user to a another page with the feedback id.
+
+- The same person also pointed out that the footer is not fixed to the bottom when there are not much content. The fix would be to add a class with a fixed position and a set the the bottom style to zero.
+
 ## Deployment
 
 To run this project you must have the following: 
@@ -224,7 +231,7 @@ To run this project you must have the following:
 ### Local deployment
 1. Clone the repository in Github
 ```
-    $ git clone https://github.com/chipchap31/codeadvisor.git
+$ git clone https://github.com/chipchap31/codeadvisor.git
 ```
 2. Open terminal and go to '/codeadvisor' directory and install dependencies.
 
@@ -252,7 +259,14 @@ $ python3 app.py
 ```
 
 ## Heroku deployment
+1. Save all of the dependencies.
+```
 
+```
+1. Create a procfile.
+```
+$ echo web: python3 > Procfile
+```
 1. Make sure that you have Heroku installed on your system. This can be simply done by checking the version.
 ```
 $ heroku --version
@@ -272,5 +286,21 @@ $ git remote -a <name of app>
 $ git add .
 $ git commit -m "<commit message>"
 
+```
+1. Set the environment variables on your Heroku settings.
 
 ```
+MONGO_URI="mongodb+srv://<USERNAME>:<PASSWORD>@cluster0-bxxlw.mongodb.n$
+SENDGRID_KEY="<SENDGRID API KEY>"
+GIT_TOKEN="<GIT TOKEN FROM GITHUB>"
+IP="0.0.0.0"
+PORT="5000"
+```
+## Credits
+
+### Content
+
+- Some of content of the reset.sass was taken from [Eric Meyer Reset 2.0 SASS](https://gist.github.com/joshvermaire/1102033)
+
+### Media
+- The image at the landing page was downloaded from [freepik.com](https://www.freepik.com/)

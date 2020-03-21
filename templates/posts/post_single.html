@@ -78,10 +78,13 @@
       </div>
 
       {% if feedback['_user'] == user_auth['_id']  %}
+     
       <ul>
         <li class='dropdown'><i data-feather='more-vertical'></i>
           <ul>
+            <li><a href="/feedback/edit/{{feedback['_id']}}">Edit</a></li>
             <li><span role='button' data-target='delete-{{ feedback["_id"] }}'>Delete</span></li>
+
           </ul>
         </li>
 
@@ -89,7 +92,7 @@
       {% endif %}
 
     </div>
-
+    {% if feedback['_user'] == user_auth['_id'] %}
     <div id='delete-{{ feedback["_id"] }}' class='dialog'>
       <div class="inner">
         <h3>This cannot be undone!</h3>
@@ -102,6 +105,8 @@
       </div>
 
     </div>
+    {% endif %}
+
 
 
 

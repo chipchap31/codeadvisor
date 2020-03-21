@@ -1407,6 +1407,10 @@ nav {
   font-weight: normal;
 }
 
+.main-callout-icon {
+  display: none !important;
+}
+
 input {
   border: none;
   border-radius: 5px;
@@ -1699,6 +1703,14 @@ label {
   .form_wrap {
     margin: 0;
   }
+
+  .main-callout {
+    display: none;
+  }
+
+  .main-callout-icon {
+    display: flex !important;
+  }
 }
 @media only screen and (max-width: 746px) and (orientation: landscape) {
   [class*=col_] {
@@ -1782,6 +1794,10 @@ label {
 
   .form_wrap {
     margin: 0;
+  }
+
+  .main-callout-icon {
+    display: flex !important;
   }
 }
 @media only screen and (max-width: 800px) and (min-width: 421px) and (orientation: portrait) {
@@ -1876,6 +1892,14 @@ label {
 
   #testimonial .container {
     max-width: 70%;
+  }
+
+  .main-callout {
+    display: none;
+  }
+
+  .main-callout-icon {
+    display: flex !important;
   }
 }
 

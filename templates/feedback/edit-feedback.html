@@ -1,0 +1,50 @@
+{% extends "view/base.html" %}
+{% block content %}
+
+<div class='col_7'>
+    {% set store = config.store %}
+     <div class='mt_20 align_center x_space-between'>
+    <a class='color_white' href='{{ config.referrer}}'><i data-feather='arrow-left-circle'></i></a>
+    </a>
+  </div>
+    <div class='p_20 bg_light_blue rounded mt_20'>
+        <h2 class="bar">Edit feedback</h2>
+        <p class='color_grey'>Please rate the following languages from 1 - 10 being 10 is the highest and depending on
+            the
+            following:</p>
+        <ul class='list'>
+            <li class='color_grey mt_10'>Appropriate use of each language.</li>
+            <li class='color_grey mt_10'>Proper indentations.</li>
+            <li class='color_grey mt_10'>Comments.</li>
+            <li class='color_grey mt_10'>Code structure.</li>
+            <li class='color_grey mt_10'>Validity</li>
+        </ul>
+
+
+        <form action="/feedback/edit/{{store['_id']}}" method="POST">
+            {% for object in store['feedback'] %}
+            {% set main_loop= loop%}
+            
+            {% for key, value in object.items() %}
+            <label class='mt_30'>Change your rate for {{ key }} codes.</label>
+            <div class='radio_wrapper d_flex mt_10'>
+                {% for i in range(1, 11)%}
+                <div class='mt_10 align_center mr_10'>
+                    <input {{'checked' if i== value['rate'] }} value='{{i}}' name="rate{{main_loop.index}}" required
+                        type='radio'><span>{{i}}</span>
+                </div>
+                {% endfor %}
+            </div>
+            <label class='mt_30'>Share some advice and online resources on what to work on.</label>
+            <textarea class='bg_white rounded mt_10'
+                 name="advice{{ main_loop.index}}">{{value['advice']}}</textarea>
+                
+            {% endfor %}
+            {% endfor %}
+            <button type='submit' class='button button_sm bg_green mt_20'>Save changes</button>
+        </form>
+    </div>
+
+</div>
+
+{% endblock%}

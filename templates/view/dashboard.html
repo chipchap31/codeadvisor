@@ -1,18 +1,18 @@
 {% extends "view/base.html" %}
 {% block content %}
-<div class="col_7  {{ 'padded-bottom' if config.posts | length < 2 }}">
-<h2 class='color_white mt_20'>Projects posted</h2>
+<div class="col_7 {{ 'padded-bottom' if config.posts | length > 2 }}">
+  <h2 class='color_white mt_20'>Projects posted</h2>
   {% if config.posts|length > 0 %}
 
   <div class='d_flex align_center mt_10'>
     <span class='mr_10 color_white'>Sort By:</span>
     <ul>
       <li class='dropdown'>
-       <div class='align_center color_white'>
+        <div class='align_center color_white'>
           {{ 'Newest' if config.curr_sort == 'posted_at' else config.curr_sort.title() }}<i
             data-feather="chevron-down"></i>
 
-        </div> 
+        </div>
         <ul>
           <li>
             <a class='decor_none color_dark_blue' href='/?page={{ config.curr_page }}&sort=posted_at'>Newest</a>
@@ -31,25 +31,27 @@
 
   {% for project in config.posts %}
   <div class="mt_20 bg_light_blue p_20 rounded">
-  <div class='mb_10'>
-    {% for label in project['stack_labels'] %}
-        <span class="tag">{{ label }}</span>
-        {% endfor %}
+    <div class='mb_10'>
+      {% for label in project['stack_labels'] %}
+      <span class="tag">{{ label }}</span>
+      {% endfor %}
     </div>
     <div class="project-item align_center x_space-between">
-    
-    
+
+
       <div class='project-inner'>
-        
+
         <h3 class="mt_10 color_indigo">{{ project['name'] }}</h3>
         <em class="text_small color_grey">posted by
-          <a class="color_grey" href="/{{ project['_user'] }}">{{ project['_user']}}</a> on {{ project['posted_at'].strftime("%d/%m/%Y") }}</em>
+          <a class="color_grey" href="/{{ project['_user'] }}">{{ project['_user']}}</a> on
+          {{ project['posted_at'].strftime("%d/%m/%Y") }}</em>
 
       </div>
 
       <div class="align_center">
         {% if project['homepage'] %}
-        <a class="icon_button_sm bg_green" target="_blank" href="{{ project['homepage'] }}"><i data-feather="globe"></i></a>
+        <a class="icon_button_sm bg_green" target="_blank" href="{{ project['homepage'] }}"><i
+            data-feather="globe"></i></a>
         {% else %}
         <div role='button' data-target="dialog_{{ project['_id'] }}" class="icon_button_sm bg_green">
           <i data-feather="globe"></i>
@@ -57,7 +59,8 @@
         {% endif %}
 
 
-        <a target="_blank" title='Source code' class="ml_10 icon_button_sm bg_green" href="{{ project['html_url'] }}"><i data-feather='code'></i></a>
+        <a target="_blank" title='Source code' class="ml_10 icon_button_sm bg_green" href="{{ project['html_url'] }}"><i
+            data-feather='code'></i></a>
       </div>
 
     </div>
@@ -80,38 +83,45 @@
       <div class="align_center">
         <a target="_blank" class="mt_20 button button_sm bg_green" href="{{ project['html_url'] }}">Add live website</a>
 
-        <button class="mt_20 ml_10 button button_sm bg_red" role="button" data-target="dialog_{{ project['_id'] }}">Close</button>
+        <button class="mt_20 ml_10 button button_sm bg_red" role="button"
+          data-target="dialog_{{ project['_id'] }}">Close</button>
       </div>
 
     </div>
   </div>
   {% endfor %}
   <div class="mt_20 align_center x_center">
-    
+
     {% if config.curr_page != 1 %}
-    <a href="{{config.ref}}" class="color_white align_center mr_30"><i class="mr_10" data-feather='arrow-left'></i>prev</a>
+    <a href="{{config.ref}}" class="color_white align_center mr_30"><i class="mr_10"
+        data-feather='arrow-left'></i>prev</a>
     {% endif %}
-    
+
     {% if config.render_next or config.curr_page != 1%}
     {% for i in range(1,config.pagination) %}
-      <a class="ml_10 color_white" href="/?page={{ i  }}&sort={{ 'posted_at' if config.curr_sort == 'posted_at' else config.curr_sort }}">{{ i }}</a>
+    <a class="ml_10 color_white"
+      href="/?page={{ i  }}&sort={{ 'posted_at' if config.curr_sort == 'posted_at' else config.curr_sort }}">{{ i }}</a>
     {% endfor %}
     {% endif %}
-    
+
     {% if config.render_next %}
-    <a title='next' href="/?page={{ config.curr_page + 1 }}&sort={{ 'posted_at' if config.curr_sort == 'posted_at' else config.curr_sort }}" class="ml_30 color_white align_center">next
+    <a title='next'
+      href="/?page={{ config.curr_page + 1 }}&sort={{ 'posted_at' if config.curr_sort == 'posted_at' else config.curr_sort }}"
+      class="ml_30 color_white align_center">next
       <i data-feather='arrow-right' class="ml_10"></i></a>
 
     {% endif %}
   </div>
   {% else %}
-   <div class="mt_20 text_center bg_light_blue p_20 rounded">
+  <div class="mt_20 text_center bg_light_blue p_20 rounded">
     <h2>It's empty here</h2>
     <p>Be the first one to post a project!</p>
     <div class='d_flex x_center'>
-    <a class='button  align_center  button_sm bg_green mt_30' href='/projects'>Browse projects <i data-feather='arrow-right'></i></a>
+      <a class='button  align_center  button_sm bg_green mt_30' href='/projects'>Browse projects <i
+          data-feather='arrow-right'></i></a>
     </div>
-     </div>
+  </div>
   {% endif %}
 </div>
+
 {% endblock %}

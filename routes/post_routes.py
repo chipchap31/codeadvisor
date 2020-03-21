@@ -90,6 +90,7 @@ def repository_view(name):
             '_user': user['_id'],
             '_username': user['user_name'],
             'posted_at': datetime.now(),
+            'edited': False,
             'like': [],
             'dislike': []
         }

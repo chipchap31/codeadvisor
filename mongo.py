@@ -246,11 +246,11 @@ class Mongo:
 
             # add the data to the feedback collectiosn
             feedback_doc = feedbacks.insert_one(data)
-            feedback_id = str(feedback_doc.inserted_id)
 
             # update the post
             # add the id to the feedback field of the post
             # depending on the id
+            feedback_id = str(feedback_doc.inserted_id)
             posts.update_one({'_id': data['post_id']}, {'$addToSet': {
                 'feedbacks': feedback_id
             }})
@@ -430,6 +430,28 @@ class Mongo:
                 "feedbacks": id
             }})
             return find
+        except pymongo.errors.PyMongoError as e:
+            print(e)
+            return False
+
+    def feedback_single(self, id):
+        feedback_collection = self.database['feedbacks']
+        # get all feedback info
+        # request document from collection
+        try:
+            doc = feedback_collection.find_one({"_id": ObjectId(id)})
+            return doc
+        except:
+            return False
+
+    def edit_feedback(self, doc):
+        feedback_collection = self.database['feedbacks']
+        try:
+
+            return feedback_collection.update_one({'_id': doc['_id']},
+                                                  {"$set": {
+                                                      "feedback": doc['feedback_arr']
+                                                  }})
         except pymongo.errors.PyMongoError as e:
             print(e)
             return False

@@ -62,6 +62,7 @@ def home():
         posts_limit = posts[(5 * curr_page) - 5: ((5 * curr_page) - 5) * 2]
 
     top_advisors = database.get_top_advisor()
+
     # below we render the dashboard
     return render_template('view/dashboard.html', user_auth=user, config={
         "posts": posts_limit,

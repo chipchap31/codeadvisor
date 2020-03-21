@@ -24,10 +24,10 @@
           </div>
 
           <label for='user_name'>Username</label>
-          <input value="{{ input["user_name"] if error else '' }}" required class="my_10" id='user_name' name='user_name' type='text' placeholder="Your username">
+          <input value="{{ input['user_name'] if error else '' }}" required class="my_10" id='user_name' name='user_name' type='text' placeholder="Your username">
           
           <label for='git_username'>Github username</label>
-          <input value="{{ input["git_username"] if error else '' }}" required class="my_10" id='git_username' name='git_username' type='text' placeholder="Your github username">
+          <input value="{{ input['git_username'] if error else '' }}" required class="my_10" id='git_username' name='git_username' type='text' placeholder="Your github username">
 
           {% if error %}
           <div class='mb_10 color_error'>
