@@ -1,7 +1,7 @@
 {% extends "view/base.html" %}
 {% block content %}
 
-<div class="col_7 {{ 'padded-bottom' if config.projects | length < 2 }}">
+<div class="col_7 {{ 'padded-bottom' if config.projects | length <= 2 }}">
   <h2 class='color_white mt_20'>Github repositories</h2>
   {% if config.projects | length > 0 %}
   {% for project in config.projects %}

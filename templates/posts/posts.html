@@ -1,7 +1,7 @@
 {% extends "view/base.html" %}
 {% block content %}
-<div class="col_7  {{ 'padded-bottom' if config.posts | length < 2 }}">
-<h2 class='color_white mt_20'>Personal posts</h2>
+<div class="col_7  {{ 'padded-bottom' if config.posts | length <= 2 }}">
+  <h2 class='color_white mt_20'>Personal posts</h2>
   {% if config.posts|length > 0 %}
   <div class='d_flex align_center mt_20 '>
     <span class='mr_10 color_white'>Sort By:</span>
@@ -32,21 +32,21 @@
   {% for project in config.posts %}
   <div class="mt_20 bg_light_blue p_20 rounded">
     <div class='d_flex x_space-between'>
-    <div class='mb_10'>
-      {% for label in project['stack_labels'] %}
-      <span class="tag">{{ label }}</span>
-      {% endfor %}
-    </div>
-    <ul class='ml_20'>
+      <div class='mb_10'>
+        {% for label in project['stack_labels'] %}
+        <span class="tag">{{ label }}</span>
+        {% endfor %}
+      </div>
+      <ul class='ml_20'>
         <li class='post-dropdown'><i data-feather='more-vertical'></i>
           <ul>
-              <li><span role='button' data-target="dialog_{{ project['_id'] + 1 }}">Delete</span></li>
+            <li><span role='button' data-target="dialog_{{ project['_id'] + 1 }}">Delete</span></li>
           </ul>
         </li>
-        
+
       </ul>
     </div>
-    
+
     <div class="project-item align_center x_space-between">
 
       <div class='project-inner d_flex x_space-between'>

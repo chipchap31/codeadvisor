@@ -18,11 +18,13 @@ var doughnut = (function () {
 						'rgb(100, 165, 233)',
 						'rgb(253, 217, 141)',
 						'rgb(8, 192, 163)',
+						'rgb(252,183,129)'
 					],
 					borderColor: [
 						'rgb(100, 165, 233)',
 						'rgb(253, 217, 141)',
 						'rgb(8, 192, 163)',
+						'rgb(252,183,129)'
 					],
 
 					data: data.stack_value
@@ -56,13 +58,13 @@ var server = (function () {
 	function post(data) {
 		// the server.post() creates a request to the server via POST
 		return fetch(data.path, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					"Access-Control-Origin": "*"
-				},
-				body: JSON.stringify(data.body | null)
-			})
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				"Access-Control-Origin": "*"
+			},
+			body: JSON.stringify(data.body | null)
+		})
 			.then(function (res) {
 				return res.json();
 			})
