@@ -1,12 +1,12 @@
 {% extends "index/base.html" %}
 {% block content %}
 
-<header id="hero">
+<header id="login" class="padded-bottom">
     <div class='container'>
         <div class='row mt_30'>
             <div class='col_4'>
                 <h2>Login to your account!</h2>
-                
+
                 <form class="mt_20" action="/login" method="POST">
                     <label for='user_name'>Username</label>
                     <input required class="my_10" id='user_name' name='user_name' type='text'

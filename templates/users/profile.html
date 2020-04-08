@@ -1,52 +1,54 @@
 {% extends "view/base.html" %}
 {% block content %}
 
-<div class='col_7'>
-    <div class='p_20 bg_light_blue rounded mt_20'>
-        
+<div class='col_7 padded-bottom'>
+    <div class='p_20  bg_light_blue rounded mt_20'>
+
         <h2 class="bar">Profile</h2>
-      
+
         <div id='profile' class='mt_10 d_flex x_space-between'>
             <div class='col_6 mt_10'>
                 <h5 class='bold'>Name</h5>
                 <p class='mt_10'>{{ curr_user.first_name + " " + curr_user.last_name }}</p>
-                
+
                 <h5 class='bold mt_10'>Username</h5>
                 <p class='mt_10'>{{ curr_user.user_name}}</p>
-                
+
                 <h5 class='bold mt_10'>Github username</h5>
                 <div class='mt_10'>
-                <a target='_blank' href='https://github.com/{{ curr_user.git_username}}' class='color_dark_blue mt_10'>github.com/{{ curr_user.git_username }}</a>
+                    <a target='_blank' href='https://github.com/{{ curr_user.git_username}}'
+                        class='color_dark_blue mt_10'>github.com/{{ curr_user.git_username }}</a>
 
                 </div>
-                
+
                 <h5 class='bold mt_10'>Email</h5>
                 <div class='mt_10'>
-                <a target='_blank' href='mailto:{{ curr_user.email }}' class='color_dark_blue mt_10'>{{ curr_user.email }}</a>
+                    <a target='_blank' href='mailto:{{ curr_user.email }}'
+                        class='color_dark_blue mt_10'>{{ curr_user.email }}</a>
 
                 </div>
 
-                
+
             </div>
             <div class='col_6 mt_10'>
                 <h5 class='bold'>Posts info</h5>
                 <p class='mt_10'><span class='bold'>Total: </span>{{ curr_user.post_amount}} posts</p>
-                
+
                 <h5 class='bold mt_10'>Feedback info</h5>
-                <p class='mt_10'><span class='bold'>Total</span>: {{ curr_user.feedback_amount }} 
-                <span class='bold'>Likes</span>: {{ curr_user.like_amount }} 
-                <span class='bold'>Dislikes</span>: {{ curr_user.dislike_amount }}
-                </p>    
+                <p class='mt_10'><span class='bold'>Total</span>: {{ curr_user.feedback_amount }}
+                    <span class='bold'>Likes</span>: {{ curr_user.like_amount }}
+                    <span class='bold'>Dislikes</span>: {{ curr_user.dislike_amount }}
+                </p>
 
 
                 <h5 class='bold mt_10'>Date joined</h5>
                 <p class='mt_10'>{{ curr_user.registered.strftime("%d/%m/%Y")}}</p>
 
-                
+
             </div>
         </div>
     </div>
-    
+
 </div>
 
 {% endblock%}

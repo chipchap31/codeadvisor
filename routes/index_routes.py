@@ -7,8 +7,6 @@ from mongo import database
 import json
 from math import ceil
 index = Blueprint('index', __name__)
-# using SendGrid's Python Library
-# https://github.com/sendgrid/sendgrid-python
 
 
 @index.route("/", methods=["POST", "GET"])
@@ -45,7 +43,10 @@ def home():
                 return redirect("/message-ok")
             except Exception as e:
                 print(e.message)
-        return render_template('index/index.html')
+
+        return render_template('index/index.html', config={
+            'render_nav': True
+        })
 
     # fetch all of the posts of the students
     posts = database.post_fetch(sort=request.args.get(
@@ -72,7 +73,8 @@ def home():
         'ref': request.referrer,
         'curr_sort': request.args.get('sort') or 'posted_at',
         'render_next': (curr_page * 5) + len(posts_limit) - 5 < posts_len,
-        'top_advisors': top_advisors
+        'top_advisors': top_advisors,
+
     })
 
 

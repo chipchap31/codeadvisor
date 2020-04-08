@@ -1,7 +1,7 @@
 {% extends "view/base.html" %}
 {% block content %}
 
-<div class='col_7'>
+<div class="col_7 {{ 'padded-bottom' if config.projects | length < 2 }}">
   <h2 class='color_white mt_20'>Github repositories</h2>
   {% if config.projects | length > 0 %}
   {% for project in config.projects %}
@@ -53,11 +53,8 @@
       <div>
         <a target="_blank" class="mt_20 button button_sm bg_green" href="{{ project['html_url'] }}">Add live website</a>
 
-        <button 
-        role='button'
-        data-target="dialog_{{ project['id'] }}"
-        type="button" 
-        class="mt_20 ml_10 button button_sm bg_red">Close</button>
+        <button role='button' data-target="dialog_{{ project['id'] }}" type="button"
+          class="mt_20 ml_10 button button_sm bg_red">Close</button>
       </div>
 
     </div>
@@ -77,8 +74,8 @@
       href="/projects?page={{ i  }}&sort={{ 'posted_at' if config.curr_sort == 'posted_at' else config.curr_sort }}">{{ i }}</a>
     {% endfor %}
     {% endif %}
-    
-    
+
+
 
 
 
@@ -94,8 +91,8 @@
   {% else %}
   <div class='mt_20 bg_light_blue rounded p_20 text_center'>
     <h3 class='color_error'>Github is empty.</h3>
-    <p class='mt_20'>The username {{ user_auth['git_username'] }} does not contain any repository. If 
-    you entered the wrong username click the button below.</p>
+    <p class='mt_20'>The username {{ user_auth['git_username'] }} does not contain any repository. If
+      you entered the wrong username click the button below.</p>
 
     <a class='button button_sm bg_green mt_30' href='/profile'>Edit username</a>
   </div>

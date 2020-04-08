@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>code advisor</title>
+  <title>Codeadvisor</title>
   <link rel="stylesheet" href="{{ url_for("static", filename="css/master.css")}}">
   <script src="https://unpkg.com/feather-icons"></script>
   <script src="{{ url_for('static', filename='scripts/master.js') }}"></script>
@@ -17,14 +17,18 @@
       <div class='align_center'>
         <div onclick="toggleMenu.toggle()" class='icon color_white mr_10 menu-mobile'>
           <i data-feather='menu'></i>
-          
+
         </div>
-          <a href='/' class='color_white logo'>Code<span class='color_salomie'>a</span>dvisor</a>
+        <a href='/' class='color_white logo'>Code<span class='color_salomie'>a</span>dvisor</a>
+
+        {% if config.render_nav %}
         <ul class='d_flex ml_40 nav-dash'>
           <li><a class='decor_none color_white hover_eff' href='#about'>About</a></li>
           <li class='ml_10'><a class='decor_none color_white hover_eff' href='#testimonial'>Testimonial</a></li>
           <li class='ml_10'><a class='decor_none color_white hover_eff' href='#contact'>Contact</a></li>
         </ul>
+        {% endif %}
+
       </div>
 
       <ul class='d_flex align_center'>
@@ -36,8 +40,10 @@
         </li>
 
       </ul>
+
+      {% if config.render_nav %}
       <ul id='menu-container'>
-      <li>
+        <li>
           <a class='color_white' href='/'>Home</a>
         </li>
         <li>
@@ -50,6 +56,8 @@
           <a class='color_white' href='#contact'>Contact</a>
         </li>
       </ul>
+      {% endif %}
+
     </div>
   </nav>
   <div id='sticky-nav' class='bg_indigo py_20'>
@@ -57,9 +65,9 @@
       <div class='align_center'>
         <div onclick="toggleMenu.toggle()" class='icon color_white mr_10 menu-mobile'>
           <i data-feather='menu'></i>
-          
+
         </div>
-      <a href='/' class='color_white logo'>Code<span class='color_salomie'>a</span>dvisor</a>
+        <a href='/' class='color_white logo'>Code<span class='color_salomie'>a</span>dvisor</a>
         <ul class='d_flex ml_40 nav-dash'>
           <li><a class='decor_none color_white hover_eff' href='#about'>About</a></li>
           <li class='ml_10'><a class='decor_none color_white hover_eff' href='#testimonial'>Testimonial</a></li>
@@ -76,7 +84,7 @@
         </li>
 
       </ul>
-     
+
     </div>
   </div>
 

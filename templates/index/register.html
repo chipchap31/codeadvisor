@@ -7,27 +7,31 @@
     <div class='row mt_30'>
       <div class='col_4'>
         <h2>Create an account!</h2>
-   
+
         <form class="mt_20" action="/register" method="POST">
           <div class='row form_inline d_flex x_space-between'>
             <div class='col_5'>
 
               <label for='first_name'>First name</label>
-              <input value="{{ input["first_name"] if error else ''}}" class="my_10" id='first_name' name='first_name' type='text' placeholder="Your first name">
+              <input value="{{ input["first_name"] if error else ''}}" class="my_10" id='first_name' name='first_name'
+                type='text' placeholder="Your first name">
 
             </div>
             <div class='col_5'>
               <label for='last_name'>Last name</label>
-              <input value="{{ input["last_name"] if error else ''}}" class="my_10" id='last_name' name='last_name' type='text' placeholder="Your last name">
+              <input value="{{ input["last_name"] if error else ''}}" class="my_10" id='last_name' name='last_name'
+                type='text' placeholder="Your last name">
 
             </div>
           </div>
 
           <label for='user_name'>Username</label>
-          <input value="{{ input['user_name'] if error else '' }}" required class="my_10" id='user_name' name='user_name' type='text' placeholder="Your username">
-          
+          <input value="{{ input['user_name'] if error else '' }}" required class="my_10" id='user_name'
+            name='user_name' type='text' placeholder="Your username">
+
           <label for='git_username'>Github username</label>
-          <input value="{{ input['git_username'] if error else '' }}" required class="my_10" id='git_username' name='git_username' type='text' placeholder="Your github username">
+          <input value="{{ input['git_username'] if error else '' }}" required class="my_10" id='git_username'
+            name='git_username' type='text' placeholder="Your github username">
 
           {% if error %}
           <div class='mb_10 color_error'>
@@ -37,7 +41,8 @@
 
 
           <label for='email'>Email address</label>
-          <input value="{{ input["email"] if error else ''}}" required class="my_10" id='email' name='email' type='email' placeholder="Your email address">
+          <input value="{{ input["email"] if error else ''}}" required class="my_10" id='email' name='email'
+            type='email' placeholder="Your email address">
           {% if error %}
           <div class='mb_10 color_error'>
             {{message["email"] if message["email"] }}
@@ -52,7 +57,8 @@
           </div>
           {% endif %}
           <label for='password2'>Confirm password</label>
-          <input required class="my_10" id='password2' name='password2' type='password' placeholder="Please re-type your password">
+          <input required class="my_10" id='password2' name='password2' type='password'
+            placeholder="Please re-type your password">
 
           <button class='button button_md bg_green mt_20' type='submit'>Register</button>
           <div class='mt_20'>
