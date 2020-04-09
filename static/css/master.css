@@ -185,6 +185,14 @@ em {
   text-align: center;
 }
 
+.text_underline {
+  text-decoration: underline;
+}
+
+.dropdown.extra_width ul li {
+  width: 150px;
+}
+
 .dropdown {
   position: relative;
 }
@@ -1442,6 +1450,10 @@ label {
   width: auto;
 }
 
+.form_row .col {
+  width: 48%;
+}
+
 /**
  * * Button classes
  * **/
@@ -1710,6 +1722,13 @@ label {
 
   .main-callout-icon {
     display: flex !important;
+  }
+
+  .form_row {
+    flex-direction: column;
+  }
+  .form_row .col {
+    width: 100%;
   }
 }
 @media only screen and (max-width: 746px) and (orientation: landscape) {

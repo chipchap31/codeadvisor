@@ -94,12 +94,11 @@
     <p class='mt_20'>The username {{ user_auth['git_username'] }} does not contain any repository. If
       you entered the wrong username click the button below.</p>
 
-    <a class='button button_sm bg_green mt_30' href='/profile'>Edit username</a>
+    <a class='button button_sm bg_green mt_30' href="/{{user_auth['user_name']}}/edit">Edit profile</a>
   </div>
 
   {% endif %}
 </div>
-
 
 
 

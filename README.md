@@ -29,6 +29,8 @@ During the research phase I found out that:
 - As a student, I want to be able to delete a post because I don't like the feedback I received.
 - As a student, I want to be able to remove feedback, so that I can create a better one.
 - As a student, I want to be able to edit my feedback so that I can improve it.
+- As a student, I want to be able to delete my account completely, as I no longer require this service.
+- As a student, I want to be able to edit my profile, as I want to change my Github username.
 
 ### Wireframing
 
@@ -163,6 +165,8 @@ The second part of testing is to go over the user stories and to make sure that 
 1. The repositories are shown.
 1. When the post buttons are pressed on the projects page, the page is automatically redirected to posts page. The project posted is then added at the very top. 
 
+    During this testing, I found out that when students typed in the wrong Github username, the server spits out a server error. During this testing, I realized that I have to allow the users to edit profile or else they wont use the site.
+
 > As a student, I want to be able to add a feedback, so that I can share some comments on each languages.
 
 1. The input and textarea field are very clear and easy to find the students.
@@ -200,6 +204,21 @@ The second part of testing is to go over the user stories and to make sure that 
 1. The page is redirected with the id of feedback.
 1. The previous feedback are successfully shown and can be edited.
 1. When the submit button is pressed, the page is redirected to the right page with the changes.
+
+> As a student, I want to be able to delete my account completely, as I no longer require this service.
+1. The user hovers on their profile username and a dropdown appears.
+1. The user clicks profile the page loads and display the profile info.
+1. The user hovers on the more icon and the delete option appears.
+1. The modal appears and user is provided options to cancel or delete.
+1. When cancel is pressed the modal closes and the account deletion is canceled.
+1. When the delete is pressed the page loads the index page and the account deletion is completed.
+
+> As a student, I want to be able to edit my profile, as I want to change my Github username.
+1. The user hovers on their profile username and a dropdown appears.
+1. The user clicks profile the page loads and display the profile info.
+1. The user hovers on the more icon and the edit option appears.
+1. When the edit page appears it is clear for the user that it is a form.
+1. When the user clicks on "Save changes" the page loads the profile page again and the changes can be seen.
 
 ## Mobile responsiveness
 

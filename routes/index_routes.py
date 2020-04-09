@@ -22,12 +22,11 @@ def home():
         if request.method == 'POST':
 
             message = Mail(
-                from_email='noreply@codeadvisor.ie',
+                from_email=os.environ.get('CLIENTS_EMAIL'),
                 to_emails=request.form.get('email'),
                 subject="noreply",
                 html_content=f'''<html>
                                     <body>
-                                        
                                         <p>Hello {request.form.get('fullname')},</p>
 
                                             <p>Thank you for your message! We will get back to you as soon as possible.</p> 

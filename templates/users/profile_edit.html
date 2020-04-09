@@ -1,0 +1,44 @@
+{% extends "view/base.html" %}
+{% block content %}
+
+
+
+
+<div class='col_7 padded-bottom'>
+    {% set store = config.profile %}
+    <div class='mt_20 align_center x_space-between'>
+        <a class='color_white' href='{{ config.referrer}}'><i data-feather='arrow-left-circle'></i></a>
+        </a>
+    </div>
+    <div class='p_20 bg_light_blue rounded mt_20'>
+        <h2 class="bar">Edit your profile</h2>
+        <form action="/{{ user_auth['user_name'] }}/edit" method="POST">
+            <div class='mt_20 form_row d_flex x_space-between'>
+                <div class='col mt_10'>
+                    <label for='first_name'>First name</label>
+                    <input name='first_name' id='first_name' class='mt_10' type='text' value="{{ store['first_name'] }}">   
+                </div>
+                <div class='col mt_10'>
+                    <label for='last_name'>Last name</label>  
+                    <input name='last_name' id='last_name' class='mt_10' type='text' value="{{ store['last_name'] }}">   
+                </div>
+            </div>
+
+            <div class='form_row d_flex x_space-between'>
+                <div class='col mt_10'>
+                    <label for='email'>Email</label>
+                    <input name='email' id='email' class='mt_10' type='email' value="{{ store['email'] }}">   
+                </div>
+                <div class='col mt_10'>
+                    <label for='git_username'>Github username</label>  
+                    <input name='git_username' id='git_username' class='mt_10' type='text' value="{{ store['git_username'] }}">   
+                </div>
+            </div>
+           
+           <button type='submit' class='button button_sm bg_green mt_20'>Save changes</button>
+        </form>
+    </div>
+
+</div>
+
+{% endblock%}

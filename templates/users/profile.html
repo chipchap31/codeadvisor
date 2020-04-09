@@ -3,8 +3,31 @@
 
 <div class='col_7 padded-bottom'>
     <div class='p_20  bg_light_blue rounded mt_20'>
+        <div class='align_center x_space-between'>
+            <h2 class="bar">User Profile</h2>
+            <ul>
+                <li class="dropdown extra_width">
+                    <i data-feather='more-vertical'></i>
+                    <ul>
 
-        <h2 class="bar">Profile</h2>
+                        <li>
+                            <a href="/{{ user_auth['user_name'] }}/edit">Edit profile</a>
+                        </li>
+                        <li 
+                        class='color_error'>
+                        
+                        <span 
+                            role='button'
+                            class='text_underline'
+                            data-target="dialog_profile">Delete profile</span>
+                           
+                        </li>
+
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
 
         <div id='profile' class='mt_10 d_flex x_space-between'>
             <div class='col_6 mt_10'>
@@ -51,4 +74,17 @@
 
 </div>
 
+<div id="dialog_profile" class="dialog">
+  <div class="inner">
+    <h3>Warning</h3>
+    <p>Are you sure you want to delete your account?</p>
+    <div class="align_center">
+        <button role='button' data-target="dialog_profile" class="mt_20 button button_sm bg_grey mr_20">Cancel</button>
+        <form action="/{{ user_auth['user_name']}}/delete" method="POST"> 
+            <button role='button' data-target="dialog_profile" class="mt_20 button button_sm bg_red">Delete</button>
+        </form>
+    </div>
+  </div>
+
+</div>
 {% endblock%}

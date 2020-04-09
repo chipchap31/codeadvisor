@@ -142,6 +142,26 @@ class Mongo:
 
         return json.dumps(cookie) if not self.error else False
 
+    def edit_user(self, form_data):
+        
+        coll = self.database['users']
+        try:
+            coll.update_one({
+                '_id': ObjectId(form_data['_id'])
+            },
+            {
+                '$set':{
+                    'first_name': form_data['first_name'],
+                    'last_name': form_data['last_name'],
+                    'email': form_data['email'],
+                    'git_username': form_data['git_username']
+            }
+            }
+            )
+        except pymongo.errors.PyMongoError as e: 
+            return False
+
+        return True
     def create_post(self, data):
         coll = self.database['posts']
         # determine if the post already exist in the collection
@@ -456,6 +476,17 @@ class Mongo:
             print(e)
             return False
 
+    def delete_account(self, data):
+        user_collection = self.database['users']
+        posts_collection = self.database['posts']
+        feedback_collection = self.database['feedbacks']
+        try:
+            user_collection.delete_one({'_id': ObjectId(data['_id'])})
+            posts_collection.delete_many({'_user': data['user_name']})
+            feedback_collection.delete_many({'_username': data['user_name']})
+        except pymongo.errors.PyMongoError as e: 
+            return False
+        return True 
 
 #  we initialize a new connection to mongodb
 # we export this so that it is reusable

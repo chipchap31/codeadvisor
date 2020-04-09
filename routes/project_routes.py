@@ -35,10 +35,13 @@ def project():
 
     # make a request to github api that returns the repositories of the username provide
     # fetch all github projects
+    try:
+        projects = list(map(essentials, git_request(
+            f"/users/{user['git_username']}/repos")))
+    except:
+        projects = []
 
-    projects = list(map(essentials, git_request(
-        f"/users/{user['git_username']}/repos")))
-    # this is the number of the public repos of the current user
+        # this is the number of the public repos of the current user
     projects_len = len(projects)
 
     curr_page = int(request.args.get('page')
